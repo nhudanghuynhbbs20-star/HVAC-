@@ -1,0 +1,310 @@
+{
+ "generated_at": "2026-10-12T05:43:41",
+ "cutoff": "2026-10-09 16:13:23",
+ "params": {
+  "building_suffix": ".B08",
+  "soft_start_min": 20,
+  "bridge_gap_min": 30,
+  "tol_min": 5,
+  "func_start": "08:00",
+  "func_end": "17:00",
+  "func_weekdays": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "cutoff": null,
+  "short_seg_min": 10.0,
+  "room_alias": null
+ },
+ "qa": {
+  "sched_rows_in": 1048,
+  "ac_rows_in": 5952,
+  "sched_rows_other_building": 623,
+  "sched_dup_in_file": 0,
+  "ac_rows_other_building": 696,
+  "ac_rows_nonpositive_duration": 0,
+  "unit_ids_used_in_multiple_rooms": 65,
+  "ac_dup_in_file": 0,
+  "ac_rows_total_warehouse": 5256,
+  "slots_total_warehouse": 425,
+  "rooms_in_schedule_without_ac_data": [],
+  "slots_without_ac_room": 0,
+  "rooms_functional": [
+   "101.B08",
+   "104.B08",
+   "107.B08",
+   "108.B08",
+   "109.B08",
+   "110.B08",
+   "111.B08",
+   "112.B08",
+   "114.B08",
+   "212.B08",
+   "312.B08",
+   "405.B08",
+   "410.B08",
+   "411.B08",
+   "412.B08",
+   "414.B08",
+   "420.B08"
+  ],
+  "unmatched_override_rules": [],
+  "run_id": "20261012_054334"
+ },
+ "overview": {
+  "slots_kpi": 377,
+  "minute_coverage": 0.9489119546592857,
+  "zero_slots": 2,
+  "early_off_hours": 24.338611111111113,
+  "ooh_hours_total": 228.92194444444445,
+  "ooh_machine_hours": 466.66666666666663,
+  "explained_share": 0.2999748822682161,
+  "event_day_room_hours": 40.54083333333333,
+  "on_lead_15_25_share": 0.5578512396694215,
+  "off_within_5_share": 0.5867768595041323
+ },
+ "daily": [
+  {
+   "date": "2026-10-05",
+   "slots_total": 90,
+   "slots_kpi": 90,
+   "minute_coverage": 0.9282595486,
+   "zero_slots": 0,
+   "slots_lt95": 28,
+   "early_off_hours": 7.2925,
+   "ooh_hours_classroom": 31.4322222222,
+   "ooh_hours_function": 22.6063888889,
+   "ooh_hours_total": 54.0386111111,
+   "ooh_machine_hours": 108.4233333333,
+   "explained_hours": 10.1972222222,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-06",
+   "slots_total": 103,
+   "slots_kpi": 103,
+   "minute_coverage": 0.9532789598,
+   "zero_slots": 0,
+   "slots_lt95": 11,
+   "early_off_hours": 4.0875,
+   "ooh_hours_classroom": 34.9611111111,
+   "ooh_hours_function": 17.7355555556,
+   "ooh_hours_total": 52.6966666667,
+   "ooh_machine_hours": 110.1744444444,
+   "explained_hours": 0.0,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-07",
+   "slots_total": 78,
+   "slots_kpi": 78,
+   "minute_coverage": 0.9453642987,
+   "zero_slots": 1,
+   "slots_lt95": 19,
+   "early_off_hours": 6.7458333333,
+   "ooh_hours_classroom": 26.0752777778,
+   "ooh_hours_function": 16.0702777778,
+   "ooh_hours_total": 42.1455555556,
+   "ooh_machine_hours": 86.3572222222,
+   "explained_hours": 4.7044444444,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-08",
+   "slots_total": 106,
+   "slots_kpi": 106,
+   "minute_coverage": 0.9643121125,
+   "zero_slots": 1,
+   "slots_lt95": 14,
+   "early_off_hours": 6.2127777778,
+   "ooh_hours_classroom": 31.9669444444,
+   "ooh_hours_function": 6.7344444444,
+   "ooh_hours_total": 38.7013888889,
+   "ooh_machine_hours": 66.0280555556,
+   "explained_hours": 13.2283333333,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-09",
+   "slots_total": 48,
+   "slots_kpi": 0,
+   "minute_coverage": null,
+   "zero_slots": 0,
+   "slots_lt95": 0,
+   "early_off_hours": 0.0,
+   "ooh_hours_classroom": 40.5408333333,
+   "ooh_hours_function": 0.7988888889,
+   "ooh_hours_total": 41.3397222222,
+   "ooh_machine_hours": 95.6836111111,
+   "explained_hours": 40.5408333333,
+   "event_day": true
+  }
+ ],
+ "ooh_by_group": [
+  {
+   "cause_group": "Chưa phân loại",
+   "luot": 218,
+   "gio_phong": 99.32,
+   "gio_may": 193.32
+  },
+  {
+   "cause_group": "Lịch / quy trình",
+   "luot": 54,
+   "gio_phong": 45.25,
+   "gio_may": 102.54
+  },
+  {
+   "cause_group": "Nghi lỗi hệ thống",
+   "luot": 3,
+   "gio_phong": 3.93,
+   "gio_may": 4.83
+  },
+  {
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "luot": 28,
+   "gio_phong": 60.93,
+   "gio_may": 134.35
+  },
+  {
+   "cause_group": "Người dùng",
+   "luot": 11,
+   "gio_phong": 19.5,
+   "gio_may": 31.63
+  }
+ ],
+ "top_rooms_ooh": [
+  {
+   "room_id": "314.B08",
+   "gio_phong": 11.45
+  },
+  {
+   "room_id": "201.B08",
+   "gio_phong": 10.86
+  },
+  {
+   "room_id": "311.B08",
+   "gio_phong": 8.22
+  },
+  {
+   "room_id": "417.B08",
+   "gio_phong": 7.76
+  },
+  {
+   "room_id": "106.B08",
+   "gio_phong": 7.7
+  },
+  {
+   "room_id": "214.B08",
+   "gio_phong": 6.33
+  },
+  {
+   "room_id": "221.B08",
+   "gio_phong": 5.75
+  },
+  {
+   "room_id": "211.B08",
+   "gio_phong": 5.27
+  },
+  {
+   "room_id": "407.B08",
+   "gio_phong": 5.21
+  },
+  {
+   "room_id": "403.B08",
+   "gio_phong": 4.95
+  },
+  {
+   "room_id": "205.B08",
+   "gio_phong": 4.87
+  },
+  {
+   "room_id": "209.B08",
+   "gio_phong": 4.7
+  },
+  {
+   "room_id": "213.B08",
+   "gio_phong": 4.45
+  },
+  {
+   "room_id": "103.B08",
+   "gio_phong": 4.39
+  },
+  {
+   "room_id": "401.B08",
+   "gio_phong": 4.2
+  }
+ ],
+ "ooh_by_start_hour": [
+  {
+   "h": 0,
+   "gio_phong": 4.31
+  },
+  {
+   "h": 4,
+   "gio_phong": 0.36
+  },
+  {
+   "h": 5,
+   "gio_phong": 1.01
+  },
+  {
+   "h": 6,
+   "gio_phong": 11.94
+  },
+  {
+   "h": 7,
+   "gio_phong": 27.01
+  },
+  {
+   "h": 8,
+   "gio_phong": 9.84
+  },
+  {
+   "h": 9,
+   "gio_phong": 21.18
+  },
+  {
+   "h": 10,
+   "gio_phong": 7.52
+  },
+  {
+   "h": 11,
+   "gio_phong": 30.05
+  },
+  {
+   "h": 12,
+   "gio_phong": 20.8
+  },
+  {
+   "h": 13,
+   "gio_phong": 17.85
+  },
+  {
+   "h": 14,
+   "gio_phong": 10.15
+  },
+  {
+   "h": 15,
+   "gio_phong": 4.19
+  },
+  {
+   "h": 16,
+   "gio_phong": 5.98
+  },
+  {
+   "h": 17,
+   "gio_phong": 46.84
+  },
+  {
+   "h": 22,
+   "gio_phong": 1.04
+  },
+  {
+   "h": 23,
+   "gio_phong": 8.85
+  }
+ ]
+}
