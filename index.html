@@ -40,7 +40,8 @@ header p{margin:0;color:var(--text-secondary);font-size:14px}
   border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
 .btn:hover,.file:hover{border-color:var(--text-muted)}
 .btn[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-.file input{display:none}
+.file input[type=file]{display:none}
+.file select{font:inherit;font-size:13px;color:var(--text-primary);background:var(--surface-0);border:1px solid var(--line);border-radius:6px;padding:2px 6px;margin-left:6px;cursor:pointer}
 .notice{background:var(--surface-1);border:1px solid var(--line);border-left:4px solid var(--s4);border-radius:8px;
   padding:10px 14px;margin:8px 0;font-size:13.5px;color:var(--text-secondary)}
 .notice b{color:var(--text-primary);font-weight:600}
@@ -129,13 +130,14 @@ td{white-space:nowrap}td:first-child{white-space:normal}
 <body>
 <div class="wrap">
   <header>
-    <h1>Giám sát máy lạnh tự động – Tòa B8</h1>
+    <h1 id="h1">Giám sát máy lạnh tự động – Tòa B8</h1>
     <p id="sub">Đang tải dữ liệu…</p>
   </header>
   <div class="bar" role="toolbar" aria-label="Tùy chọn hiển thị">
     <button class="btn" id="btnTheme" type="button">Giao diện: tự động</button>
     <button class="btn" id="btnTables" type="button" aria-pressed="false">Hiện tất cả bảng dữ liệu</button>
-    <label class="file">Nạp data.json khác<input type="file" id="fileIn" accept="application/json,.json"></label>
+    <label class="file">Tòa nhà <select id="bldg" aria-label="Chọn tòa nhà"><option value="B08">B08</option></select></label>
+    <label class="file">Nạp data.json / energy.json<input type="file" id="fileIn" accept="application/json,.json" multiple></label>
   </div>
   <div class="tabs" role="tablist" aria-label="Chọn góc nhìn">
     <button class="tab" role="tab" id="t1" aria-controls="app" aria-selected="true" type="button">1 · Kiểm tra vận hành hệ thống</button>
@@ -365,15 +367,23 @@ function lineChart(box, pts, o) {
 }
 
 /* ---------- dựng trang ---------- */
-let DATA = null;
+let DATA = null, ENERGY = null, BLDG = "B08";
 function build(d) {
   DATA = d; charts.length = 0;
+  document.getElementById("h1").textContent = "Giám sát máy lạnh tự động – Tòa " + BLDG.replace(/^B0?/, "B").replace(/ \(.*\)/, "");
   const app = document.getElementById("app"); app.replaceChildren();
   const ov = d.overview, daily = d.daily;
   const dates = daily.map(x => x.date);
   document.getElementById("sub").textContent =
     `Dữ liệu ${dlabel(dates[0])} → ${dlabel(dates[dates.length - 1])}/2026 · cắt tại ${d.cutoff.replace("T", " ").slice(0, 16)} · tạo lúc ${d.generated_at.replace("T", " ")}`;
   const nt = document.getElementById("notices"); nt.replaceChildren();
+  if (BLDG !== "B08") {
+    app.append(el("div", {class: "card"}, el("h2", {}, `${BLDG}: chưa có dữ liệu vận hành máy lạnh`),
+      el("p", {class: "desc"}, "Tab 1 đọc log máy lạnh và lịch học theo phòng, hiện chỉ có cho tòa B08. Với các tòa khác, hãy xem điện năng ở Tab 2.")));
+    const bt2 = el("button", {class: "btn", type: "button"}, "Mở Tab 2: Góc nhìn quản lý"); bt2.addEventListener("click", () => showTab(2)); app.append(bt2);
+    document.getElementById("foot").replaceChildren();
+    buildTab2(d); return;
+  }
   const qa = d.qa || {};
   if (qa.unit_ids_used_in_multiple_rooms) nt.append(el("div", {class: "notice"}, el("b", {}, "Chất lượng dữ liệu: "),
     `${qa.unit_ids_used_in_multiple_rooms} mã thiết bị xuất hiện ở nhiều phòng. Giờ-máy theo phòng có thể bị gán sai phòng cho đến khi IIC xác nhận bảng ánh xạ thiết bị–phòng.`));
@@ -554,63 +564,218 @@ function build(d) {
 }
 
 
-/* ---------- Tab 2: góc nhìn quản lý (khung, chờ dữ liệu điện năng và tiền) ---------- */
+/* ---------- biểu đồ phụ cho Tab 2 ---------- */
+function multiLine(box, xl, series, o) {
+  box.replaceChildren();
+  const W = box.clientWidth || 600, H = 250, m = {l: 48, r: 14, t: 16, b: 30};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const all = series.flatMap(s => s.values).filter(v => v != null);
+  const max = niceMax(Math.max(...all, 1) * 1.05);
+  const y = v => m.t + ih - v / max * ih, n = xl.length, px = i => m.l + iw * i / Math.max(1, n - 1);
+  const svg = sv("svg", {width: W, height: H, role: "img", "aria-label": o.aria});
+  ticks(max, 4).forEach(t => { svg.append(sv("line", {class: t === 0 ? "axis" : "grid", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t)})); svg.append(sv("text", {x: m.l - 8, y: y(t) + 4, "text-anchor": "end"}, nf0.format(t))); });
+  const every = W < 520 ? 12 : 6;
+  xl.forEach((l, i) => { if (i % every === 0 || i === n - 1 && false) svg.append(sv("text", {x: px(i), y: H - m.b + 16, "text-anchor": "middle"}, l)); });
+  series.forEach(s => {
+    const pts = s.values.map((v, i) => v == null ? null : px(i) + "," + y(v)).filter(Boolean).join(" ");
+    svg.append(sv("polyline", {points: pts, fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round", ...(s.dash ? {"stroke-dasharray": "5 4"} : {})}));
+  });
+  const cross = sv("line", {x1: 0, x2: 0, y1: m.t, y2: H - m.b, stroke: css("--text-muted"), "stroke-width": 1, opacity: 0}); svg.append(cross);
+  const sl = iw / Math.max(1, n - 1);
+  xl.forEach((l, i) => {
+    const hit = sv("rect", {class: "hit", x: px(i) - sl / 2, y: m.t, width: sl, height: ih, "aria-label": l});
+    bindTip(hit, l, series.map(s => ({label: s.name, color: s.color, value: s.values[i] == null ? "–" : nf1.format(s.values[i]) + " " + o.unit})),
+      () => { cross.setAttribute("x1", px(i)); cross.setAttribute("x2", px(i)); cross.setAttribute("opacity", 1); }, () => cross.setAttribute("opacity", 0));
+    svg.append(hit);
+  });
+  box.append(svg);
+}
+function scatter(box, pts, fit, o) {
+  box.replaceChildren();
+  const W = box.clientWidth || 500, H = 260, m = {l: 48, r: 14, t: 14, b: 40};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const xm = niceMax(Math.max(...pts.map(p => p.x)) * 1.05), ym = niceMax(Math.max(...pts.map(p => p.y)) * 1.05);
+  const X = v => m.l + v / xm * iw, Y = v => m.t + ih - v / ym * ih;
+  const svg = sv("svg", {width: W, height: H, role: "img", "aria-label": o.aria});
+  ticks(ym, 4).forEach(t => { svg.append(sv("line", {class: t === 0 ? "axis" : "grid", x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t)})); svg.append(sv("text", {x: m.l - 8, y: Y(t) + 4, "text-anchor": "end"}, nf0.format(t))); });
+  ticks(xm, 4).forEach(t => svg.append(sv("text", {x: X(t), y: H - m.b + 16, "text-anchor": "middle"}, nf0.format(t))));
+  svg.append(sv("text", {x: m.l + iw / 2, y: H - 6, "text-anchor": "middle"}, o.xTitle));
+  svg.append(sv("text", {x: 12, y: m.t + ih / 2, "text-anchor": "middle", transform: `rotate(-90 12 ${m.t + ih / 2})`}, o.yTitle));
+  const c1 = css("--s1"), c2 = css("--s2");
+  pts.forEach(p => { const c = sv("circle", {cx: X(p.x), cy: Y(p.y), r: 3.2, fill: c1, "fill-opacity": .55}); c.append(sv("title", {}, `${p.t}: ${nf1.format(p.x)} máy, ${nf1.format(p.y)} kWh`)); svg.append(c); });
+  svg.append(sv("line", {x1: X(0), y1: Y(fit.a), x2: X(xm), y2: Y(fit.a + fit.b * xm), stroke: c2, "stroke-width": 2}));
+  box.append(svg);
+}
+const vnd = v => v >= 1e6 ? nf1.format(v / 1e6) + " triệu đồng" : nf0.format(Math.round(v / 1e3)) + " nghìn đồng";
+const vndRange = (a, b) => { const lo = Math.min(a, b), hi = Math.max(a, b); return hi >= 1e6 ? `${nf1.format(lo / 1e6)}–${nf1.format(hi / 1e6)} triệu đồng` : `${nf0.format(Math.round(lo / 1e3))}–${nf0.format(Math.round(hi / 1e3))} nghìn đồng`; };
+
+/* ---------- Tab 2: góc nhìn quản lý ---------- */
 function buildTab2(d) {
-  const ov = d.overview, host = document.getElementById("app2"); host.replaceChildren();
-  host.append(el("div", {class: "notice"}, el("b", {}, "Đang xây dựng. "), "Tab này sẽ trả lời 3 câu hỏi của quản lý bằng tiền. Hiện chưa có dữ liệu điện năng, nên chưa có con số nào ở đây được coi là kết luận."));
-  host.append(el("div", {class: "sec"}, el("h2", {}, "Ba câu hỏi quản lý cần trả lời"), el("p", {}, "Phần có dữ liệu thì hiển thị ngay; phần còn thiếu nêu rõ cần gì.")));
+  const host = document.getElementById("app2"); host.replaceChildren();
+  const E = ENERGY;
+  if (!E) {
+    host.append(el("div", {class: "notice"}, el("b", {}, "Chưa có dữ liệu điện năng. "), "Đặt file energy.json (tạo bằng build_energy.py từ file xuất Q-energy) cùng thư mục với index.html rồi tải lại trang."));
+    return;
+  }
+  const bsel = E.buildings.find(b => b.id === BLDG) || E.buildings[0];
+  const ts = E.ts, N = ts.length;
+  const dayOf = ts.map(t => t.slice(0, 10)), hhmm = ts.map(t => t.slice(11, 16));
+  const days = [...new Set(dayOf)];
+  const evDays = (d.daily || []).filter(x => x.event_day).map(x => x.date);
+  const normal = days.filter(x => !evDays.includes(x));
+  const kwhDay = (b, dt) => b.kwh.reduce((a, v, i) => a + (dayOf[i] === dt && v != null ? v : 0), 0);
+  const isB8 = bsel.id === "B08" && bsel.calibration;
+  const cal = bsel.calibration;
 
-  const g = el("div", {class: "grid charts"});
-  const q = (n, t, ready, need) => { const c = el("section", {class: "card" + (ready ? "" : " lock")}, el("h2", {}, n + ". " + t)); return c; };
+  /* tham số do người dùng chỉnh */
+  const P = {price: 2138, share: 90, base: 0.93};
+  const inPrice = el("input", {type: "number", min: "0", step: "10", inputmode: "numeric", value: String(P.price), "aria-label": "Đơn giá điện"});
+  const inShare = el("input", {type: "number", min: "0", max: "100", step: "1", inputmode: "numeric", value: String(P.share), "aria-label": "Tỷ lệ điện máy lạnh"});
+  const inBase = el("input", {type: "number", min: "0", step: "0.01", inputmode: "decimal", value: String(P.base), "aria-label": "Hệ số lãng phí khi thủ công"});
+  const par = el("section", {class: "card"}, el("h2", {}, "Thông số quy đổi (có thể sửa)"),
+    el("p", {class: "desc"}, "Đổi số ở đây, mọi con số tiền bên dưới tính lại ngay."),
+    el("div", {class: "inputs"},
+      el("label", {}, "Đơn giá điện (đồng/kWh)", inPrice),
+      el("label", {}, "Tỷ lệ điện dùng cho máy lạnh (%)", inShare),
+      ...(isB8 ? [el("label", {}, "Hệ số lãng phí khi vận hành thủ công", inBase)] : [])));
+  par.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), "Đơn giá 2.138 đồng/kWh (giá trung bình cho trường đại học do bạn cung cấp); tỷ lệ máy lạnh 90% (theo thông tin nội bộ, còn lại là đèn, thang máy…)."));
+  host.append(par);
 
-  const c1 = q(1, "Hệ thống đã tiết kiệm được bao nhiêu tiền?", false);
-  c1.append(el("p", {class: "need"}, "Chưa tính được. Cần so sánh với mức chạy khi chưa có hệ thống:"));
-  c1.append(el("ul", {}, ...["Điện năng (kWh) theo tòa hoặc theo phòng, trước và sau khi bật hệ thống",
-    "Hoặc giờ chạy máy của giai đoạn vận hành thủ công cùng điều kiện (cùng lịch học, cùng thời tiết)",
-    "Công suất hoặc điện năng thực đo mỗi máy lạnh (kWh mỗi giờ chạy)",
-    "Đơn giá điện áp dụng cho tòa B8"].map(x => el("li", {}, x))));
+  const dyn = []; /* các hàm cập nhật khi đổi tham số */
+  const upd = () => { P.price = parseFloat(inPrice.value) || 0; P.share = Math.min(100, Math.max(0, parseFloat(inShare.value) || 0)); P.base = parseFloat(inBase.value) || 0; dyn.forEach(f => f()); };
+  [inPrice, inShare, inBase].forEach(i => i.addEventListener("input", upd));
+  const live = (node, fn) => { dyn.push(() => { node.textContent = fn(); }); node.textContent = fn(); return node; };
 
-  const c2 = q(2, "Còn chạy thừa bao nhiêu tiền?", true);
-  c2.append(el("p", {class: "need"}, `Tuần này có ${nf1.format(ov.ooh_hours_total)} giờ phòng chạy ngoài khung cho phép. Nhập thông số để quy ra tiền (ước tính, chưa kiểm chứng):`));
-  const inKwh = el("input", {type: "number", min: "0", step: "0.1", inputmode: "decimal", id: "inKwh", placeholder: "vd. kWh/giờ phòng"});
-  const inPrice = el("input", {type: "number", min: "0", step: "10", inputmode: "numeric", id: "inPrice", value: "1940"});
-  const out = el("div", {class: "big"}, "—"), note = el("div", {class: "sub", style: "color:var(--text-muted);font-size:12.5px;margin-top:6px"});
-  c2.append(el("div", {class: "inputs"},
-    el("label", {}, "Điện năng mỗi giờ phòng (kWh)", inKwh),
-    el("label", {}, "Đơn giá (đồng/kWh)", inPrice)));
-  c2.append(out, note);
-  const upd = () => {
-    const k = parseFloat(inKwh.value), pr = parseFloat(inPrice.value);
-    if (!(k > 0) || !(pr > 0)) { out.textContent = "—"; note.textContent = "Nhập cả hai số để xem. Báo cáo thử nghiệm từng dùng 9,856 kWh mỗi giờ chạy và 1.940 đồng/kWh [CHƯA XÁC MINH: con số 9,856 có thể gồm cả tải không phải máy lạnh]."; return; }
-    const v = ov.ooh_hours_total * k * pr;
-    out.textContent = nf0.format(Math.round(v / 1000) * 1000) + " đồng";
-    note.textContent = `${nf1.format(ov.ooh_hours_total)} giờ phòng × ${k} kWh × ${nf0.format(pr)} đồng. [DỰ ĐOÁN] Chỉ là ước tính theo thông số đã nhập, chưa dựa trên điện năng đo thực.`;
-  };
-  inKwh.addEventListener("input", upd); inPrice.addEventListener("input", upd); upd();
+  /* ===== Phần 1: điện và tiền ===== */
+  const totalKwh = bsel.kwh.reduce((a, v) => a + (v || 0), 0);
+  const perDay = totalKwh / days.length;
+  host.append(el("div", {class: "sec"}, el("h2", {}, `1. ${bsel.id}: dùng bao nhiêu điện, bao nhiêu tiền?`),
+    el("p", {}, `Số liệu Q-energy, ${days.length} ngày ${dlabel(days[0])} → ${dlabel(days[days.length - 1])}, đo mỗi 30 phút${bsel.meters > 1 ? `; tòa này có ${bsel.meters} đồng hồ, đã cộng lại` : ""}.`)));
+  const k1 = el("div", {class: "grid kpis"});
+  const tileL = (l, valFn, subFn) => { const v = el("div", {class: "val"}), s = el("div", {class: "sub"}); dyn.push(() => { v.textContent = valFn(); s.textContent = subFn ? subFn() : ""; }); v.textContent = valFn(); s.textContent = subFn ? subFn() : ""; return el("div", {class: "card tile"}, el("div", {class: "lbl"}, l), v, s); };
+  k1.append(tileL("Điện đã dùng", () => nf0.format(totalKwh) + " kWh", () => `trung bình ${nf0.format(perDay)} kWh/ngày`));
+  k1.append(tileL("Tiền điện", () => vnd(totalKwh * P.price), () => `${nf0.format(totalKwh)} kWh × ${nf0.format(P.price)} đồng`));
+  k1.append(tileL("Điện máy lạnh (ước tính)", () => vnd(totalKwh * P.share / 100 * P.price), () => `${P.share}% điện của tòa ≈ ${nf0.format(totalKwh * P.share / 100)} kWh`));
+  host.append(k1);
 
-  const c3 = q(3, "Nên xử lý việc gì trước?", true);
-  c3.append(el("p", {class: "need"}, "Xếp theo giờ chạy thừa. Cột tiền sẽ hiện khi đã nhập thông số ở câu 2."));
-  const tb = el("table"), th = el("thead"), tr = el("tr");
-  ["Việc cần xem", "Giờ phòng", "Ước tính tiền"].forEach(h => tr.append(el("th", {}, h))); th.append(tr); tb.append(th);
-  const body = el("tbody"); tb.append(body);
-  const rows = [];
-  if (Array.isArray(d.top_rooms_ooh)) d.top_rooms_ooh.slice(0, 5).forEach(r => rows.push([`Kiểm tra lịch và thói quen dùng phòng ${r.room_id.replace(".B08", "")}`, r.gio_phong]));
-  if (ov.event_day_room_hours) rows.push(["Gỡ lịch trên hệ thống vào ngày lớp nghỉ (ngày sự kiện)", ov.event_day_room_hours]);
-  rows.sort((a, b) => b[1] - a[1]);
-  const cells = rows.map(r => { const m = el("td", {}, "—"); body.append(el("tr", {}, el("td", {}, r[0]), el("td", {}, nf1.format(r[1])), m)); return m; });
-  const upd3 = () => { const k = parseFloat(inKwh.value), pr = parseFloat(inPrice.value);
-    cells.forEach((m, i) => m.textContent = (k > 0 && pr > 0) ? nf0.format(Math.round(rows[i][1] * k * pr / 1000) * 1000) + " đồng" : "—"); };
-  inKwh.addEventListener("input", upd3); inPrice.addEventListener("input", upd3); upd3();
-  c3.append(tb);
-  g.append(c1, c2, c3); host.append(g);
+  const g1 = el("div", {class: "grid charts"}); host.append(g1);
+  /* 1a. điện theo ngày */
+  {
+    const c = card("Mỗi ngày tòa dùng bao nhiêu điện?", "");
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "chiều cao cột là kWh cả ngày. Cột cam là ngày sự kiện (lớp nghỉ). Rê chuột để xem số tiền."), c.box);
+    const cats = days.map(dt => { const v = kwhDay(bsel, dt); return {dt, label: dlabel(dt), value: v, rows: [{label: "Điện", value: nf0.format(v) + " kWh"}, {label: "Tiền điện", value: vnd(v * P.price)}]}; });
+    register(c.box, () => columns(c.box, cats.map(x => ({...x, color: evDays.includes(x.dt) ? css("--s2") : css("--s1")})), {unit: "kWh", aria: "Điện năng theo ngày"}));
+    c.card.append(tableView(["Ngày", "kWh"], cats.map(x => [x.label, nf0.format(x.value)])));
+    g1.append(c.card);
+  }
+  /* 1b. đường tải */
+  {
+    const prof = h => { const o = []; for (let s = 0; s < 48; s++) { const idx = ts.map((t, i) => i).filter(i => hhmm[i] === hhmm[s]); o.push(idx); } return o; };
+    const slotsIdx = prof();
+    const xl = slotsIdx.map((ix, s) => hhmm[ix[0]]);
+    const avgN = slotsIdx.map(ix => { const v = ix.filter(i => normal.includes(dayOf[i])).map(i => bsel.kwh[i]).filter(x => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; });
+    const sers = [{name: `Trung bình ${normal.length} ngày thường`, color: css("--s1"), values: avgN}];
+    evDays.filter(x => days.includes(x)).forEach(dt => sers.push({name: `Ngày sự kiện ${dlabel(dt)}`, color: css("--s2"), dash: true, values: slotsIdx.map(ix => { const i = ix.find(i => dayOf[i] === dt); return i == null ? null : bsel.kwh[i]; })}));
+    const c = card("Một ngày điện đi lên và xuống thế nào?", "", {legend: sers.map(s => [s.name, s.color])});
+    let ratioTxt = "";
+    if (sers.length > 1) {
+      const win = s => xl.reduce((a, l, i) => a + (l >= "08:00" && l <= "17:00" && s.values[i] != null ? s.values[i] : 0), 0);
+      const r = win(sers[1]) / win(sers[0]); ratioTxt = ` Ngày sự kiện, ban ngày (08:00–17:00) tòa chỉ dùng ${pct(r, 0)} so với ngày thường: đây là phần điện phụ thuộc vào việc có học và có bật máy lạnh.`;
+    }
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "mỗi điểm là điện của một khoảng 30 phút (kWh). Phần thấp nhất ban đêm là điện nền không đổi theo giờ học." + ratioTxt), c.box);
+    register(c.box, () => multiLine(c.box, xl, sers, {unit: "kWh", aria: "Đường tải điện trong ngày"}));
+    c.card.append(tableView(["Giờ"].concat(sers.map(s => s.name)), xl.map((l, i) => [l].concat(sers.map(s => s.values[i] == null ? "–" : nf1.format(s.values[i]))))));
+    g1.append(c.card);
+  }
+  /* 1c. so sánh tòa */
+  {
+    const rows = E.buildings.map(b => ({id: b.id, v: normal.reduce((a, dt) => a + kwhDay(b, dt), 0) / Math.max(1, normal.length)})).sort((a, b) => b.v - a.v);
+    const c = card("So với các tòa khác", "");
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), `kWh trung bình mỗi ngày thường (${normal.length} ngày, không tính ngày sự kiện). Thanh xanh là tòa đang chọn. Chưa chia theo diện tích hay số người, nên chỉ so quy mô, chưa so hiệu quả.`), c.box);
+    const cats = rows.map(r => ({label: r.id.replace(" (Library)", ""), value: r.v, rows: [{label: "kWh/ngày", value: nf0.format(r.v)}, {label: "Tiền/ngày", value: vnd(r.v * P.price)}]}));
+    register(c.box, () => hbars(c.box, cats.map((x, i) => ({...x, color: rows[i].id === bsel.id ? css("--s1") : css("--neutral")})), {aria: "Điện trung bình mỗi ngày thường theo tòa"}));
+    c.card.append(tableView(["Tòa", "kWh/ngày thường"], rows.map(r => [r.id, nf0.format(r.v)])));
+    g1.append(c.card);
+  }
 
-  const lk = el("section", {class: "card lock", style: "margin-top:16px"}, el("h2", {}, "Dữ liệu cần bổ sung cho tab này"));
-  lk.append(el("ul", {}, ...["Điện năng tiêu thụ (kWh) của B8 theo ngày hoặc theo tuần, trước và sau khi chạy hệ thống",
-    "Đơn giá điện và các khoản phụ (nếu muốn quy đổi chính xác)",
-    "Công suất mỗi loại máy lạnh để quy giờ-máy ra kWh khi chưa có điện năng đo",
-    "Mốc so sánh: giai đoạn vận hành thủ công, hoặc tòa/khu tương đương không chạy tự động",
-    "Nhiệt độ ngoài trời (để loại ảnh hưởng thời tiết khi so sánh)"].map(x => el("li", {}, x))));
-  host.append(lk);
+  /* ===== Phần 2 & 3: chỉ tòa có log máy lạnh ===== */
+  if (!isB8) {
+    host.append(el("div", {class: "notice"}, el("b", {}, "Tòa này chưa có dữ liệu máy lạnh theo lịch học. "), "Hiện chỉ có điện năng, nên chưa quy được tiền chạy thừa hay tiền tiết kiệm. Phần đó chỉ tính cho B08."));
+    return;
+  }
+  const kL = cal.kwh_per_machine_hour;
+  const kU = () => P.share / 100 * cal.kwh_window / cal.machine_hours_window;
+  const ov = d.overview;
+  const shareReg = kL * cal.machine_hours_window / cal.kwh_window;
+
+  host.append(el("div", {class: "sec"}, el("h2", {}, "2. Một giờ máy lạnh chạy tốn bao nhiêu điện?"),
+    el("p", {}, "Con số này là cầu nối từ giờ chạy sang tiền. Có hai cách ước tính, nên kết quả tiền được hiển thị dưới dạng khoảng.")));
+  const g2 = el("div", {class: "grid charts"}); host.append(g2);
+  {
+    const c = card("Điện thực đo và số máy đang chạy", "");
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), `mỗi chấm là một khoảng 30 phút của ${cal.days_used.length} ngày thường. Càng nhiều máy chạy, tòa càng tốn điện. Đường cam là đường khớp tốt nhất (R² = ${nf1.format(cal.r2 * 100)}%).`), c.box);
+    const pts = []; bsel.kwh.forEach((v, i) => { if (v != null && bsel.machines_on[i] != null && cal.days_used.includes(dayOf[i])) pts.push({x: bsel.machines_on[i], y: v, t: dayOf[i].slice(5).replace("-", "/") + " " + hhmm[i]}); });
+    register(c.box, () => scatter(c.box, pts, {a: cal.base_kwh_per_30min, b: cal.kwh_per_machine_hour / 2}, {xTitle: "Số máy lạnh đang chạy (theo log SBMS)", yTitle: "kWh mỗi 30 phút", aria: "Điện năng theo số máy đang chạy"}));
+    g2.append(c.card);
+  }
+  {
+    const c = el("section", {class: "card"}, el("h2", {}, "Hai cách ước tính"));
+    const t = el("table"), th = el("thead"), tr = el("tr");
+    ["Cách", "kWh mỗi giờ-máy", "Máy lạnh chiếm"].forEach(h => tr.append(el("th", {}, h))); th.append(tr); t.append(th);
+    const tb = el("tbody"); t.append(tb);
+    const a = el("td", {}), b2 = el("td", {});
+    tb.append(el("tr", {}, el("td", {}, "A. Hồi quy từ log máy lạnh (đo thực)"), el("td", {}, nf1.format(kL)), el("td", {}, pct(shareReg, 0) + " điện tòa")));
+    tb.append(el("tr", {}, el("td", {}, "B. Theo tỷ lệ bạn cung cấp"), live(a, () => nf1.format(kU())), live(b2, () => P.share + "% điện tòa")));
+    c.append(t);
+    c.append(el("p", {class: "how", style: "margin-top:10px"}, el("span", {class: "tag"}, "SUY LUẬN"), `Điện nền ban đêm của B08 vào khoảng ${nf0.format(cal.base_kwh_per_30min * 2)} kW và gần như không đổi theo giờ học. Nếu coi phần nền đó là điện không phải máy lạnh thì máy lạnh chiếm khoảng ${pct(shareReg, 0)}, thấp hơn 90%.`));
+    c.append(el("p", {class: "how"}, el("span", {class: "tag"}, "CHƯA XÁC MINH"), "Nhưng hồi quy chỉ thấy phần máy lạnh có trong log SBMS. Máy lạnh ngoài hệ thống, hoặc quạt dàn nóng chạy kéo dài, sẽ nằm trong phần nền. Cần đối chiếu với kỹ thuật tòa nhà trước khi chọn một con số duy nhất."));
+    c.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Mốc thời gian Q-energy hiểu là giờ kết thúc khoảng 30 phút (khớp với log tốt hơn mốc bắt đầu). ${cal.sessions_open_filled} phiên máy chưa đóng được tính chạy đến cuối dữ liệu. Báo cáo thử nghiệm từng dùng 9,856 kWh mỗi giờ chạy; số đo thực tế cao nhất ở đây là ${nf1.format(Math.max(kL, kU()))}, nên con số cũ nhiều khả năng bị thổi phồng.`));
+    g2.append(c);
+  }
+
+  host.append(el("div", {class: "sec"}, el("h2", {}, "3. Chạy thừa đang tốn bao nhiêu tiền?"),
+    el("p", {}, "Quy giờ-máy chạy ngoài khung cho phép ở Tab 1 sang điện và tiền, theo hai cách ước tính ở trên.")));
+  const k3 = el("div", {class: "grid kpis"});
+  const oohMh = ov.ooh_machine_hours;
+  k3.append(tileL("Tiền điện chạy thừa", () => vndRange(oohMh * kL * P.price, oohMh * kU() * P.price), () => `${nf1.format(oohMh)} giờ-máy ngoài khung cho phép (cả ngày sự kiện)`));
+  k3.append(tileL("Điện chạy thừa", () => `${nf0.format(oohMh * kL)}–${nf0.format(oohMh * kU())} kWh`.replace(/(\d+)–\1/, "$1"), () => `so với ${nf0.format(totalKwh)} kWh cả tuần của tòa`));
+  k3.append(tileL("Quy ra cả năm (nếu giữ mức này)", () => vndRange(oohMh * kL * P.price * 52, oohMh * kU() * P.price * 52), () => "nhân 52 tuần; tuần khai giảng có thể cao hơn bình thường"));
+  host.append(k3);
+  host.append(el("p", {class: "how"}, el("span", {class: "tag"}, "DỰ ĐOÁN"), "Ước tính cả năm là phép nhân thô; không tính nghỉ hè, nghỉ lễ hay mùa mát nên khó đúng. Dùng để định cỡ vấn đề, không dùng để cam kết số tiền."));
+
+  /* việc cần xử lý */
+  {
+    const c = el("section", {class: "card", style: "margin-top:16px"}, el("h2", {}, "Nên xử lý việc gì trước?"));
+    c.append(el("p", {class: "need"}, "Xếp theo giờ chạy thừa. Tiền ước tính theo số máy trung bình mỗi phòng đang chạy ngoài khung."));
+    const mpr = oohMh / ov.ooh_hours_total;
+    const rows = [];
+    if (Array.isArray(d.top_rooms_ooh)) d.top_rooms_ooh.slice(0, 5).forEach(r => rows.push([`Kiểm tra lịch và thói quen dùng phòng ${r.room_id.replace(".B08", "")}`, r.gio_phong]));
+    if (ov.event_day_room_hours) rows.push(["Gỡ lịch trên hệ thống vào ngày lớp nghỉ (ngày sự kiện)", ov.event_day_room_hours]);
+    rows.sort((a, b) => b[1] - a[1]);
+    const tb = el("table"), th = el("thead"), tr = el("tr");
+    ["Việc cần xem", "Giờ phòng", "Ước tính tiền"].forEach(h => tr.append(el("th", {}, h))); th.append(tr); tb.append(th);
+    const body = el("tbody"); tb.append(body);
+    rows.forEach(r => { const m = el("td", {}); body.append(el("tr", {}, el("td", {}, r[0]), el("td", {}, nf1.format(r[1])), live(m, () => vndRange(r[1] * mpr * kL * P.price, r[1] * mpr * kU() * P.price)))); });
+    c.append(tb); host.append(c);
+  }
+
+  /* ===== Phần 4: tiết kiệm (kịch bản) ===== */
+  host.append(el("div", {class: "sec"}, el("h2", {}, "4. Hệ thống đã tiết kiệm được bao nhiêu? (kịch bản)"),
+    el("p", {}, "Cần một mốc so sánh. Hiện mốc duy nhất có là hệ số lãng phí khi vận hành thủ công trong báo cáo thử nghiệm. Đây chỉ là kịch bản, chưa phải kết quả đo.")));
+  if (cal.scheduled_room_hours_nonevent && cal.ooh_classroom_room_hours_nonevent != null) {
+    const S = cal.scheduled_room_hours_nonevent, W = cal.ooh_classroom_room_hours_nonevent, cNow = W / S;
+    const saved = () => Math.max(0, (P.base - cNow) * S);
+    const k4 = el("div", {class: "grid kpis"});
+    k4.append(tileL("Hệ số lãng phí hiện tại", () => new Intl.NumberFormat("vi-VN", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(cNow), () => `${nf1.format(W)} giờ phòng học chạy ngoài khung ÷ ${nf0.format(S)} giờ phòng có lịch (không tính ngày sự kiện)`));
+    k4.append(tileL("Tiết kiệm so với thủ công", () => vndRange(saved() * cal.machines_per_run_room_hour * kL * P.price, saved() * cal.machines_per_run_room_hour * kU() * P.price), () => `${nf0.format(saved())} giờ phòng không phải chạy thừa, trong ${cal.days_used.length} ngày`));
+    k4.append(tileL("So với điện thực tế", () => { const e = saved() * cal.machines_per_run_room_hour; return `${pct(e * kL / cal.kwh_window, 0)}–${pct(e * kU() / cal.kwh_window, 0)}`; }, () => "phần điện tránh được ÷ điện thực dùng của các ngày đó"));
+    host.append(k4);
+    host.append(el("p", {class: "how"}, el("span", {class: "tag"}, "CHƯA XÁC MINH"), `Hệ số ${new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 2}).format(P.base)} lấy từ báo cáo thử nghiệm (giai đoạn thủ công khác, có thể khác cách tính). Hãy kiểm tra: nếu mức tiết kiệm trông quá lớn so với điện thực tế (ô thứ ba), mốc thủ công đang bị đặt quá cao. Mốc đáng tin cậy hơn là điện của chính B8 trong một tuần thủ công cùng kiểu lịch học, hoặc tòa tương đương không chạy tự động.`));
+    host.append(el("p", {class: "how"}, "Tính: (hệ số thủ công − hệ số hiện tại) × giờ phòng có lịch × " + nf1.format(cal.machines_per_run_room_hour) + " máy mỗi phòng đang chạy × kWh mỗi giờ-máy × đơn giá."));
+  } else {
+    host.append(el("div", {class: "notice"}, "Thiếu số giờ có lịch hoặc giờ chạy ngoài khung trong energy.json. Hãy chạy lại build_energy.py với thư mục có marts/."));
+  }
+  upd();
 }
 
 /* ---------- chuyển tab ---------- */
@@ -619,7 +784,7 @@ function showTab(n) {
   document.getElementById("app").hidden = !one; document.getElementById("app2").hidden = one;
   document.getElementById("t1").setAttribute("aria-selected", String(one)); document.getElementById("t2").setAttribute("aria-selected", String(!one));
   try { history.replaceState(null, "", one ? location.pathname + location.search : location.pathname + location.search + "#quanly"); } catch (e) {}
-  if (one) requestAnimationFrame(() => charts.forEach(c => c.draw()));
+  requestAnimationFrame(() => charts.forEach(c => c.draw()));
 }
 document.getElementById("t1").addEventListener("click", () => showTab(1));
 document.getElementById("t2").addEventListener("click", () => showTab(2));
@@ -649,10 +814,27 @@ function safeBuild(j) {
   catch (e) { console.error(e); fail("Đọc được data.json nhưng không hiển thị được: " + e.message + ". Thường do data.json tạo từ phiên bản pipeline khác; hãy chạy lại notebook bằng bản pipeline mới nhất."); }
 }
 function fail(msg) { const n = document.getElementById("notices"); n.replaceChildren(el("div", {class: "notice err"}, msg)); document.getElementById("sub").textContent = "Chưa có dữ liệu"; }
+const isEnergy = j => j && Array.isArray(j.buildings) && Array.isArray(j.ts);
+function fillBldg() {
+  const sel = document.getElementById("bldg"); sel.replaceChildren();
+  const ids = ENERGY ? ENERGY.buildings.map(b => b.id) : ["B08"];
+  if (!ids.includes("B08")) ids.unshift("B08");
+  if (!ids.includes(BLDG)) BLDG = ids.includes("B08") ? "B08" : ids[0];
+  ids.forEach(id => { const o = el("option", {value: id}, id); if (id === BLDG) o.selected = true; sel.append(o); });
+}
+document.getElementById("bldg").addEventListener("change", e => {
+  BLDG = e.target.value; try { localStorage.setItem("b8-bldg", BLDG); } catch (x) {}
+  if (DATA) build(DATA);
+});
 document.getElementById("fileIn").addEventListener("change", e => {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader(); r.onload = () => { let j; try { j = JSON.parse(r.result); } catch (x) { return fail("File không phải JSON hợp lệ: " + x.message); } safeBuild(j); };
-  r.readAsText(f);
+  const fs = [...e.target.files]; if (!fs.length) return;
+  Promise.all(fs.map(f => new Promise(res => { const r = new FileReader(); r.onload = () => res({n: f.name, t: r.result}); r.readAsText(f); }))).then(list => {
+    for (const x of list) {
+      let j; try { j = JSON.parse(x.t); } catch (err) { return fail(`${x.n} không phải JSON hợp lệ: ${err.message}`); }
+      if (isEnergy(j)) { ENERGY = j; fillBldg(); } else DATA = j;
+    }
+    if (DATA) safeBuild(DATA);
+  });
 });
 (async function init() {
   setMode(mode === "auto" ? "auto" : mode);
@@ -662,8 +844,14 @@ document.getElementById("fileIn").addEventListener("change", e => {
     if (!res.ok) throw new Error("HTTP " + res.status);
     var j = await res.json();
   } catch (err) {
-    return fail("Không đọc được " + url + " (" + err.message + "). Nếu mở trực tiếp từ máy (file://), hãy dùng nút “Nạp data.json khác” hoặc chạy qua GitHub Pages.");
+    return fail("Không đọc được " + url + " (" + err.message + "). Nếu mở trực tiếp từ máy (file://), hãy dùng nút “Nạp data.json / energy.json” hoặc chạy qua GitHub Pages.");
   }
+  try {
+    const eu = new URLSearchParams(location.search).get("energy") || "energy.json";
+    const er = await fetch(eu, {cache: "no-store"}); if (er.ok) { const ej = await er.json(); if (isEnergy(ej)) ENERGY = ej; }
+  } catch (err) { /* energy.json là tùy chọn */ }
+  try { BLDG = new URLSearchParams(location.search).get("b") || localStorage.getItem("b8-bldg") || "B08"; } catch (err) {}
+  fillBldg();
   safeBuild(j);
   if (location.hash === "#quanly") showTab(2);
 })();

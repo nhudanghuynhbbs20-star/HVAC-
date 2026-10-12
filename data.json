@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-12T05:43:41",
+ "generated_at": "2026-10-12T09:50:09",
  "cutoff": "2026-10-09 16:13:23",
  "params": {
   "building_suffix": ".B08",
@@ -52,7 +52,7 @@
    "420.B08"
   ],
   "unmatched_override_rules": [],
-  "run_id": "20261012_054334"
+  "run_id": "20261012_094951"
  },
  "overview": {
   "slots_kpi": 377,
@@ -66,6 +66,312 @@
   "on_lead_15_25_share": 0.5578512396694215,
   "off_within_5_share": 0.5867768595041323
  },
+ "ooh_by_day_group": [
+  {
+   "date": "2026-10-05",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 24.25
+  },
+  {
+   "date": "2026-10-05",
+   "cause_group": "Nghi lỗi hệ thống",
+   "gio_phong": 3.93
+  },
+  {
+   "date": "2026-10-05",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 19.59
+  },
+  {
+   "date": "2026-10-05",
+   "cause_group": "Người dùng",
+   "gio_phong": 6.27
+  },
+  {
+   "date": "2026-10-06",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 34.96
+  },
+  {
+   "date": "2026-10-06",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 17.74
+  },
+  {
+   "date": "2026-10-07",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 21.37
+  },
+  {
+   "date": "2026-10-07",
+   "cause_group": "Lịch / quy trình",
+   "gio_phong": 4.7
+  },
+  {
+   "date": "2026-10-07",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 16.07
+  },
+  {
+   "date": "2026-10-08",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 18.74
+  },
+  {
+   "date": "2026-10-08",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 6.73
+  },
+  {
+   "date": "2026-10-08",
+   "cause_group": "Người dùng",
+   "gio_phong": 13.23
+  },
+  {
+   "date": "2026-10-09",
+   "cause_group": "Lịch / quy trình",
+   "gio_phong": 40.54
+  },
+  {
+   "date": "2026-10-09",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 0.8
+  }
+ ],
+ "ooh_by_day_kind": [
+  {
+   "date": "2026-10-05",
+   "kind": "Phòng chức năng",
+   "gio_phong": 22.61
+  },
+  {
+   "date": "2026-10-05",
+   "kind": "Phòng học",
+   "gio_phong": 31.43
+  },
+  {
+   "date": "2026-10-06",
+   "kind": "Phòng chức năng",
+   "gio_phong": 17.74
+  },
+  {
+   "date": "2026-10-06",
+   "kind": "Phòng học",
+   "gio_phong": 34.96
+  },
+  {
+   "date": "2026-10-07",
+   "kind": "Phòng chức năng",
+   "gio_phong": 16.07
+  },
+  {
+   "date": "2026-10-07",
+   "kind": "Phòng học",
+   "gio_phong": 26.08
+  },
+  {
+   "date": "2026-10-08",
+   "kind": "Phòng chức năng",
+   "gio_phong": 6.73
+  },
+  {
+   "date": "2026-10-08",
+   "kind": "Phòng học",
+   "gio_phong": 31.97
+  },
+  {
+   "date": "2026-10-09",
+   "kind": "Phòng chức năng",
+   "gio_phong": 0.8
+  },
+  {
+   "date": "2026-10-09",
+   "kind": "Phòng học",
+   "gio_phong": 40.54
+  }
+ ],
+ "on_lead_hist": [
+  {
+   "nhom": "Sau giờ học",
+   "so_luong": 3
+  },
+  {
+   "nhom": "0–15",
+   "so_luong": 6
+  },
+  {
+   "nhom": "15–25 (thiết kế 20)",
+   "so_luong": 134
+  },
+  {
+   "nhom": "25–40",
+   "so_luong": 51
+  },
+  {
+   "nhom": "40–60",
+   "so_luong": 27
+  },
+  {
+   "nhom": "60–120",
+   "so_luong": 6
+  },
+  {
+   "nhom": ">120",
+   "so_luong": 15
+  }
+ ],
+ "off_lag_hist": [
+  {
+   "nhom": "Tắt sớm >30",
+   "so_luong": 11
+  },
+  {
+   "nhom": "Tắt sớm 5–30",
+   "so_luong": 50
+  },
+  {
+   "nhom": "Đúng giờ ±5",
+   "so_luong": 142
+  },
+  {
+   "nhom": "Trễ 5–15",
+   "so_luong": 24
+  },
+  {
+   "nhom": "Trễ >15",
+   "so_luong": 15
+  }
+ ],
+ "coverage_buckets": [
+  {
+   "nhom": "Không chạy",
+   "so_luong": 2
+  },
+  {
+   "nhom": "<50%",
+   "so_luong": 8
+  },
+  {
+   "nhom": "50–80%",
+   "so_luong": 3
+  },
+  {
+   "nhom": "80–95%",
+   "so_luong": 59
+  },
+  {
+   "nhom": "≥95%",
+   "so_luong": 305
+  }
+ ],
+ "event_day_rooms": [
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "103.B08",
+   "room_hours": 3.88,
+   "machine_hours": 14.58
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "401.B08",
+   "room_hours": 2.52,
+   "machine_hours": 4.88
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "309.B08",
+   "room_hours": 2.18,
+   "machine_hours": 7.08
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "307.B08",
+   "room_hours": 2.18,
+   "machine_hours": 7.04
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "218.B08",
+   "room_hours": 2.14,
+   "machine_hours": 4.29
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "106.B08",
+   "room_hours": 2.1,
+   "machine_hours": 4.2
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "303.B08",
+   "room_hours": 2.07,
+   "machine_hours": 5.94
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "207.B08",
+   "room_hours": 1.91,
+   "machine_hours": 3.2
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "221.B08",
+   "room_hours": 1.75,
+   "machine_hours": 3.49
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "216.B08",
+   "room_hours": 1.73,
+   "machine_hours": 3.47
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "409.B08",
+   "room_hours": 1.63,
+   "machine_hours": 1.8
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "203.B08",
+   "room_hours": 1.31,
+   "machine_hours": 2.61
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "209.B08",
+   "room_hours": 1.27,
+   "machine_hours": 2.53
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "213.B08",
+   "room_hours": 1.25,
+   "machine_hours": 2.49
+  },
+  {
+   "date": "2026-10-09",
+   "event_name": "Lễ khai giảng",
+   "room_id": "314.B08",
+   "room_hours": 1.22,
+   "machine_hours": 2.43
+  }
+ ],
+ "slots_total": 425,
  "daily": [
   {
    "date": "2026-10-05",
