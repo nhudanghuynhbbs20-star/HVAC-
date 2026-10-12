@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Máy lạnh tự động B8</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface-0:#f6f6f4; --surface-1:#fcfcfb; --line:#e3e2dd; --grid:#ecebe7;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#76756f;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --neutral:#a9a8a1; --soft:#c9c8c1;
+  --accent:#2a78d6; --ok:#0ca30c; --warn:#fab219;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --surface-0:#121211; --surface-1:#1a1a19; --line:#34332f; --grid:#2a2a27;
+    --text-primary:#f0efec; --text-secondary:#c3c2b7; --text-muted:#9d9c93;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --neutral:#77766f; --soft:#4a4944;
+    --accent:#3987e5;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-0:#121211; --surface-1:#1a1a19; --line:#34332f; --grid:#2a2a27;
+  --text-primary:#f0efec; --text-secondary:#c3c2b7; --text-muted:#9d9c93;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --neutral:#77766f; --soft:#4a4944;
+  --accent:#3987e5;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface-0);color:var(--text-primary);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 16px 56px}
+header h1{font-size:22px;line-height:1.25;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
+header p{margin:0;color:var(--text-secondary);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 8px}
+.btn,.file{font:inherit;font-size:13px;color:var(--text-primary);background:var(--surface-1);border:1px solid var(--line);
+  border-radius:8px;padding:6px 12px;cursor:pointer;min-height:34px}
+.btn:hover,.file:hover{border-color:var(--text-muted)}
+.btn[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.file input{display:none}
+.notice{background:var(--surface-1);border:1px solid var(--line);border-left:4px solid var(--s4);border-radius:8px;
+  padding:10px 14px;margin:8px 0;font-size:13.5px;color:var(--text-secondary)}
+.notice b{color:var(--text-primary);font-weight:600}
+.notice.err{border-left-color:#d03b3b}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(3,1fr);margin:16px 0}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.kpis{grid-template-columns:1fr}}
+.card{background:var(--surface-1);border:1px solid var(--line);border-radius:12px;padding:16px}
+.tile .lbl{font-size:13px;color:var(--text-secondary);margin-bottom:6px}
+.tile .val{font-size:30px;line-height:1.1;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .sub{font-size:12.5px;color:var(--text-muted);margin-top:6px}
+.hero{grid-column:1/-1}
+.hero .val{font-size:52px}
+.hero .row{display:flex;flex-wrap:wrap;gap:8px 32px;align-items:flex-end}
+.hero .split{font-size:13.5px;color:var(--text-secondary)}
+.charts{grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr))}
+.charts .wide{grid-column:1/-1}
+.card h2{font-size:15px;margin:0 0 2px;font-weight:620}
+.card .desc{font-size:12.5px;color:var(--text-muted);margin:0 0 10px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 8px;font-size:12.5px;color:var(--text-secondary)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.chart{position:relative;width:100%}
+svg{display:block;overflow:visible}
+svg text{fill:var(--text-secondary);font:11.5px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+svg .val{fill:var(--text-primary);font-weight:600}
+svg .grid{stroke:var(--grid);stroke-width:1}
+svg .axis{stroke:var(--line);stroke-width:1}
+svg .hit{fill:transparent;cursor:default}
+svg .hit:focus{outline:none}
+svg .hit:focus-visible{stroke:var(--accent);stroke-width:2}
+.tip{position:fixed;z-index:10;pointer-events:none;background:var(--surface-1);color:var(--text-primary);border:1px solid var(--line);
+  border-radius:8px;padding:8px 10px;font-size:12.5px;box-shadow:0 6px 20px rgba(0,0,0,.16);max-width:260px;opacity:0;transition:opacity .08s}
+.tip.on{opacity:1}
+.tip .t{color:var(--text-secondary);margin-bottom:4px}
+.tip .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.tip .r span.k{display:flex;align-items:center;gap:6px;color:var(--text-secondary)}
+.tip .r span.k i{display:inline-block;width:12px;height:3px;border-radius:2px}
+.tip .r b{font-weight:650;font-variant-numeric:tabular-nums}
+details.tbl{margin-top:8px}
+details.tbl summary{cursor:pointer;font-size:12.5px;color:var(--text-secondary)}
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--text-secondary);font-weight:560}
+.foot{margin-top:24px;font-size:12.5px;color:var(--text-muted)}
+.foot p{margin:4px 0}
+.tag{display:inline-block;font-size:11px;font-weight:600;color:var(--text-secondary);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-right:4px}
+@media (max-width:560px){.hero .val{font-size:40px}.tile .val{font-size:26px}}
+
+.tabs{display:flex;gap:4px;margin:16px 0 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{font:inherit;font-size:14px;font-weight:560;color:var(--text-secondary);background:none;border:0;border-bottom:3px solid transparent;
+  padding:10px 14px;cursor:pointer;white-space:nowrap;min-height:44px}
+.tab:hover{color:var(--text-primary)}
+.tab[aria-selected="true"]{color:var(--text-primary);border-bottom-color:var(--accent)}
+.panel[hidden]{display:none}
+.sec{margin:28px 0 12px}
+.sec h2{font-size:18px;margin:0 0 2px;font-weight:650;letter-spacing:-.01em}
+.sec p{margin:0;font-size:13.5px;color:var(--text-secondary);max-width:80ch}
+.summary{margin:16px 0 0}
+.summary h2{font-size:15px;margin:0 0 8px;font-weight:620}
+.summary ol{margin:0;padding-left:20px;font-size:14px;color:var(--text-secondary)}
+.summary li{margin:4px 0}
+.summary li b{color:var(--text-primary);font-weight:620}
+.how{font-size:12.5px;color:var(--text-secondary);margin:0 0 10px}
+.how b{color:var(--text-primary);font-weight:600}
+.tile .go{display:inline-block;margin-top:8px;font:inherit;font-size:12.5px;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 3px transparent}}
+.flash{animation:flash 1.6s ease-out}
+.gloss{margin-top:28px}
+.gloss summary{cursor:pointer;font-weight:620;font-size:15px}
+.gloss dl{margin:10px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:13.5px}
+.gloss dt{font-weight:620}
+.gloss dd{margin:0;color:var(--text-secondary)}
+@media (max-width:560px){.gloss dl{grid-template-columns:1fr}.gloss dd{margin-bottom:6px}}
+.lock{border-style:dashed}
+.need{font-size:13px;color:var(--text-secondary);margin:6px 0 0}
+.lock ul{margin:6px 0 0;padding-left:20px;font-size:13px;color:var(--text-secondary)}
+.inputs{display:flex;flex-wrap:wrap;gap:12px 20px;margin:8px 0}
+.inputs label{font-size:13px;color:var(--text-secondary);display:flex;flex-direction:column;gap:4px}
+.inputs input{font:inherit;font-size:14px;color:var(--text-primary);background:var(--surface-0);border:1px solid var(--line);border-radius:8px;padding:6px 10px;width:170px;min-height:36px}
+td{white-space:nowrap}td:first-child{white-space:normal}
+.big{font-size:30px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Giám sát máy lạnh tự động – Tòa B8</h1>
+    <p id="sub">Đang tải dữ liệu…</p>
+  </header>
+  <div class="bar" role="toolbar" aria-label="Tùy chọn hiển thị">
+    <button class="btn" id="btnTheme" type="button">Giao diện: tự động</button>
+    <button class="btn" id="btnTables" type="button" aria-pressed="false">Hiện tất cả bảng dữ liệu</button>
+    <label class="file">Nạp data.json khác<input type="file" id="fileIn" accept="application/json,.json"></label>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Chọn góc nhìn">
+    <button class="tab" role="tab" id="t1" aria-controls="app" aria-selected="true" type="button">1 · Kiểm tra vận hành hệ thống</button>
+    <button class="tab" role="tab" id="t2" aria-controls="app2" aria-selected="false" type="button">2 · Góc nhìn quản lý</button>
+  </div>
+  <div id="notices"></div>
+  <main id="app" class="panel" role="tabpanel" aria-labelledby="t1" aria-live="polite"></main>
+  <section id="app2" class="panel" role="tabpanel" aria-labelledby="t2" hidden></section>
+  <div class="foot" id="foot"></div>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+"use strict";
+/* ---------- tiện ích ---------- */
+const NS = "http://www.w3.org/2000/svg";
+const nf1 = new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 1});
+const nf0 = new Intl.NumberFormat("vi-VN", {maximumFractionDigits: 0});
+const pct = (v, d = 1) => v == null || isNaN(v) ? "–" : new Intl.NumberFormat("vi-VN", {maximumFractionDigits: d}).format(v * 100) + "%";
+const hrs = v => v == null || isNaN(v) ? "–" : nf1.format(v) + " giờ";
+const WD = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+function dlabel(iso) { const [y, m, d] = iso.split("-").map(Number); const dt = new Date(y, m - 1, d); return WD[dt.getDay()] + " " + String(d).padStart(2, "0") + "/" + String(m).padStart(2, "0"); }
+function el(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) { if (k === "class") e.className = v; else e.setAttribute(k, v); }
+  for (const c of kids) e.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  return e;
+}
+function sv(tag, attrs, ...kids) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v);
+  for (const c of kids) e.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  return e;
+}
+function niceMax(v) { if (v <= 0) return 4; const q = v / 4, p = Math.pow(10, Math.floor(Math.log10(q)));
+  for (const m of [1, 1.5, 2, 2.5, 3, 4, 5, 6, 7.5, 8, 10]) if (m * p >= q - 1e-12) return 4 * m * p; return 40 * p; }
+function ticks(max, n = 4) { const o = []; for (let i = 0; i <= n; i++) o.push(max * i / n); return o; }
+function topRounded(x, y, w, h, r) { r = Math.min(r, w / 2, h); return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`; }
+function rightRounded(x, y, w, h, r) { r = Math.min(r, h / 2, w); return `M${x},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h - r}Q${x + w},${y + h} ${x + w - r},${y + h}H${x}Z`; }
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- tooltip (một cái dùng chung) ---------- */
+const tip = document.getElementById("tip");
+function showTip(evOrEl, title, rows) {
+  tip.replaceChildren();
+  tip.append(el("div", {class: "t"}, title));
+  for (const r of rows) {
+    const key = el("span", {class: "k"});
+    if (r.color) { const i = el("i"); i.style.background = r.color; key.append(i); }
+    key.append(r.label);
+    tip.append(el("div", {class: "r"}, key, el("b", {}, r.value)));
+  }
+  tip.classList.add("on");
+  let x, y;
+  if (evOrEl && evOrEl.clientX != null) { x = evOrEl.clientX; y = evOrEl.clientY; }
+  else { const b = evOrEl.getBoundingClientRect(); x = b.left + b.width / 2; y = b.top + b.height / 2; }
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let left = x + 14, top = y - h - 10;
+  if (left + w > innerWidth - 8) left = x - w - 14;
+  if (left < 8) left = 8;
+  if (top < 8) top = y + 16;
+  tip.style.left = left + "px"; tip.style.top = top + "px";
+}
+function hideTip() { tip.classList.remove("on"); }
+function bindTip(node, title, rows, onEnter, onLeave) {
+  node.setAttribute("tabindex", "0");
+  node.addEventListener("pointermove", e => { showTip(e, title, rows); onEnter && onEnter(); });
+  node.addEventListener("focus", () => { showTip(node, title, rows); onEnter && onEnter(); });
+  const leave = () => { hideTip(); onLeave && onLeave(); };
+  node.addEventListener("pointerleave", leave); node.addEventListener("blur", leave);
+}
+
+/* ---------- bảng dữ liệu ---------- */
+function tableView(headers, rows) {
+  const d = el("details", {class: "tbl"});
+  d.append(el("summary", {}, "Xem bảng dữ liệu"));
+  const t = el("table"); const thead = el("thead"), tr = el("tr");
+  headers.forEach(h => tr.append(el("th", {}, h))); thead.append(tr); t.append(thead);
+  const tb = el("tbody");
+  rows.forEach(r => { const x = el("tr"); r.forEach(c => x.append(el("td", {}, c))); tb.append(x); });
+  t.append(tb); d.append(t); return d;
+}
+
+/* ---------- thẻ biểu đồ ---------- */
+const charts = []; // {box, draw}
+function card(title, desc, opts = {}) {
+  const c = el("section", {class: "card" + (opts.wide ? " wide" : "")});
+  c.append(el("h2", {}, title));
+  if (desc) c.append(el("p", {class: "desc"}, desc));
+  if (opts.legend) {
+    const lg = el("div", {class: "legend"});
+    opts.legend.forEach(([name, col]) => { const i = el("i"); i.style.background = col; lg.append(el("span", {}, i, name)); });
+    c.append(lg);
+  }
+  const box = el("div", {class: "chart"}); c.append(box);
+  return {card: c, box};
+}
+function register(box, draw) { charts.push({box, draw}); draw(); }
+
+/* ---------- biểu đồ: cột xếp chồng ---------- */
+function stackedColumns(box, cats, series, o) {
+  box.replaceChildren();
+  const W = box.clientWidth || 600, H = 270, m = {l: 44, r: 12, t: 22, b: 30};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const totals = cats.map(c => series.reduce((a, s) => a + (s.values[c.key] || 0), 0));
+  const max = niceMax(Math.max(...totals, 1) * 1.08);
+  const y = v => m.t + ih - v / max * ih;
+  const svg = sv("svg", {width: W, height: H, role: "img", "aria-label": o.aria});
+  ticks(max, 4).forEach(t => {
+    svg.append(sv("line", {class: t === 0 ? "axis" : "grid", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t)}));
+    svg.append(sv("text", {x: m.l - 8, y: y(t) + 4, "text-anchor": "end"}, nf0.format(t)));
+  });
+  const slot = iw / cats.length, bw = Math.min(28, slot * 0.5);
+  cats.forEach((c, i) => {
+    const cx = m.l + slot * i + slot / 2, x0 = cx - bw / 2;
+    const g = sv("g"); let acc = 0;
+    const live = series.filter(s => (s.values[c.key] || 0) > 0);
+    live.forEach((s, k) => {
+      const v = s.values[c.key], h = v / max * ih, top = y(acc + v);
+      const isTop = k === live.length - 1;
+      const gap = k === 0 ? 0 : 2;
+      const hh = Math.max(h - gap, 1);
+      g.append(sv("path", {d: isTop ? topRounded(x0, top, bw, hh, 4) : `M${x0},${top}h${bw}v${hh}h${-bw}Z`, fill: s.color}));
+      acc += v;
+    });
+    if (totals[i] > 0) svg.append(sv("text", {class: "val", x: cx, y: y(totals[i]) - 6, "text-anchor": "middle"}, nf1.format(totals[i])));
+    svg.append(g);
+    const lab = sv("text", {x: cx, y: H - m.b + 16, "text-anchor": "middle"}, c.label);
+    svg.append(lab);
+    if (c.note) svg.append(sv("text", {x: cx, y: H - m.b + 29, "text-anchor": "middle", style: "font-size:10.5px"}, c.note));
+    const hit = sv("rect", {class: "hit", x: cx - slot / 2, y: m.t, width: slot, height: ih + 6, "aria-label": c.label});
+    const rows = series.slice().reverse().filter(s => (s.values[c.key] || 0) > 0).map(s => ({label: s.name, color: s.color, value: hrs(s.values[c.key])}));
+    rows.push({label: "Tổng", value: hrs(totals[i])});
+    bindTip(hit, c.label + (c.note ? " · " + c.note : ""), rows, () => g.style.opacity = .82, () => g.style.opacity = 1);
+    svg.append(hit);
+  });
+  box.append(svg);
+}
+
+/* ---------- biểu đồ: cột đơn ---------- */
+function columns(box, cats, o) {
+  box.replaceChildren();
+  const W = box.clientWidth || 500, H = o.height || 230, m = {l: 40, r: 10, t: 22, b: o.bottom || 44};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const max = niceMax(Math.max(...cats.map(c => c.value), 1) * 1.1);
+  const y = v => m.t + ih - v / max * ih;
+  const svg = sv("svg", {width: W, height: H, role: "img", "aria-label": o.aria});
+  ticks(max, 4).forEach(t => {
+    svg.append(sv("line", {class: t === 0 ? "axis" : "grid", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t)}));
+    svg.append(sv("text", {x: m.l - 8, y: y(t) + 4, "text-anchor": "end"}, nf0.format(t)));
+  });
+  const slot = iw / cats.length, bw = Math.min(28, slot * 0.6);
+  cats.forEach((c, i) => {
+    const cx = m.l + slot * i + slot / 2, h = c.value / max * ih;
+    const bar = c.value > 0 ? sv("path", {d: topRounded(cx - bw / 2, y(c.value), bw, h, 4), fill: c.color || css("--s1")}) : null;
+    if (bar) svg.append(bar);
+    if (c.value > 0 && (o.labelAll !== false)) svg.append(sv("text", {class: "val", x: cx, y: y(c.value) - 6, "text-anchor": "middle"}, nf0.format(c.value)));
+    const lines = (cats.length > 12 && slot < 18 && i % 2 === 1) ? [] : String(c.label).split("\n");
+    lines.forEach((ln, k) => svg.append(sv("text", {x: cx, y: H - m.b + 16 + k * 13, "text-anchor": "middle", style: slot < 52 ? "font-size:10.5px" : ""}, ln)));
+    const hit = sv("rect", {class: "hit", x: cx - slot / 2, y: m.t, width: slot, height: ih + 6, "aria-label": c.label.replace("\n", " ")});
+    bindTip(hit, c.label.replace("\n", " "), [{label: o.unit, color: c.color || css("--s1"), value: nf0.format(c.value)}].concat(c.extra || []),
+      () => bar && (bar.style.opacity = .8), () => bar && (bar.style.opacity = 1));
+    svg.append(hit);
+  });
+  box.append(svg);
+}
+
+/* ---------- biểu đồ: thanh ngang ---------- */
+function hbars(box, cats, o) {
+  box.replaceChildren();
+  const W = box.clientWidth || 500, rowH = 30, m = {l: o.labelW || 70, r: 56, t: 6, b: 24};
+  const H = m.t + rowH * cats.length + m.b;
+  const max = niceMax(Math.max(...cats.map(c => c.value), 1));
+  const iw = W - m.l - m.r;
+  const x = v => m.l + v / max * iw;
+  const svg = sv("svg", {width: W, height: H, role: "img", "aria-label": o.aria});
+  ticks(max, 4).forEach(t => {
+    svg.append(sv("line", {class: t === 0 ? "axis" : "grid", x1: x(t), x2: x(t), y1: m.t, y2: H - m.b}));
+    svg.append(sv("text", {x: x(t), y: H - 6, "text-anchor": "middle"}, nf0.format(t)));
+  });
+  cats.forEach((c, i) => {
+    const cy = m.t + rowH * i + rowH / 2, bh = 18, w = Math.max(c.value / max * iw, 2);
+    svg.append(sv("text", {x: m.l - 8, y: cy + 4, "text-anchor": "end"}, c.label));
+    const bar = sv("path", {d: rightRounded(m.l, cy - bh / 2, w, bh, 4), fill: c.color || css("--s1")});
+    svg.append(bar);
+    svg.append(sv("text", {class: "val", x: m.l + w + 6, y: cy + 4}, nf1.format(c.value)));
+    const hit = sv("rect", {class: "hit", x: 0, y: cy - rowH / 2, width: W, height: rowH, "aria-label": c.label});
+    bindTip(hit, c.label, c.rows, () => bar.style.opacity = .8, () => bar.style.opacity = 1);
+    svg.append(hit);
+  });
+  box.append(svg);
+}
+
+/* ---------- biểu đồ: đường ---------- */
+function lineChart(box, pts, o) {
+  box.replaceChildren();
+  const W = box.clientWidth || 500, H = 230, m = {l: 44, r: 16, t: 20, b: 32};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const y = v => m.t + ih - (v - o.min) / (o.max - o.min) * ih;
+  const slot = iw / pts.length, px = i => m.l + slot * i + slot / 2;
+  const svg = sv("svg", {width: W, height: H, role: "img", "aria-label": o.aria});
+  for (let t = o.min; t <= o.max + 1e-9; t += o.step) {
+    svg.append(sv("line", {class: t === o.min ? "axis" : "grid", x1: m.l, x2: W - m.r, y1: y(t), y2: y(t)}));
+    svg.append(sv("text", {x: m.l - 8, y: y(t) + 4, "text-anchor": "end"}, Math.round(t * 100) + "%"));
+  }
+  const col = css("--s1"), surf = css("--surface-1");
+  const valid = pts.map((p, i) => ({p, i})).filter(o2 => o2.p.value != null);
+  if (valid.length > 1) svg.append(sv("polyline", {points: valid.map(o2 => px(o2.i) + "," + y(o2.p.value)).join(" "), fill: "none", stroke: col, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round"}));
+  const cross = sv("line", {x1: 0, x2: 0, y1: m.t, y2: H - m.b, stroke: css("--text-muted"), "stroke-width": 1, opacity: 0});
+  svg.append(cross);
+  const minV = Math.min(...valid.map(o2 => o2.p.value));
+  pts.forEach((p, i) => {
+    svg.append(sv("text", {x: px(i), y: H - m.b + 16, "text-anchor": "middle"}, p.label));
+    if (p.value != null) {
+      svg.append(sv("circle", {cx: px(i), cy: y(p.value), r: 4, fill: col, stroke: surf, "stroke-width": 2}));
+      if (p.value === minV || i === valid[valid.length - 1].i) svg.append(sv("text", {class: "val", x: px(i), y: y(p.value) - 10, "text-anchor": "middle"}, pct(p.value)));
+    } else {
+      svg.append(sv("text", {x: px(i), y: m.t + ih / 2, "text-anchor": "middle", style: "font-size:11px"}, "Ngày sự kiện"));
+      svg.append(sv("text", {x: px(i), y: m.t + ih / 2 + 14, "text-anchor": "middle", style: "font-size:11px"}, "không tính"));
+    }
+    const hit = sv("rect", {class: "hit", x: px(i) - slot / 2, y: m.t, width: slot, height: ih + 4, "aria-label": p.label});
+    bindTip(hit, p.label, p.value != null ? [{label: "Độ phủ theo phút", color: col, value: pct(p.value)}].concat(p.extra || []) : [{label: "Lịch AAO không còn hiệu lực", value: "loại khỏi KPI"}],
+      () => { cross.setAttribute("x1", px(i)); cross.setAttribute("x2", px(i)); cross.setAttribute("opacity", 1); }, () => cross.setAttribute("opacity", 0));
+    svg.append(hit);
+  });
+  box.append(svg);
+}
+
+/* ---------- dựng trang ---------- */
+let DATA = null;
+function build(d) {
+  DATA = d; charts.length = 0;
+  const app = document.getElementById("app"); app.replaceChildren();
+  const ov = d.overview, daily = d.daily;
+  const dates = daily.map(x => x.date);
+  document.getElementById("sub").textContent =
+    `Dữ liệu ${dlabel(dates[0])} → ${dlabel(dates[dates.length - 1])}/2026 · cắt tại ${d.cutoff.replace("T", " ").slice(0, 16)} · tạo lúc ${d.generated_at.replace("T", " ")}`;
+  const nt = document.getElementById("notices"); nt.replaceChildren();
+  const qa = d.qa || {};
+  if (qa.unit_ids_used_in_multiple_rooms) nt.append(el("div", {class: "notice"}, el("b", {}, "Chất lượng dữ liệu: "),
+    `${qa.unit_ids_used_in_multiple_rooms} mã thiết bị xuất hiện ở nhiều phòng. Giờ-máy theo phòng có thể bị gán sai phòng cho đến khi IIC xác nhận bảng ánh xạ thiết bị–phòng.`));
+  const NEED = {ooh_by_day_group: "giờ ngoài giờ theo ngày", ooh_by_day_kind: "tách phòng học/chức năng", coverage_buckets: "phân bố độ phủ", on_lead_hist: "thời điểm bật", off_lag_hist: "thời điểm tắt"};
+  const missing = Object.keys(NEED).filter(k => !Array.isArray(d[k]));
+  if (missing.length) nt.append(el("div", {class: "notice"}, el("b", {}, "data.json được tạo bởi phiên bản pipeline cũ. "),
+    `Thiếu: ${missing.map(k => NEED[k]).join(", ")}. Hãy cập nhật sbms_hvac_pipeline.py bản mới, chạy lại notebook và nạp lại data.json để có đủ biểu đồ.`));
+  if (qa.slots_without_ac_room) nt.append(el("div", {class: "notice"}, el("b", {}, "Cảnh báo: "), `${qa.slots_without_ac_room} ca học thuộc phòng không có dữ liệu máy lạnh.`));
+
+  /* nhóm nguyên nhân: màu theo thực thể, cố định */
+  const GROUPS = [["Chưa phân loại", css("--neutral")], ["Người dùng", css("--s1")], ["Lịch / quy trình", css("--s2")], ["Nghi lỗi hệ thống", css("--s3")], ["Ngoài phạm vi GĐ1", css("--s4")]];
+  const kindSum = {}; (d.ooh_by_day_kind || []).forEach(r => kindSum[r.kind] = (kindSum[r.kind] || 0) + r.gio_phong);
+  const hasKind = Array.isArray(d.ooh_by_day_kind);
+  const evDays = daily.filter(x => x.event_day).map(x => x.date);
+
+  const sec = (t, sub) => el("div", {class: "sec"}, el("h2", {}, t), el("p", {}, sub));
+  const jump = id => { const t = document.getElementById(id); if (!t) return; t.scrollIntoView({behavior: "smooth", block: "center"}); t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash"); };
+  const tile = (l, v, s, target) => {
+    const t = el("div", {class: "card tile"}, el("div", {class: "lbl"}, l), el("div", {class: "val"}, v), el("div", {class: "sub"}, s));
+    if (target) { const b = el("button", {class: "go", type: "button"}, "Xem biểu đồ ↓"); b.addEventListener("click", () => jump(target)); t.append(b); }
+    return t;
+  };
+  const top1 = Array.isArray(d.top_rooms_ooh) && d.top_rooms_ooh[0];
+  const bigGrp = Array.isArray(d.ooh_by_group) ? d.ooh_by_group.filter(r => r.cause_group !== "Chưa phân loại").sort((a, b) => b.gio_phong - a.gio_phong)[0] : null;
+
+  /* Tóm tắt */
+  const sm = el("section", {class: "card summary"}, el("h2", {}, "Tóm tắt trong 3 câu"));
+  const ol = el("ol");
+  ol.append(el("li", {}, el("b", {}, "Có chạy khi cần: "), `máy lạnh phủ ${pct(ov.minute_coverage)} số phút có lịch học; ${ov.zero_slots}/${ov.slots_kpi} ca không có máy chạy phút nào (phần A).`));
+  ol.append(el("li", {}, el("b", {}, "Có chạy thừa: "), `${nf1.format(ov.ooh_hours_total)} giờ phòng chạy ngoài khung cho phép, chỉ ${pct(ov.explained_share, 0)} đã có nguyên nhân ghi nhận${bigGrp ? `; nhóm có nguyên nhân lớn nhất là “${bigGrp.cause_group}” (${hrs(bigGrp.gio_phong)})` : ""} (phần B).`));
+  ol.append(el("li", {}, el("b", {}, "Nên xem trước: "), top1 ? `phòng ${top1.room_id.replace(".B08", "")} chạy ngoài khung nhiều nhất (${hrs(top1.gio_phong)})` : "xem danh sách phòng ở phần B", ov.event_day_room_hours ? `, và ${hrs(ov.event_day_room_hours)} máy chạy khi lớp nghỉ ngày sự kiện.` : "."));
+  sm.append(ol); app.append(sm);
+
+  /* ===== PHẦN A ===== */
+  app.append(sec("A. Máy lạnh có chạy khi cần không?", "Nhìn từ phía người học: ca có lịch thì phòng phải có máy chạy, bật kịp trước giờ học, không tắt sớm. Chỉ tính các ca học thường, không tính ngày sự kiện."));
+  const kA = el("div", {class: "grid kpis"});
+  kA.append(tile("Độ phủ ca học (theo phút)", pct(ov.minute_coverage), `${nf0.format(ov.slots_kpi)} ca; phút máy chạy ÷ phút có lịch`, "c-cov"));
+  kA.append(tile("Ca máy lạnh không chạy", `${ov.zero_slots}/${ov.slots_kpi}`, "0 phút chạy trong khung ca", "c-cov"));
+  kA.append(tile("Giờ có lịch nhưng máy đã tắt sớm", hrs(ov.early_off_hours), "máy tắt trước giờ kết thúc ca", "c-cov"));
+  kA.append(tile("Bật đúng thiết kế (15–25 phút trước giờ học)", pct(ov.on_lead_15_25_share), "trên các khối ca liên tục", "c-lead"));
+  kA.append(tile("Tắt đúng giờ (±5 phút)", pct(ov.off_within_5_share), "so với giờ kết thúc khối ca", "c-lag"));
+  app.append(kA);
+  const gridA = el("div", {class: "grid charts"}); app.append(gridA);
+
+  /* A1. Độ phủ theo ngày */
+  {
+    const c = card("Ngày nào máy chạy đủ trong giờ học?", "", {});
+    c.card.id = "c-cov";
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "càng gần 100% càng tốt. Điểm thấp nghĩa là hôm đó có ca bị thiếu phút chạy. Ngày sự kiện không vẽ vì lớp nghỉ."), c.box);
+    const pts = daily.map(x => ({label: dlabel(x.date), value: x.event_day ? null : x.minute_coverage,
+      extra: [{label: "Ca không chạy", value: String(x.zero_slots)}, {label: "Ca phủ <95%", value: String(x.slots_lt95)}, {label: "Giờ tắt sớm", value: hrs(x.early_off_hours)}]}));
+    const lo = Math.min(...pts.filter(p => p.value != null).map(p => p.value));
+    const min = Math.max(0, Math.floor((lo - 0.02) * 20) / 20);
+    register(c.box, () => lineChart(c.box, pts, {min, max: 1, step: 0.05, aria: "Độ phủ ca học theo ngày"}));
+    c.card.append(tableView(["Ngày", "Độ phủ", "Ca không chạy", "Ca phủ <95%", "Giờ tắt sớm"], daily.map(x => [dlabel(x.date), x.event_day ? "ngày sự kiện" : pct(x.minute_coverage), x.zero_slots, x.slots_lt95, nf1.format(x.early_off_hours)])));
+    gridA.append(c.card);
+  }
+  /* A2. Phân bố độ phủ từng ca */
+  if (Array.isArray(d.coverage_buckets)) {
+    const c = card("Bao nhiêu ca được phủ đủ?", "");
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), `mỗi cột là số ca (trên ${nf0.format(ov.slots_kpi)}) rơi vào một mức phủ. Cột xanh là ca phủ từ 95% trở lên; cột xám là ca thiếu.`), c.box);
+    const cats = d.coverage_buckets.map(b => ({label: b.nhom, value: b.so_luong}));
+    register(c.box, () => columns(c.box, cats.map(x => ({...x, color: x.label === "≥95%" ? css("--s1") : css("--neutral")})), {unit: "Số ca", aria: "Phân bố độ phủ từng ca"}));
+    c.card.append(tableView(["Mức phủ", "Số ca"], cats.map(x => [x.label, x.value])));
+    gridA.append(c.card);
+  }
+  /* A3. Bật trước giờ học */
+  if (Array.isArray(d.on_lead_hist)) {
+    const c = card("Máy bật trước giờ học bao lâu?", "");
+    c.card.id = "c-lead";
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "hệ thống được thiết kế bật trước giờ học 20 phút. Cột xanh là bật trong khoảng 15–25 phút. Cột bên trái là bật muộn, bên phải là bật quá sớm (tốn điện)."), c.box);
+    const cats = d.on_lead_hist.map(b => ({label: b.nhom.replace(" (thiết kế 20)", "").replace("Sau giờ học", "Sau\ngiờ học"), value: b.so_luong, key: b.nhom}));
+    register(c.box, () => columns(c.box, cats.map(x => ({...x, color: x.key.startsWith("15–25") ? css("--s1") : css("--neutral")})), {unit: "Số khối ca", aria: "Phân bố thời điểm bật máy trước giờ học", height: 240, bottom: 48}));
+    c.card.append(tableView(["Phút trước giờ học", "Số khối ca"], d.on_lead_hist.map(b => [b.nhom, b.so_luong])));
+    gridA.append(c.card);
+  }
+  /* A4. Tắt so với giờ kết thúc */
+  if (Array.isArray(d.off_lag_hist)) {
+    const c = card("Máy tắt chậm hay sớm so với giờ kết thúc?", "");
+    c.card.id = "c-lag";
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "cột xanh là tắt trong ±5 phút quanh giờ kết thúc. Cột lệch về phía “tắt trễ” là máy chạy thừa sau khi lớp đã tan; lệch về “tắt sớm” là lớp còn học nhưng máy đã tắt."), c.box);
+    const cats = d.off_lag_hist.map(b => ({label: b.nhom.replace(" ", "\n"), value: b.so_luong, key: b.nhom}));
+    register(c.box, () => columns(c.box, cats.map(x => ({...x, color: x.key.startsWith("Đúng") ? css("--s1") : css("--neutral")})), {unit: "Số khối ca", aria: "Phân bố thời điểm tắt máy so với giờ kết thúc", height: 240, bottom: 48}));
+    c.card.append(tableView(["Độ lệch", "Số khối ca"], d.off_lag_hist.map(b => [b.nhom, b.so_luong])));
+    gridA.append(c.card);
+  }
+
+  /* ===== PHẦN B ===== */
+  app.append(sec("B. Máy lạnh có chạy thừa không?", "Nhìn từ phía chi phí: máy chạy ngoài khung cho phép (trước ca quá sớm, sau ca quá muộn, lúc không có lịch, ngày sự kiện). Đọc theo thứ tự: bao nhiêu → vì sao → ở đâu → lúc nào."));
+  const kB = el("div", {class: "grid kpis"});
+  const hero = el("div", {class: "card tile hero"},
+    el("div", {class: "lbl"}, "Giờ phòng máy lạnh chạy ngoài khung cho phép"),
+    el("div", {class: "row"},
+      el("div", {class: "val"}, nf1.format(ov.ooh_hours_total)),
+      el("div", {class: "split"}, hasKind ? `Phòng học ${hrs(kindSum["Phòng học"] || 0)} · Phòng chức năng ${hrs(kindSum["Phòng chức năng"] || 0)}` : "")),
+    el("div", {class: "sub"}, `${nf1.format(ov.ooh_machine_hours)} giờ-máy · chỉ ${pct(ov.explained_share, 0)} số giờ đã có nguyên nhân được ghi nhận`));
+  { const b = el("button", {class: "go", type: "button"}, "Xem theo ngày và nguyên nhân ↓"); b.addEventListener("click", () => jump("c-day")); hero.append(b); }
+  kB.append(hero);
+  if (ov.event_day_room_hours) kB.append(tile("Chạy khi lớp nghỉ (ngày sự kiện)", hrs(ov.event_day_room_hours), "phòng học, lịch AAO chưa gỡ", "c-event"));
+  app.append(kB);
+  const grid = el("div", {class: "grid charts"}); app.append(grid);
+
+  /* B1. Ngoài giờ theo ngày × nguyên nhân (fallback: tổng theo nhóm nếu thiếu dữ liệu theo ngày) */
+  if (!Array.isArray(d.ooh_by_day_group) && Array.isArray(d.ooh_by_group)) {
+    const c = card("Giờ phòng ngoài giờ theo nhóm nguyên nhân", "Tổng cả giai đoạn (thiếu số liệu theo ngày trong data.json).", {wide: true});
+    c.card.id = "c-day";
+    const colOf = Object.fromEntries(GROUPS);
+    const cats = d.ooh_by_group.slice().sort((a, b) => b.gio_phong - a.gio_phong).map(r => ({label: r.cause_group, value: r.gio_phong, color: colOf[r.cause_group] || css("--neutral"),
+      rows: [{label: "Giờ phòng", value: hrs(r.gio_phong)}, {label: "Giờ-máy", value: hrs(r.gio_may)}, {label: "Số lượt", value: String(r.luot)}]}));
+    register(c.box, () => hbars(c.box, cats, {aria: "Giờ phòng ngoài giờ theo nhóm nguyên nhân", labelW: 130}));
+    c.card.append(tableView(["Nhóm", "Giờ phòng", "Giờ-máy", "Lượt"], d.ooh_by_group.map(r => [r.cause_group, nf1.format(r.gio_phong), nf1.format(r.gio_may), r.luot])));
+    grid.append(c.card);
+  }
+  if (Array.isArray(d.ooh_by_day_group)) {
+    const c = card("Mỗi ngày chạy thừa bao nhiêu, vì lý do gì?", "", {wide: true, legend: GROUPS.map(g => [g[0], g[1]])});
+    c.card.id = "c-day";
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "chiều cao cột là tổng giờ phòng chạy thừa trong ngày; màu là nhóm nguyên nhân. Phần xám “Chưa phân loại” là phần chưa ai giải thích được, cần đối chiếu thêm."), c.box);
+    const cats = dates.map(dt => ({key: dt, label: dlabel(dt), note: evDays.includes(dt) ? "Sự kiện" : ""}));
+    const series = GROUPS.map(([n, col]) => ({name: n, color: col, values: Object.fromEntries(d.ooh_by_day_group.filter(r => r.cause_group === n).map(r => [r.date, r.gio_phong]))}));
+    register(c.box, () => stackedColumns(c.box, cats, series, {aria: "Giờ phòng ngoài giờ theo ngày và nhóm nguyên nhân"}));
+    c.card.append(tableView(["Ngày"].concat(GROUPS.map(g => g[0])).concat(["Tổng"]),
+      dates.map(dt => [dlabel(dt)].concat(series.map(s => nf1.format(s.values[dt] || 0))).concat([nf1.format(series.reduce((a, s) => a + (s.values[dt] || 0), 0))]))));
+    grid.append(c.card);
+  }
+  /* B2. Top phòng học ngoài giờ */
+  if (Array.isArray(d.top_rooms_ooh)) {
+    const c = card("Phòng nào chạy thừa nhiều nhất?", "");
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "10 phòng học có tổng giờ chạy ngoài khung cao nhất. Đây là danh sách nên kiểm tra lịch và thói quen sử dụng trước."), c.box);
+    const top = d.top_rooms_ooh.slice(0, 10);
+    const cats = top.map(r => ({label: r.room_id.replace(".B08", ""), value: r.gio_phong, rows: [{label: "Giờ phòng ngoài giờ", color: css("--s1"), value: hrs(r.gio_phong)}]}));
+    register(c.box, () => hbars(c.box, cats.map(x => ({...x, color: css("--s1")})), {aria: "10 phòng học chạy ngoài giờ nhiều nhất"}));
+    c.card.append(tableView(["Phòng", "Giờ phòng"], top.map(r => [r.room_id, nf1.format(r.gio_phong)])));
+    grid.append(c.card);
+  }
+  /* B3. Giờ trong ngày */
+  if (Array.isArray(d.ooh_by_start_hour)) {
+    const c = card("Chạy thừa thường bắt đầu lúc mấy giờ?", "");
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "mỗi cột là một giờ trong ngày (0–23h); chiều cao là tổng giờ phòng chạy ngoài khung bắt đầu trong giờ đó. Cột cao cho biết thời điểm cần siết quy trình."), c.box);
+    const m = Object.fromEntries(d.ooh_by_start_hour.map(r => [r.h, r.gio_phong]));
+    const cats = Array.from({length: 24}, (_, h) => ({label: String(h), value: m[h] || 0}));
+    register(c.box, () => columns(c.box, cats.map(x => ({...x, color: css("--s1")})), {unit: "Giờ phòng", aria: "Giờ phòng ngoài giờ theo giờ bắt đầu", labelAll: false, height: 230, bottom: 30}));
+    c.card.append(tableView(["Giờ bắt đầu", "Giờ phòng"], cats.filter(x => x.value > 0).map(x => [x.label + "h", nf1.format(x.value)])));
+    grid.append(c.card);
+  }
+  /* B4. Ngày sự kiện */
+  if (Array.isArray(d.event_day_rooms) && d.event_day_rooms.length) {
+    const ev = d.event_day_rooms; const nm = ev[0].event_name;
+    const c = card(`Ngày sự kiện “${nm}”: phòng nào còn chạy máy?`, "");
+    c.card.id = "c-event";
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "ngày này lớp nghỉ nhưng lịch học vẫn còn trên hệ thống, nên máy tự bật. Mỗi thanh là một phòng học; chiều dài là số giờ phòng máy chạy."), c.box);
+    const cats = ev.slice(0, 10).map(r => ({label: r.room_id.replace(".B08", ""), value: r.room_hours, rows: [{label: "Giờ phòng", color: css("--s2"), value: hrs(r.room_hours)}, {label: "Giờ-máy", value: hrs(r.machine_hours)}]}));
+    register(c.box, () => hbars(c.box, cats.map(x => ({...x, color: css("--s2")})), {aria: "Phòng chạy máy lạnh trong ngày sự kiện"}));
+    c.card.append(tableView(["Phòng", "Giờ phòng", "Giờ-máy"], ev.map(r => [r.room_id, nf1.format(r.room_hours), nf1.format(r.machine_hours)])));
+    grid.append(c.card);
+  }
+
+  /* Giải thích thuật ngữ */
+  const G = [
+    ["Giờ phòng", "Số giờ một phòng có ít nhất 1 máy lạnh đang chạy. Phòng có 2 máy chạy cùng lúc vẫn tính 1 giờ phòng."],
+    ["Giờ-máy", "Tổng giờ chạy của từng máy. Phòng có 2 máy chạy 1 giờ = 2 giờ-máy."],
+    ["Khung cho phép", "Khoảng thời gian máy được phép chạy: từ lúc bật mềm trước ca đến hết ca (nối các ca cách nhau ngắn). Phòng chức năng: 08:00–17:00 thứ 2–thứ 6 [GIẢ ĐỊNH]."],
+    ["Ngoài khung / chạy thừa", "Phần thời gian máy chạy nằm ngoài khung cho phép."],
+    ["Độ phủ", "Phút máy chạy ÷ phút có lịch học trong cùng ca. 100% là chạy suốt ca."],
+    ["Khối ca", "Các ca học liên tiếp của một phòng, nối nhau thành một đợt (ví dụ ca 1 và ca 2 sát nhau). Dùng để đo giờ bật đầu đợt và giờ tắt cuối đợt."],
+    ["Ngày sự kiện", "Ngày lớp nghỉ theo lịch sự kiện (vd. khai giảng) nhưng lịch học còn trên hệ thống; tách riêng để không làm sai độ phủ."],
+    ["Nhóm nguyên nhân", "Gán theo nhật ký theo dõi thủ công và quy tắc trong cause_rules.csv; không phải kết luận từ log hệ thống."]];
+  const gl = el("details", {class: "card gloss"}, el("summary", {}, "Giải thích thuật ngữ"));
+  const dl = el("dl"); G.forEach(([k, v]) => { dl.append(el("dt", {}, k)); dl.append(el("dd", {}, v)); }); gl.append(dl); app.append(gl);
+
+  buildTab2(d);
+
+  const p = d.params || {};
+  const foot = document.getElementById("foot"); foot.replaceChildren(
+    el("p", {}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Khung cho phép của phòng học: bật mềm ${p.soft_start_min} phút trước ca, nối khe nghỉ ≤${p.bridge_gap_min} phút, dung sai ${p.tol_min} phút. Phòng chức năng: ${p.func_start}–${p.func_end}, thứ 2–thứ 6.`),
+    el("p", {}, el("span", {class: "tag"}, "SUY LUẬN"), "Nhóm nguyên nhân được gán theo nhật ký theo dõi thủ công và quy tắc trong cause_rules.csv, không phải kết luận từ log hệ thống. “Chưa phân loại” nghĩa là chưa có ghi nhận."),
+    el("p", {}, el("span", {class: "tag"}, "GIỚI HẠN"), "Chưa có Activities log (lệnh QUEUED/SKIPPED), điện năng theo phòng và số người có mặt; không thể quy ra kWh hay kết luận phòng trống."));
+  applyTableToggle();
+}
+
+
+/* ---------- Tab 2: góc nhìn quản lý (khung, chờ dữ liệu điện năng và tiền) ---------- */
+function buildTab2(d) {
+  const ov = d.overview, host = document.getElementById("app2"); host.replaceChildren();
+  host.append(el("div", {class: "notice"}, el("b", {}, "Đang xây dựng. "), "Tab này sẽ trả lời 3 câu hỏi của quản lý bằng tiền. Hiện chưa có dữ liệu điện năng, nên chưa có con số nào ở đây được coi là kết luận."));
+  host.append(el("div", {class: "sec"}, el("h2", {}, "Ba câu hỏi quản lý cần trả lời"), el("p", {}, "Phần có dữ liệu thì hiển thị ngay; phần còn thiếu nêu rõ cần gì.")));
+
+  const g = el("div", {class: "grid charts"});
+  const q = (n, t, ready, need) => { const c = el("section", {class: "card" + (ready ? "" : " lock")}, el("h2", {}, n + ". " + t)); return c; };
+
+  const c1 = q(1, "Hệ thống đã tiết kiệm được bao nhiêu tiền?", false);
+  c1.append(el("p", {class: "need"}, "Chưa tính được. Cần so sánh với mức chạy khi chưa có hệ thống:"));
+  c1.append(el("ul", {}, ...["Điện năng (kWh) theo tòa hoặc theo phòng, trước và sau khi bật hệ thống",
+    "Hoặc giờ chạy máy của giai đoạn vận hành thủ công cùng điều kiện (cùng lịch học, cùng thời tiết)",
+    "Công suất hoặc điện năng thực đo mỗi máy lạnh (kWh mỗi giờ chạy)",
+    "Đơn giá điện áp dụng cho tòa B8"].map(x => el("li", {}, x))));
+
+  const c2 = q(2, "Còn chạy thừa bao nhiêu tiền?", true);
+  c2.append(el("p", {class: "need"}, `Tuần này có ${nf1.format(ov.ooh_hours_total)} giờ phòng chạy ngoài khung cho phép. Nhập thông số để quy ra tiền (ước tính, chưa kiểm chứng):`));
+  const inKwh = el("input", {type: "number", min: "0", step: "0.1", inputmode: "decimal", id: "inKwh", placeholder: "vd. kWh/giờ phòng"});
+  const inPrice = el("input", {type: "number", min: "0", step: "10", inputmode: "numeric", id: "inPrice", value: "1940"});
+  const out = el("div", {class: "big"}, "—"), note = el("div", {class: "sub", style: "color:var(--text-muted);font-size:12.5px;margin-top:6px"});
+  c2.append(el("div", {class: "inputs"},
+    el("label", {}, "Điện năng mỗi giờ phòng (kWh)", inKwh),
+    el("label", {}, "Đơn giá (đồng/kWh)", inPrice)));
+  c2.append(out, note);
+  const upd = () => {
+    const k = parseFloat(inKwh.value), pr = parseFloat(inPrice.value);
+    if (!(k > 0) || !(pr > 0)) { out.textContent = "—"; note.textContent = "Nhập cả hai số để xem. Báo cáo thử nghiệm từng dùng 9,856 kWh mỗi giờ chạy và 1.940 đồng/kWh [CHƯA XÁC MINH: con số 9,856 có thể gồm cả tải không phải máy lạnh]."; return; }
+    const v = ov.ooh_hours_total * k * pr;
+    out.textContent = nf0.format(Math.round(v / 1000) * 1000) + " đồng";
+    note.textContent = `${nf1.format(ov.ooh_hours_total)} giờ phòng × ${k} kWh × ${nf0.format(pr)} đồng. [DỰ ĐOÁN] Chỉ là ước tính theo thông số đã nhập, chưa dựa trên điện năng đo thực.`;
+  };
+  inKwh.addEventListener("input", upd); inPrice.addEventListener("input", upd); upd();
+
+  const c3 = q(3, "Nên xử lý việc gì trước?", true);
+  c3.append(el("p", {class: "need"}, "Xếp theo giờ chạy thừa. Cột tiền sẽ hiện khi đã nhập thông số ở câu 2."));
+  const tb = el("table"), th = el("thead"), tr = el("tr");
+  ["Việc cần xem", "Giờ phòng", "Ước tính tiền"].forEach(h => tr.append(el("th", {}, h))); th.append(tr); tb.append(th);
+  const body = el("tbody"); tb.append(body);
+  const rows = [];
+  if (Array.isArray(d.top_rooms_ooh)) d.top_rooms_ooh.slice(0, 5).forEach(r => rows.push([`Kiểm tra lịch và thói quen dùng phòng ${r.room_id.replace(".B08", "")}`, r.gio_phong]));
+  if (ov.event_day_room_hours) rows.push(["Gỡ lịch trên hệ thống vào ngày lớp nghỉ (ngày sự kiện)", ov.event_day_room_hours]);
+  rows.sort((a, b) => b[1] - a[1]);
+  const cells = rows.map(r => { const m = el("td", {}, "—"); body.append(el("tr", {}, el("td", {}, r[0]), el("td", {}, nf1.format(r[1])), m)); return m; });
+  const upd3 = () => { const k = parseFloat(inKwh.value), pr = parseFloat(inPrice.value);
+    cells.forEach((m, i) => m.textContent = (k > 0 && pr > 0) ? nf0.format(Math.round(rows[i][1] * k * pr / 1000) * 1000) + " đồng" : "—"); };
+  inKwh.addEventListener("input", upd3); inPrice.addEventListener("input", upd3); upd3();
+  c3.append(tb);
+  g.append(c1, c2, c3); host.append(g);
+
+  const lk = el("section", {class: "card lock", style: "margin-top:16px"}, el("h2", {}, "Dữ liệu cần bổ sung cho tab này"));
+  lk.append(el("ul", {}, ...["Điện năng tiêu thụ (kWh) của B8 theo ngày hoặc theo tuần, trước và sau khi chạy hệ thống",
+    "Đơn giá điện và các khoản phụ (nếu muốn quy đổi chính xác)",
+    "Công suất mỗi loại máy lạnh để quy giờ-máy ra kWh khi chưa có điện năng đo",
+    "Mốc so sánh: giai đoạn vận hành thủ công, hoặc tòa/khu tương đương không chạy tự động",
+    "Nhiệt độ ngoài trời (để loại ảnh hưởng thời tiết khi so sánh)"].map(x => el("li", {}, x))));
+  host.append(lk);
+}
+
+/* ---------- chuyển tab ---------- */
+function showTab(n) {
+  const one = n === 1;
+  document.getElementById("app").hidden = !one; document.getElementById("app2").hidden = one;
+  document.getElementById("t1").setAttribute("aria-selected", String(one)); document.getElementById("t2").setAttribute("aria-selected", String(!one));
+  try { history.replaceState(null, "", one ? location.pathname + location.search : location.pathname + location.search + "#quanly"); } catch (e) {}
+  if (one) requestAnimationFrame(() => charts.forEach(c => c.draw()));
+}
+document.getElementById("t1").addEventListener("click", () => showTab(1));
+document.getElementById("t2").addEventListener("click", () => showTab(2));
+
+/* ---------- điều khiển ---------- */
+let tablesOpen = false;
+function applyTableToggle() { document.querySelectorAll("details.tbl").forEach(x => x.open = tablesOpen); }
+document.getElementById("btnTables").addEventListener("click", e => {
+  tablesOpen = !tablesOpen; e.currentTarget.setAttribute("aria-pressed", String(tablesOpen)); applyTableToggle();
+});
+const root = document.documentElement; const bt = document.getElementById("btnTheme");
+const modes = ["auto", "light", "dark"], names = {auto: "tự động", light: "sáng", dark: "tối"};
+let mode = "auto";
+try { mode = localStorage.getItem("b8-theme") || "auto"; } catch (e) {}
+function setMode(m) {
+  mode = m; if (m === "auto") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", m);
+  bt.textContent = "Giao diện: " + names[m]; try { localStorage.setItem("b8-theme", m); } catch (e) {}
+  if (DATA) build(DATA);
+}
+bt.addEventListener("click", () => setMode(modes[(modes.indexOf(mode) + 1) % 3]));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (mode === "auto" && DATA) build(DATA); });
+let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => charts.forEach(c => c.draw()), 80); }).observe(document.body);
+
+/* ---------- nạp dữ liệu ---------- */
+function safeBuild(j) {
+  try { build(j); }
+  catch (e) { console.error(e); fail("Đọc được data.json nhưng không hiển thị được: " + e.message + ". Thường do data.json tạo từ phiên bản pipeline khác; hãy chạy lại notebook bằng bản pipeline mới nhất."); }
+}
+function fail(msg) { const n = document.getElementById("notices"); n.replaceChildren(el("div", {class: "notice err"}, msg)); document.getElementById("sub").textContent = "Chưa có dữ liệu"; }
+document.getElementById("fileIn").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = () => { let j; try { j = JSON.parse(r.result); } catch (x) { return fail("File không phải JSON hợp lệ: " + x.message); } safeBuild(j); };
+  r.readAsText(f);
+});
+(async function init() {
+  setMode(mode === "auto" ? "auto" : mode);
+  const url = new URLSearchParams(location.search).get("data") || "data.json";
+  try {
+    const res = await fetch(url, {cache: "no-store"});
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    var j = await res.json();
+  } catch (err) {
+    return fail("Không đọc được " + url + " (" + err.message + "). Nếu mở trực tiếp từ máy (file://), hãy dùng nút “Nạp data.json khác” hoặc chạy qua GitHub Pages.");
+  }
+  safeBuild(j);
+  if (location.hash === "#quanly") showTab(2);
+})();
+</script>
+</body>
+</html>
