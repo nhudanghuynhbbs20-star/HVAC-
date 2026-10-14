@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-12T18:39:03",
+ "generated_at": "2026-10-14T11:11:10",
  "cutoff": "2026-10-09 16:13:23",
  "params": {
   "building_suffix": ".B08",
@@ -17,7 +17,27 @@
   ],
   "cutoff": null,
   "short_seg_min": 10.0,
-  "room_alias": null
+  "room_alias": null,
+  "night_from": "22:05",
+  "night_to": "05:00",
+  "night_min_overlap_min": 10.0,
+  "chain_gap_s": 120.0,
+  "room_hours": {
+   "101.B08": {
+    "start": "06:00",
+    "end": "22:00",
+    "weekdays": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "note": "Family Mart (đơn vị thuê) - tạm theo thông tin người dùng cung cấp 14/10/2026; chờ giờ chính thức"
+   }
+  }
  },
  "qa": {
   "sched_rows_in": 1048,
@@ -52,16 +72,16 @@
    "420.B08"
   ],
   "unmatched_override_rules": [],
-  "run_id": "20261012_183858"
+  "run_id": "20261014_111106"
  },
  "overview": {
   "slots_kpi": 377,
   "minute_coverage": 0.9489119546592857,
   "zero_slots": 2,
   "early_off_hours": 24.338611111111113,
-  "ooh_hours_total": 228.92194444444445,
-  "ooh_machine_hours": 466.66666666666663,
-  "explained_share": 0.2999748822682161,
+  "ooh_hours_total": 203.875,
+  "ooh_machine_hours": 413.6922222222222,
+  "explained_share": 0.3915607330199604,
   "event_day_room_hours": 40.54083333333333,
   "on_lead_15_25_share": 0.5578512396694215,
   "off_within_5_share": 0.5867768595041323
@@ -75,17 +95,17 @@
   {
    "date": "2026-10-05",
    "cause_group": "Nghi lỗi hệ thống",
-   "gio_phong": 3.93
+   "gio_phong": 2.88
   },
   {
    "date": "2026-10-05",
    "cause_group": "Ngoài phạm vi GĐ1",
-   "gio_phong": 19.59
+   "gio_phong": 5.82
   },
   {
    "date": "2026-10-05",
    "cause_group": "Người dùng",
-   "gio_phong": 6.27
+   "gio_phong": 14.17
   },
   {
    "date": "2026-10-06",
@@ -95,7 +115,12 @@
   {
    "date": "2026-10-06",
    "cause_group": "Ngoài phạm vi GĐ1",
-   "gio_phong": 17.74
+   "gio_phong": 8.51
+  },
+  {
+   "date": "2026-10-06",
+   "cause_group": "Người dùng",
+   "gio_phong": 4.31
   },
   {
    "date": "2026-10-07",
@@ -110,7 +135,7 @@
   {
    "date": "2026-10-07",
    "cause_group": "Ngoài phạm vi GĐ1",
-   "gio_phong": 16.07
+   "gio_phong": 9.31
   },
   {
    "date": "2026-10-08",
@@ -120,7 +145,7 @@
   {
    "date": "2026-10-08",
    "cause_group": "Ngoài phạm vi GĐ1",
-   "gio_phong": 6.73
+   "gio_phong": 0.88
   },
   {
    "date": "2026-10-08",
@@ -135,14 +160,14 @@
   {
    "date": "2026-10-09",
    "cause_group": "Ngoài phạm vi GĐ1",
-   "gio_phong": 0.8
+   "gio_phong": 0.2
   }
  ],
  "ooh_by_day_kind": [
   {
    "date": "2026-10-05",
    "kind": "Phòng chức năng",
-   "gio_phong": 22.61
+   "gio_phong": 15.69
   },
   {
    "date": "2026-10-05",
@@ -152,7 +177,7 @@
   {
    "date": "2026-10-06",
    "kind": "Phòng chức năng",
-   "gio_phong": 17.74
+   "gio_phong": 12.82
   },
   {
    "date": "2026-10-06",
@@ -162,7 +187,7 @@
   {
    "date": "2026-10-07",
    "kind": "Phòng chức năng",
-   "gio_phong": 16.07
+   "gio_phong": 9.31
   },
   {
    "date": "2026-10-07",
@@ -172,7 +197,7 @@
   {
    "date": "2026-10-08",
    "kind": "Phòng chức năng",
-   "gio_phong": 6.73
+   "gio_phong": 0.88
   },
   {
    "date": "2026-10-08",
@@ -182,7 +207,7 @@
   {
    "date": "2026-10-09",
    "kind": "Phòng chức năng",
-   "gio_phong": 0.8
+   "gio_phong": 0.2
   },
   {
    "date": "2026-10-09",
@@ -3148,6 +3173,87 @@
    "lag_bucket": "Đúng giờ ±5"
   }
  ],
+ "night_events": {
+  "summary": {
+   "events": 4,
+   "rooms": 3,
+   "night_hours": 11.28,
+   "seg_hours": 12.41,
+   "machine_hours": 19.8,
+   "restart_events": 4,
+   "longest_chain_hours": 22.94
+  },
+  "rows": [
+   {
+    "room_id": "104.B08",
+    "date": "2026-10-05",
+    "start": "2026-10-05 22:10",
+    "end": "2026-10-05 23:13",
+    "seg_hours": 1.04,
+    "night_hours": 1.04,
+    "units_on": 1,
+    "machine_hours": 1.04,
+    "chain_start": "2026-10-05 22:10",
+    "chain_end": "2026-10-05 23:13",
+    "chain_hours": 1.04,
+    "restart_after_lockdown": true,
+    "rule_id": "R14",
+    "cause": "Bảo vệ trực đêm tự bật máy lạnh ngủ; quản lý SBMS (Trần Phan Thiên Phúc) tắt lúc 23:13",
+    "cause_group": "Người dùng"
+   },
+   {
+    "room_id": "101.B08",
+    "date": "2026-10-05",
+    "start": "2026-10-05 23:03",
+    "end": "2026-10-06 05:55",
+    "seg_hours": 6.85,
+    "night_hours": 5.94,
+    "units_on": 2,
+    "machine_hours": 13.71,
+    "chain_start": "2026-10-05 23:03",
+    "chain_end": "2026-10-06 22:00",
+    "chain_hours": 22.94,
+    "restart_after_lockdown": true,
+    "rule_id": "R13",
+    "cause": "Đơn vị thuê (Family Mart) tự bật lại sau khóa 22:00 để nhập hàng rồi quên tắt (chạy xuyên đêm)",
+    "cause_group": "Người dùng"
+   },
+   {
+    "room_id": "104.B08",
+    "date": "2026-10-06",
+    "start": "2026-10-06 00:54",
+    "end": "2026-10-06 05:12",
+    "seg_hours": 4.31,
+    "night_hours": 4.09,
+    "units_on": 1,
+    "machine_hours": 4.31,
+    "chain_start": "2026-10-06 00:54",
+    "chain_end": "2026-10-06 05:12",
+    "chain_hours": 4.31,
+    "restart_after_lockdown": true,
+    "rule_id": "R15",
+    "cause": "Bảo vệ trực đêm tự bật máy lạnh ngủ; tắt 05:12 (lệnh online queued rồi Manual Users tắt; IT xác nhận lỗi hiển thị)",
+    "cause_group": "Người dùng"
+   },
+   {
+    "room_id": "111.B08",
+    "date": "2026-10-07",
+    "start": "2026-10-07 04:45",
+    "end": "2026-10-07 04:58",
+    "seg_hours": 0.21,
+    "night_hours": 0.21,
+    "units_on": 4,
+    "machine_hours": 0.74,
+    "chain_start": "2026-10-07 04:45",
+    "chain_end": "2026-10-07 04:58",
+    "chain_hours": 0.21,
+    "restart_after_lockdown": true,
+    "rule_id": "DEFAULT_FUNC",
+    "cause": "Phòng chức năng – ngoài phạm vi Giai đoạn 1",
+    "cause_group": "Ngoài phạm vi GĐ1"
+   }
+  ]
+ },
  "coverage_buckets": [
   {
    "nhom": "Không chạy",
@@ -3288,10 +3394,10 @@
    "slots_lt95": 28,
    "early_off_hours": 7.2925,
    "ooh_hours_classroom": 31.4322222222,
-   "ooh_hours_function": 22.6063888889,
-   "ooh_hours_total": 54.0386111111,
-   "ooh_machine_hours": 108.4233333333,
-   "explained_hours": 10.1972222222,
+   "ooh_hours_function": 15.6872222222,
+   "ooh_hours_total": 47.1194444444,
+   "ooh_machine_hours": 91.7011111111,
+   "explained_hours": 17.0505555556,
    "event_day": false
   },
   {
@@ -3303,10 +3409,10 @@
    "slots_lt95": 11,
    "early_off_hours": 4.0875,
    "ooh_hours_classroom": 34.9611111111,
-   "ooh_hours_function": 17.7355555556,
-   "ooh_hours_total": 52.6966666667,
-   "ooh_machine_hours": 110.1744444444,
-   "explained_hours": 0.0,
+   "ooh_hours_function": 12.8155555556,
+   "ooh_hours_total": 47.7766666667,
+   "ooh_machine_hours": 100.3344444444,
+   "explained_hours": 4.3052777778,
    "event_day": false
   },
   {
@@ -3318,9 +3424,9 @@
    "slots_lt95": 19,
    "early_off_hours": 6.7458333333,
    "ooh_hours_classroom": 26.0752777778,
-   "ooh_hours_function": 16.0702777778,
-   "ooh_hours_total": 42.1455555556,
-   "ooh_machine_hours": 86.3572222222,
+   "ooh_hours_function": 9.3088888889,
+   "ooh_hours_total": 35.3841666667,
+   "ooh_machine_hours": 72.8377777778,
    "explained_hours": 4.7044444444,
    "event_day": false
   },
@@ -3333,9 +3439,9 @@
    "slots_lt95": 14,
    "early_off_hours": 6.2127777778,
    "ooh_hours_classroom": 31.9669444444,
-   "ooh_hours_function": 6.7344444444,
-   "ooh_hours_total": 38.7013888889,
-   "ooh_machine_hours": 66.0280555556,
+   "ooh_hours_function": 0.8830555556,
+   "ooh_hours_total": 32.85,
+   "ooh_machine_hours": 54.3252777778,
    "explained_hours": 13.2283333333,
    "event_day": false
   },
@@ -3348,9 +3454,9 @@
    "slots_lt95": 0,
    "early_off_hours": 0.0,
    "ooh_hours_classroom": 40.5408333333,
-   "ooh_hours_function": 0.7988888889,
-   "ooh_hours_total": 41.3397222222,
-   "ooh_machine_hours": 95.6836111111,
+   "ooh_hours_function": 0.2038888889,
+   "ooh_hours_total": 40.7447222222,
+   "ooh_machine_hours": 94.4936111111,
    "explained_hours": 40.5408333333,
    "event_day": true
   }
@@ -3370,21 +3476,21 @@
   },
   {
    "cause_group": "Nghi lỗi hệ thống",
-   "luot": 3,
-   "gio_phong": 3.93,
-   "gio_may": 4.83
+   "luot": 2,
+   "gio_phong": 2.88,
+   "gio_may": 3.79
   },
   {
    "cause_group": "Ngoài phạm vi GĐ1",
-   "luot": 28,
-   "gio_phong": 60.93,
-   "gio_may": 134.35
+   "luot": 19,
+   "gio_phong": 24.72,
+   "gio_may": 63.36
   },
   {
    "cause_group": "Người dùng",
-   "luot": 11,
-   "gio_phong": 19.5,
-   "gio_may": 31.63
+   "luot": 14,
+   "gio_phong": 31.7,
+   "gio_may": 50.68
   }
  ],
  "top_rooms_ooh": [
@@ -3464,11 +3570,11 @@
   },
   {
    "h": 6,
-   "gio_phong": 11.94
+   "gio_phong": 9.17
   },
   {
    "h": 7,
-   "gio_phong": 27.01
+   "gio_phong": 26.42
   },
   {
    "h": 8,
@@ -3508,7 +3614,7 @@
   },
   {
    "h": 17,
-   "gio_phong": 46.84
+   "gio_phong": 27.16
   },
   {
    "h": 22,
@@ -3516,7 +3622,7 @@
   },
   {
    "h": 23,
-   "gio_phong": 8.85
+   "gio_phong": 6.85
   }
  ]
 }

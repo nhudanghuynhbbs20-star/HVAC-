@@ -402,8 +402,8 @@ function build(d) {
     `Dữ liệu ${dlabel(dates[0])} → ${dlabel(dates[dates.length - 1])}/2026 · cắt tại ${d.cutoff.replace("T", " ").slice(0, 16)} · tạo lúc ${d.generated_at.replace("T", " ")}`;
   const nt = document.getElementById("notices"); nt.replaceChildren();
   if (BLDG !== "B08") {
-    app.append(el("div", {class: "card"}, el("h2", {}, `${BLDG}: chưa có dữ liệu vận hành máy lạnh`),
-      el("p", {class: "desc"}, "Tab 1 đọc log máy lạnh và lịch học theo phòng, hiện chỉ có cho tòa B08. Với các tòa khác, hãy xem điện năng ở Tab 2.")));
+    app.append(el("div", {class: "card"}, el("h2", {}, `${BLDG}: chưa nạp dữ liệu vận hành máy lạnh`),
+      el("p", {class: "desc"}, "Tab 1 đọc log máy lạnh và lịch học theo phòng, và pipeline hiện chỉ xử lý dữ liệu của B08. Với các tòa khác, hãy xem điện năng ở Tab 2.")));
     const bt2 = el("button", {class: "btn", type: "button"}, "Mở Tab 2: Góc nhìn quản lý"); bt2.addEventListener("click", () => showTab(2)); app.append(bt2);
     document.getElementById("foot").replaceChildren();
     buildTab2(d); return;
@@ -423,6 +423,7 @@ function build(d) {
   const hasKind = Array.isArray(d.ooh_by_day_kind);
   const evDays = daily.filter(x => x.event_day).map(x => x.date);
 
+  const p0 = d.params || {};
   const sec = (t, sub) => el("div", {class: "sec"}, el("h2", {}, t), el("p", {}, sub));
   const jump = id => { const t = document.getElementById(id); if (!t) return; t.scrollIntoView({behavior: "smooth", block: "center"}); t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash"); };
   const tile = (l, v, s, target) => {
@@ -550,6 +551,8 @@ function build(d) {
   { const b = el("button", {class: "go", type: "button"}, "Xem theo ngày và nguyên nhân ↓"); b.addEventListener("click", () => jump("c-day")); hero.append(b); }
   kB.append(hero);
   if (ov.event_day_room_hours) kB.append(tile("Chạy khi lớp nghỉ (ngày sự kiện)", hrs(ov.event_day_room_hours), "phòng học, lịch AAO chưa gỡ", "c-event"));
+  const NE = d.night_events && d.night_events.rows ? d.night_events : null;
+  if (NE && NE.summary.events) kB.append(tile("Chạy sau chốt chặn 22:00", `${NE.summary.events} đợt`, `${nf1.format(NE.summary.night_hours)} giờ phòng trong khung 22:05–05:00; dài nhất ${nf1.format(NE.summary.longest_chain_hours)} giờ liên tục`, "c-night"));
   app.append(kB);
   const grid = el("div", {class: "grid charts"}); app.append(grid);
 
@@ -607,6 +610,30 @@ function build(d) {
     grid.append(c.card);
   }
 
+  /* ===== PHẦN C: chạy sau chốt chặn 22:00 ===== */
+  if (NE) {
+    app.append(sec("C. Máy lạnh chạy sau chốt chặn 22:00", "Hệ thống quét và tắt toàn tòa lúc 22:00. Mục này liệt kê các đợt máy chạy trong khung 22:05–05:00, tức là có người bật lại sau khi khóa, hoặc máy không bị ngắt."));
+    const cN = el("section", {class: "card", id: "c-night"}, el("h2", {}, "Những đợt chạy ban đêm"));
+    if (!NE.summary.events) { cN.append(el("p", {class: "desc"}, "Không có đợt nào trong giai đoạn này.")); }
+    else {
+      const top = NE.rows.slice().sort((a, b) => b.chain_hours - a.chain_hours)[0];
+      const tshort = x => x.slice(8, 10) + "/" + x.slice(5, 7) + " " + x.slice(11);
+      cN.append(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "mỗi dòng là một đợt máy chạy ngoài khung cho phép có chạm vào khung đêm. Cột “chuỗi liên tục” cho biết máy đó đã chạy liền một mạch từ lúc nào đến lúc nào, kể cả phần ban ngày không tính là chạy thừa."));
+      cN.append(el("p", {class: "sum"}, el("b", {}, `Ví dụ lớn nhất: phòng ${top.room_id.replace(".B08", "")}. `),
+        `Bật lúc ${tshort(top.chain_start)}${top.restart_after_lockdown ? " (sau chốt chặn)" : ""}, chạy liên tục ${nf1.format(top.chain_hours)} giờ với ${top.units_on} máy, đến ${tshort(top.chain_end)} mới tắt. `,
+        `Trong đó ${nf1.format(top.seg_hours)} giờ nằm ngoài giờ hoạt động của phòng và được tính vào phần B; phần chạy trong giờ hoạt động của phòng không tính là chạy thừa.`));
+      const t = el("table"), th = el("thead"), tr = el("tr");
+      ["Phòng", "Đợt chạy ngoài khung", "Giờ phòng", "Trong khung đêm", "Số máy", "Chuỗi chạy liên tục", "Nhóm nguyên nhân"].forEach((h, i) => tr.append(el("th", {style: i === 1 || i === 5 || i === 6 ? "text-align:left" : ""}, h))); th.append(tr); t.append(th);
+      const tb = el("tbody"); t.append(tb);
+      NE.rows.forEach(r => tb.append(el("tr", {}, el("td", {}, r.room_id.replace(".B08", "")), el("td", {style: "text-align:left;white-space:normal"}, `${tshort(r.start)} → ${tshort(r.end)}`), el("td", {}, hrs(r.seg_hours)), el("td", {}, hrs(r.night_hours)), el("td", {}, String(r.units_on)),
+        el("td", {style: "text-align:left;white-space:normal"}, `${tshort(r.chain_start)} → ${tshort(r.chain_end)} (${nf1.format(r.chain_hours)} giờ)`), el("td", {style: "text-align:left;white-space:normal"}, el("div", {}, r.cause_group), el("div", {style: "font-size:12px;color:var(--text-muted)"}, r.cause)))));
+      cN.append(el("div", {class: "scroll"}, t));
+      cN.append(el("p", {class: "how", style: "margin-top:10px"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Khung đêm là ${p0.night_from || "22:05"}–${p0.night_to || "05:00"}; chỉ ghi nhận đợt chạy chạm khung đêm từ ${p0.night_min_overlap_min || 10} phút. Chuỗi liên tục nối các phiên cách nhau tối đa ${p0.chain_gap_s || 120} giây.`));
+      cN.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), "Phòng y tế (104) không được dùng ban đêm; các đợt chạy đêm ở phòng này do bảo vệ trực đêm tự bật máy lạnh, ghi nhận theo log Activities. " + (p0.room_hours && Object.keys(p0.room_hours).length ? "Giờ hoạt động riêng đang áp dụng: " + Object.entries(p0.room_hours).map(([k, v]) => `${k.replace(".B08", "")} ${v.start}–${v.end}`).join("; ") + " (phòng thuê, chờ giờ chính thức)." : "")));
+    }
+    app.append(cN);
+  }
+
   /* Giải thích thuật ngữ */
   const G = [
     ["Giờ phòng", "Số giờ một phòng có ít nhất 1 máy lạnh đang chạy. Phòng có 2 máy chạy cùng lúc vẫn tính 1 giờ phòng."],
@@ -624,7 +651,7 @@ function build(d) {
 
   const p = d.params || {};
   const foot = document.getElementById("foot"); foot.replaceChildren(
-    el("p", {}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Khung cho phép của phòng học: bật mềm ${p.soft_start_min} phút trước ca, nối khe nghỉ ≤${p.bridge_gap_min} phút, dung sai ${p.tol_min} phút. Phòng chức năng: ${p.func_start}–${p.func_end}, thứ 2–thứ 6.`),
+    el("p", {}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Khung cho phép của phòng học: bật mềm ${p.soft_start_min} phút trước ca, nối khe nghỉ ≤${p.bridge_gap_min} phút, dung sai ${p.tol_min} phút. Phòng chức năng: ${p.func_start}–${p.func_end}, thứ 2–thứ 6.${p.room_hours && Object.keys(p.room_hours).length ? " Ngoại lệ: " + Object.entries(p.room_hours).map(([k, v]) => `${k.replace(".B08", "")} ${v.start}–${v.end}`).join("; ") + "." : ""}`),
     el("p", {}, el("span", {class: "tag"}, "SUY LUẬN"), "Nhóm nguyên nhân được gán theo nhật ký theo dõi thủ công và quy tắc trong cause_rules.csv, không phải kết luận từ log hệ thống. “Chưa phân loại” nghĩa là chưa có ghi nhận."),
     el("p", {}, el("span", {class: "tag"}, "GIỚI HẠN"), "Chưa có Activities log (lệnh QUEUED/SKIPPED), điện năng theo phòng và số người có mặt; không thể quy ra kWh hay kết luận phòng trống."));
   applyTableToggle();
@@ -763,61 +790,16 @@ function buildTab2(d) {
     const rows = E.buildings.map(b => ({id: b.id, v: normal.reduce((a, dt) => a + kwhDay(b, dt), 0) / Math.max(1, normal.length)})).sort((a, b) => b.v - a.v);
     const c = card("So với các tòa khác", "");
     c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), `kWh trung bình mỗi ngày thường (${normal.length} ngày, không tính ngày sự kiện). Thanh xanh là tòa đang chọn. Chưa chia theo diện tích hay số người, nên chỉ so quy mô, chưa so hiệu quả.`), c.box);
+    c.card.insertBefore(el("p", {class: "how"}, el("span", {class: "tag"}, "LƯU Ý"), "Biểu đồ này là minh chứng về mức sử dụng phòng của từng tòa nhà. Nó không chứng minh thiết bị của B08 tốn điện hơn các tòa khác, và không dùng để đánh giá hiệu quả của hệ thống."), c.box);
     const cats = rows.map(r => ({label: r.id.replace(" (Library)", ""), value: r.v, rows: [{label: "kWh/ngày", value: nf0.format(r.v)}, {label: "Tiền/ngày", value: vnd(r.v * P.price)}]}));
     register(c.box, () => hbars(c.box, cats.map((x, i) => ({...x, color: rows[i].id === bsel.id ? css("--s1") : css("--neutral")})), {aria: "Điện trung bình mỗi ngày thường theo tòa"}));
     c.card.append(tableView(["Tòa", "kWh/ngày thường"], rows.map(r => [r.id, nf0.format(r.v)])));
     g1.append(c.card);
   }
 
-  /* ===== So sánh với tòa khác (tòa chưa có hệ thống) ===== */
-  function compareSection(num) {
-    const others = E.buildings.filter(b => b.id !== bsel.id);
-    if (!others.length) return;
-    host.append(el("div", {class: "sec"}, el("h2", {}, `${num}. So ${bsel.id} với một tòa khác`),
-      el("p", {}, "Chọn tòa so sánh (ví dụ B03, chưa chạy hệ thống tự động). So bằng tỷ lệ phần trăm để không bị lệch vì tòa to nhỏ khác nhau.")));
-    const refSel = el("select", {"aria-label": "Tòa so sánh"}); others.forEach(b => refSel.append(el("option", {value: b.id}, b.id)));
-    refSel.value = (others.find(b => b.id === "B03") || others[0]).id;
-    const c = el("section", {class: "card cmp"}, el("h2", {}, "So sánh cách dùng điện trong ngày"), el("div", {class: "inputs"}, el("label", {}, "Tòa so sánh", refSel)));
-    const legend = el("div", {class: "legend"}); const box = el("div", {class: "chart"}); const out = el("div"), verdict = el("div");
-    c.append(legend, box, out, verdict); host.append(c);
-    const slotsIdx = (() => { const o = []; for (let k = 0; k < 48; k++) o.push(ts.map((t, i) => i).filter(i => hhmm[i] === hhmm[k])); return o; })();
-    const xl = slotsIdx.map(ix => hhmm[ix[0]]);
-    const avgProf = b => slotsIdx.map(ix => { const v = ix.filter(i => normal.includes(dayOf[i])).map(i => b.kwh[i]).filter(x => x != null); return v.length ? v.reduce((a, q) => a + q, 0) / v.length : 0; });
-    const inClass = l => l > "07:00" && l <= "17:30";
-    const met = b => {
-      const pr = avgProf(b), tot = pr.reduce((a, q) => a + q, 0), outS = xl.reduce((a, l, i) => a + (inClass(l) ? 0 : pr[i]), 0) / tot;
-      const peak = Math.max(...pr), night = xl.reduce((a, l, i) => a + (l <= "05:00" && l > "00:00" ? pr[i] : 0), 0) / xl.filter(l => l <= "05:00" && l > "00:00").length;
-      let ev = null; const ed = evDays.find(x => days.includes(x));
-      if (ed) { const day = xl.reduce((a, l, i) => a + (inClass(l) ? pr[i] : 0), 0); const evv = slotsIdx.reduce((a, ix, k) => { const i = ix.find(j => dayOf[j] === ed); return a + (i != null && inClass(xl[k]) && b.kwh[i] != null ? b.kwh[i] : 0); }, 0); ev = evv / day; }
-      return {pr, tot, outS, nightRatio: night / peak, ev};
-    };
-    const draw = () => {
-      const R = E.buildings.find(b => b.id === refSel.value), A = bsel, mA = met(A), mR = met(R);
-      legend.replaceChildren(...[[A.id, css("--s1")], [R.id, css("--s2")]].map(([n, col]) => { const i = el("i"); i.style.background = col; return el("span", {}, i, n); }));
-      const pk = m => Math.max(...m.pr) / 100;
-      multiLine(box, xl, [{name: A.id, color: css("--s1"), values: mA.pr.map(v => v / pk(mA))}, {name: R.id, color: css("--s2"), values: mR.pr.map(v => v / pk(mR))}], {unit: "% mức cao nhất", aria: "So sánh đường tải hai tòa"});
-      out.replaceChildren();
-      const rows = [["Điện ngoài giờ học (trước 07:00, sau 17:30) ÷ cả ngày", pct(mA.outS), pct(mR.outS)],
-        ["Điện nền ban đêm (0–5h) ÷ mức cao nhất ban ngày", pct(mA.nightRatio, 0), pct(mR.nightRatio, 0)],
-        ...(mA.ev != null ? [["Ngày sự kiện: điện ban ngày ÷ ngày thường", pct(mA.ev, 0), pct(mR.ev, 0)]] : []),
-        ["Điện trung bình mỗi ngày thường", nf0.format(mA.tot) + " kWh", nf0.format(mR.tot) + " kWh"]];
-      const t = el("table", {style: "margin-top:10px"}), th = el("thead"), tr = el("tr"); ["Chỉ số", A.id, R.id].forEach((h, i) => tr.append(el("th", {style: i === 0 ? "text-align:left" : ""}, h))); th.append(tr); t.append(th);
-      const tb = el("tbody"); rows.forEach(r => tb.append(el("tr", {}, ...r.map((x, i) => el("td", {style: i === 0 ? "text-align:left" : ""}, x))))); t.append(tb); out.append(el("div", {style: "overflow-x:auto"}, t));
-      const diff = mA.outS - mR.outS, kwhDay = diff * mA.tot;
-      verdict.replaceChildren(
-        el("p", {class: "how", style: "margin-top:10px"}, el("b", {}, "Nhận xét tự động: "),
-          diff > 0.01 ? `${A.id} dùng ${pct(mA.outS)} điện cả ngày vào ngoài giờ học, nhiều hơn ${R.id} (${pct(mR.outS)}). Vì vậy so sánh này không cho thấy ${A.id} tiết kiệm hơn. Nếu ${A.id} gọn được như ${R.id}, mức chênh khoảng ${nf0.format(kwhDay)} kWh mỗi ngày, tương đương ${vnd(kwhDay * P.price)} mỗi ngày (chỉ để tham khảo, chưa phải tiết kiệm đã đạt).`
-          : diff < -0.01 ? `${A.id} dùng ${pct(mA.outS)} điện cả ngày vào ngoài giờ học, ít hơn ${R.id} (${pct(mR.outS)}). Mức chênh khoảng ${nf0.format(-kwhDay)} kWh mỗi ngày, tương đương ${vnd(-kwhDay * P.price)} mỗi ngày, nhưng chưa chắc là do hệ thống (xem lưu ý).`
-          : `${A.id} và ${R.id} có tỷ lệ điện ngoài giờ học gần như nhau (${pct(mA.outS)} và ${pct(mR.outS)}).`),
-        el("p", {class: "how"}, el("span", {class: "tag"}, "CHƯA XÁC MINH"), "Hai tòa khác nhau về công năng, giờ hoạt động và thiết bị chạy suốt ngày (máy chủ, thang máy, phòng chức năng). B08 còn có phòng chức năng chạy đến 22:00 (ngoài phạm vi giai đoạn 1). Không có số liệu của B08 trước khi triển khai, nên cách so này chưa tách được tác động riêng của hệ thống. Dùng làm tham khảo; mốc đáng tin hơn vẫn là hệ số lãng phí ở mục 4."));
-    };
-    refSel.addEventListener("change", draw); charts.push({box, draw}); draw();
-  }
-
   /* ===== Phần 2 & 3: chỉ tòa có log máy lạnh ===== */
   if (!isB8) {
-    host.append(el("div", {class: "notice"}, el("b", {}, "Tòa này chưa có dữ liệu máy lạnh theo lịch học. "), "Hiện chỉ có điện năng, nên chưa quy được tiền chạy thừa hay tiền tiết kiệm. Phần đó chỉ tính cho B08."));
-    compareSection(2);
+    host.append(el("div", {class: "notice"}, el("b", {}, "Dashboard mới nạp log máy lạnh và lịch học của B08. "), "Với tòa này chỉ có điện năng, nên chưa quy được tiền chạy thừa hay tiền tiết kiệm. Phần đó chỉ tính cho B08."));
     return;
   }
   const kL = cal.kwh_per_machine_hour;
@@ -871,12 +853,20 @@ function buildTab2(d) {
     const rows = [];
     if (Array.isArray(d.top_rooms_ooh)) d.top_rooms_ooh.slice(0, 5).forEach(r => rows.push([`Kiểm tra lịch và thói quen dùng phòng ${r.room_id.replace(".B08", "")}`, r.gio_phong]));
     if (ov.event_day_room_hours) rows.push(["Gỡ lịch trên hệ thống vào ngày lớp nghỉ (ngày sự kiện)", ov.event_day_room_hours]);
+    const NE2 = d.night_events && d.night_events.summary && d.night_events.summary.events ? d.night_events : null;
+    if (NE2) rows.push([`Chặn bật lại sau chốt chặn 22:00 và nhắc tắt (${NE2.summary.events} đợt, ${NE2.summary.rooms} phòng)`, NE2.summary.seg_hours, NE2.summary.machine_hours]);
     rows.sort((a, b) => b[1] - a[1]);
     const tb = el("table"), th = el("thead"), tr = el("tr");
     ["Việc cần xem", "Giờ phòng", "Ước tính tiền"].forEach(h => tr.append(el("th", {}, h))); th.append(tr); tb.append(th);
     const body = el("tbody"); tb.append(body);
-    rows.forEach(r => { const m = el("td", {}); body.append(el("tr", {}, el("td", {}, r[0]), el("td", {}, nf1.format(r[1])), live(m, () => vndRange(r[1] * mpr * kL * P.price, r[1] * mpr * kU() * P.price)))); });
-    c.append(tb); host.append(c);
+    rows.forEach(r => { const m = el("td", {}); body.append(el("tr", {}, el("td", {}, r[0]), el("td", {}, nf1.format(r[1])), live(m, () => { const mh = r[2] != null ? r[2] : r[1] * mpr; return vndRange(mh * kL * P.price, mh * kU() * P.price); }))); });
+    c.append(tb);
+    if (NE2) {
+      const top = NE2.rows.slice().sort((a, b) => b.chain_hours - a.chain_hours)[0], mhc = top.chain_hours * top.units_on, sp = el("span");
+      live(sp, () => `Ví dụ: phòng ${top.room_id.replace(".B08", "")} chạy liên tục ${nf1.format(top.chain_hours)} giờ với ${top.units_on} máy (${nf1.format(mhc)} giờ-máy) ≈ ${nf0.format(mhc * kL)}–${nf0.format(mhc * kU())} kWh ≈ ${vndRange(mhc * kL * P.price, mhc * kU() * P.price)} cho một lần quên tắt, tính cả phần ban ngày.`);
+      c.append(el("p", {class: "how", style: "margin-top:10px"}, el("span", {class: "tag"}, "SUY LUẬN"), sp));
+    }
+    host.append(c);
   }
 
   /* ===== Phần 4: tiết kiệm (kịch bản) ===== */
@@ -910,7 +900,6 @@ function buildTab2(d) {
   } else {
     host.append(el("div", {class: "notice"}, "Thiếu số giờ có lịch hoặc giờ chạy trong energy.json. Hãy chạy lại build_energy.py với thư mục có marts/."));
   }
-  compareSection(5);
   upd();
 }
 
