@@ -153,6 +153,7 @@ td{white-space:nowrap}td:first-child{white-space:normal}
   <div class="bar" role="toolbar" aria-label="Tùy chọn hiển thị">
     <button class="btn" id="btnTheme" type="button">Giao diện: tự động</button>
     <button class="btn" id="btnTables" type="button" aria-pressed="false">Hiện tất cả bảng dữ liệu</button>
+    <label class="file" id="weekWrap" style="display:none">Tuần <select id="week" aria-label="Chọn tuần dữ liệu"></select></label>
     <label class="file">Tòa nhà <select id="bldg" aria-label="Chọn tòa nhà"><option value="B08">B08</option></select></label>
     <label class="file">Nạp data.json / energy.json<input type="file" id="fileIn" accept="application/json,.json" multiple></label>
   </div>
@@ -961,21 +962,51 @@ document.getElementById("fileIn").addEventListener("change", e => {
     if (DATA) safeBuild(DATA);
   });
 });
+let WEEKS = null;
+async function getJSON(u) { const r = await fetch(u, {cache: "no-store"}); if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }
+async function loadWeek(w) {
+  let j;
+  try { j = await getJSON(w.data); }
+  catch (err) { return fail("Không đọc được " + w.data + " (" + err.message + ")."); }
+  ENERGY = null;   // không dùng điện của tuần khác
+  if (w.energy) { try { const ej = await getJSON(w.energy); if (isEnergy(ej)) ENERGY = ej; } catch (err) { /* điện là tùy chọn */ } }
+  fillBldg();
+  safeBuild(j);
+  if (w.note) { const n = document.getElementById("notices"); n.append(el("div", {class: "notice"}, w.note)); }
+}
+document.getElementById("week").addEventListener("change", e => {
+  const w = WEEKS && WEEKS.find(x => x.id === e.target.value); if (!w) return;
+  try { localStorage.setItem("b8-week", w.id); } catch (x) {}
+  try { const u = new URL(location.href); u.searchParams.set("w", w.id); history.replaceState(null, "", u); } catch (x) {}
+  loadWeek(w);
+});
 (async function init() {
   setMode(mode === "auto" ? "auto" : mode);
-  const url = new URLSearchParams(location.search).get("data") || "data.json";
-  try {
-    const res = await fetch(url, {cache: "no-store"});
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    var j = await res.json();
-  } catch (err) {
+  const qs = new URLSearchParams(location.search);
+  try { BLDG = qs.get("b") || localStorage.getItem("b8-bldg") || "B08"; } catch (err) {}
+  // Chế độ nhiều tuần: có weeks.json và không ép data=... trên URL
+  if (!qs.get("data")) {
+    try {
+      const m = await getJSON("weeks.json");
+      if (m && Array.isArray(m.weeks) && m.weeks.length) {
+        WEEKS = m.weeks;
+        const sel = document.getElementById("week");
+        WEEKS.forEach(w => sel.append(el("option", {value: w.id}, w.label)));
+        let want = qs.get("w"); try { want = want || localStorage.getItem("b8-week"); } catch (x) {}
+        const w = WEEKS.find(x => x.id === want) || WEEKS.find(x => x.id === m.default) || WEEKS[0];
+        sel.value = w.id; document.getElementById("weekWrap").style.display = "";
+        await loadWeek(w);
+        if (location.hash === "#quanly") showTab(2);
+        return;
+      }
+    } catch (err) { /* không có weeks.json: chạy chế độ một tuần như cũ */ }
+  }
+  const url = qs.get("data") || "data.json";
+  try { var j = await getJSON(url); }
+  catch (err) {
     return fail("Không đọc được " + url + " (" + err.message + "). Nếu mở trực tiếp từ máy (file://), hãy dùng nút “Nạp data.json / energy.json” hoặc chạy qua GitHub Pages.");
   }
-  try {
-    const eu = new URLSearchParams(location.search).get("energy") || "energy.json";
-    const er = await fetch(eu, {cache: "no-store"}); if (er.ok) { const ej = await er.json(); if (isEnergy(ej)) ENERGY = ej; }
-  } catch (err) { /* energy.json là tùy chọn */ }
-  try { BLDG = new URLSearchParams(location.search).get("b") || localStorage.getItem("b8-bldg") || "B08"; } catch (err) {}
+  try { const ej = await getJSON(qs.get("energy") || "energy.json"); if (isEnergy(ej)) ENERGY = ej; } catch (err) { /* energy.json là tùy chọn */ }
   fillBldg();
   safeBuild(j);
   if (location.hash === "#quanly") showTab(2);

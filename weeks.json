@@ -1,0 +1,8 @@
+{
+ "default": "T42",
+ "weeks": [
+  {"id": "T42", "label": "T42 · 12–16/10/2026", "data": "weeks/T42/data.json", "energy": "weeks/T42/energy.json",
+   "note": "Tuần T42 dựng từ log vận hành (Operation Log) và lịch AAO, không phải từ báo cáo giờ sử dụng như T41, nên cách tính khác nhau; không nên so trực tiếp hai tuần. Nguyên nhân chạy ngoài khung của T42 chưa được phân loại: mục “Chưa phân loại” là chưa có giải thích, không phải kết luận."},
+  {"id": "T41", "label": "T41 · 05–09/10/2026", "data": "data.json", "energy": "energy.json"}
+ ]
+}
