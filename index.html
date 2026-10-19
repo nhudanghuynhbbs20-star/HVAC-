@@ -89,6 +89,11 @@ th:first-child,td:first-child{text-align:left}
 th{color:var(--text-secondary);font-weight:560}
 .foot{margin-top:24px;font-size:12.5px;color:var(--text-muted)}
 .foot p{margin:4px 0}
+.heat{border-collapse:separate;border-spacing:2px;font-size:12px;width:100%}
+.heat th{font-weight:600;color:var(--text-secondary);text-align:center;padding:2px 4px}
+.heat td{text-align:center;padding:4px 2px;border-radius:4px;min-width:56px;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.heat td.rm{text-align:left;font-weight:600;background:none;padding-left:0;min-width:70px}
+.heat td.sm{background:none;color:var(--text-secondary)}
 .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--text-secondary);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-right:4px}
 @media (max-width:560px){.hero .val{font-size:40px}.tile .val{font-size:26px}}
 
@@ -398,6 +403,7 @@ function build(d) {
   document.getElementById("h1").textContent = "Giám sát máy lạnh tự động – Tòa " + BLDG.replace(/^B0?/, "B").replace(/ \(.*\)/, "");
   const app = document.getElementById("app"); app.replaceChildren();
   const ov = d.overview, daily = d.daily;
+  const L = ov.design_lead_min || (d.params && d.params.soft_start_min) || 20;   // phút bật trước giờ học theo thiết kế của tuần này
   const dates = daily.map(x => x.date);
   document.getElementById("sub").textContent =
     `Dữ liệu ${dlabel(dates[0])} → ${dlabel(dates[dates.length - 1])}/2026 · cắt tại ${d.cutoff.replace("T", " ").slice(0, 16)} · tạo lúc ${d.generated_at.replace("T", " ")}`;
@@ -449,7 +455,7 @@ function build(d) {
   kA.append(tile("Độ phủ ca học (theo phút)", pct(ov.minute_coverage), `${nf0.format(ov.slots_kpi)} ca; phút máy chạy ÷ phút có lịch`, "c-cov"));
   kA.append(tile("Ca máy lạnh không chạy", `${ov.zero_slots}/${ov.slots_kpi}`, "0 phút chạy trong khung ca", "c-cov"));
   kA.append(tile("Giờ có lịch nhưng máy đã tắt sớm", hrs(ov.early_off_hours), "máy tắt trước giờ kết thúc ca", "c-cov"));
-  kA.append(tile("Bật đúng thiết kế (15–25 phút trước giờ học)", pct(ov.on_lead_15_25_share), "trên các khối ca liên tục", "c-lead"));
+  kA.append(tile(`Bật đúng thiết kế (${L - 5}–${L + 5} phút trước giờ học)`, pct(ov.on_lead_design_share != null ? ov.on_lead_design_share : ov.on_lead_15_25_share), `thiết kế bật trước ${L} phút; trên các khối ca liên tục`, "c-lead"));
   kA.append(tile("Tắt đúng giờ (±5 phút)", pct(ov.off_within_5_share), "so với giờ kết thúc khối ca", "c-lag"));
   app.append(kA);
   const gridA = el("div", {class: "grid charts"}); app.append(gridA);
@@ -518,12 +524,12 @@ function build(d) {
   if (Array.isArray(d.on_lead_hist)) {
     const c = card("Máy bật trước giờ học bao lâu?", "");
     c.card.id = "c-lead";
-    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "hệ thống được thiết kế bật trước giờ học 20 phút. Cột xanh là bật trong khoảng 15–25 phút. Cột bên trái là bật muộn, bên phải là bật quá sớm (tốn điện). Bấm vào cột để xem phòng nào, giờ nào."), c.box);
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), `hệ thống được thiết kế bật trước giờ học ${L} phút. Cột xanh là bật trong khoảng ${L - 5}–${L + 5} phút. Cột bên trái là bật muộn, bên phải là bật quá sớm (tốn điện). Bấm vào cột để xem phòng nào, giờ nào.`), c.box);
     drillBlocks(c, d.on_lead_hist, {
       bucket: "lead_bucket", aria: "Phân bố thời điểm bật máy trước giờ học", colHead: "Phút trước giờ học",
-      short: n => n.replace(" (thiết kế 20)", "").replace("Sau giờ học", "Sau\ngiờ học"), good: n => n.startsWith("15–25"),
+      short: n => n.replace(/ \(thiết kế \d+\)/, "").replace("Sau giờ học", "Sau\ngiờ học"), good: n => n.includes("thiết kế"),
       title: "Bật trước giờ học", totalLabel: "tổng giờ bật trước giờ học",
-      amount: x => Math.max(x.lead_min, 0) , over: x => Math.max(x.lead_min - 20, 0), overLabel: "vượt mức thiết kế 20 phút",
+      amount: x => Math.max(x.lead_min, 0) , over: x => Math.max(x.lead_min - L, 0), overLabel: `vượt mức thiết kế ${L} phút`,
       detail: fmtLead});
     gridA.append(c.card);
   }
@@ -587,6 +593,29 @@ function build(d) {
     const cats = top.map(r => ({label: r.room_id.replace(".B08", ""), value: r.gio_phong, rows: [{label: "Giờ phòng ngoài giờ", color: css("--s1"), value: hrs(r.gio_phong)}]}));
     register(c.box, () => hbars(c.box, cats.map(x => ({...x, color: css("--s1")})), {aria: "10 phòng học chạy ngoài giờ nhiều nhất"}));
     c.card.append(tableView(["Phòng", "Giờ phòng"], top.map(r => [r.room_id, nf1.format(r.gio_phong)])));
+    grid.append(c.card);
+  }
+  /* B2b. Bản đồ nhiệt phòng × ngày */
+  if (Array.isArray(d.room_day) && d.room_day.length) {
+    const dts = [...new Set(d.daily.map(x => x.date))];
+    const byRoom = {};
+    d.room_day.forEach(r => { const o = byRoom[r.room_id] || (byRoom[r.room_id] = {room: r.room_id, kind: r.kind, tot: 0, by: {}}); o.by[r.date] = (o.by[r.date] || 0) + r.gio_phong; o.tot += r.gio_phong; });
+    const rooms = Object.values(byRoom).sort((a, b) => b.tot - a.tot).slice(0, 30);
+    const mx = Math.max(1, ...rooms.flatMap(r => dts.map(x => r.by[x] || 0)));
+    const c = card("Phòng nào lặp lại chạy thừa nhiều ngày?", "", {wide: true});
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), `mỗi hàng là một phòng (30 phòng có tổng giờ chạy ngoài khung cao nhất), mỗi cột là một ngày; màu càng đậm là càng nhiều giờ phòng chạy ngoài khung (đậm nhất = ${nf1.format(mx)} giờ). Phòng nào đậm ở nhiều cột liền nhau là bất thường lặp lại, đáng kiểm tra trước. “CN” là phòng chức năng, ngoài phạm vi Giai đoạn 1.`), c.box);
+    const t = el("table", {class: "heat"});
+    const hr = el("tr", {}, el("th", {}, "Phòng"), el("th", {}, "Loại"));
+    dts.forEach(x => hr.append(el("th", {}, dlabel(x)))); hr.append(el("th", {}, "Tổng"));
+    t.append(el("thead", {}, hr));
+    const tb = el("tbody");
+    rooms.forEach(r => {
+      const tr = el("tr", {}, el("td", {class: "rm"}, r.room.replace(".B08", "")), el("td", {class: "sm"}, r.kind === "Phòng học" ? "học" : "CN"));
+      dts.forEach(x => { const v = r.by[x] || 0; const td = el("td", {title: `${r.room} · ${dlabel(x)}: ${nf1.format(v)} giờ phòng chạy ngoài khung`}, v ? nf1.format(v) : "·"); if (v) td.style.background = `color-mix(in srgb, var(--s1) ${Math.round(12 + 78 * v / mx)}%, var(--surface-0))`; tr.append(td); });
+      tr.append(el("td", {class: "sm"}, nf1.format(r.tot)));
+      tb.append(tr);
+    });
+    t.append(tb); c.box.append(t);
     grid.append(c.card);
   }
   /* B3. Giờ trong ngày */
@@ -734,10 +763,10 @@ function buildTab2(d) {
     el("p", {class: "desc"}, "Đổi số ở đây, mọi con số tiền bên dưới tính lại ngay."),
     el("div", {class: "inputs"},
       el("label", {}, "Đơn giá điện (đồng/kWh)", inPrice),
-      el("label", {}, "Tỷ lệ điện dùng cho máy lạnh (%)", inShare),
+      el("label", {}, "Tỷ lệ điện dùng cho máy lạnh: GIẢ ĐỊNH (%)", inShare),
       ...(isB8 ? [el("label", {}, "Hệ số lãng phí: thủ công (báo cáo thử nghiệm)", inBase), el("label", {}, "Hệ số lãng phí: có hệ thống (báo cáo thử nghiệm)", inPilot),
         el("label", {}, "Số tuần học mỗi kỳ", inWeeks), el("label", {}, "Số kỳ học mỗi năm", inTerms)] : [])));
-  par.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), "Đơn giá 2.138 đồng/kWh (giá trung bình cho trường đại học do bạn cung cấp); tỷ lệ máy lạnh 90% (theo thông tin nội bộ, còn lại là đèn, thang máy…). Hệ số lãng phí 0,93 và 0,374 lấy từ báo cáo thử nghiệm 14–27/5/2026. Số tuần và số kỳ chỉ để quy đổi thô, bạn tự chỉnh theo lịch năm học."));
+  par.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), "Đơn giá 2.138 đồng/kWh (giá trung bình cho trường đại học do bạn cung cấp). Tỷ lệ máy lạnh 90% là GIẢ ĐỊNH theo thông tin nội bộ (còn lại là đèn, thang máy…), chưa có công tơ riêng cho máy lạnh để kiểm chứng; kết quả hồi quy từ log được nêu ở mục “Hai cách ước tính” bên dưới. Hệ số lãng phí 0,93 và 0,374 lấy từ báo cáo thử nghiệm 14–27/5/2026. Số tuần và số kỳ chỉ để quy đổi thô, bạn tự chỉnh theo lịch năm học."));
   host.append(par);
 
   const dyn = []; /* các hàm cập nhật khi đổi tham số */
@@ -751,10 +780,10 @@ function buildTab2(d) {
   host.append(el("div", {class: "sec"}, el("h2", {}, `1. ${bsel.id}: dùng bao nhiêu điện, bao nhiêu tiền?`),
     el("p", {}, `Số liệu Q-energy, ${days.length} ngày ${dlabel(days[0])} → ${dlabel(days[days.length - 1])}, đo mỗi 30 phút${bsel.meters > 1 ? `; tòa này có ${bsel.meters} đồng hồ, đã cộng lại` : ""}.`)));
   const k1 = el("div", {class: "grid kpis"});
-  const tileL = (l, valFn, subFn) => { const v = el("div", {class: "val"}), s = el("div", {class: "sub"}); dyn.push(() => { v.textContent = valFn(); s.textContent = subFn ? subFn() : ""; }); v.textContent = valFn(); s.textContent = subFn ? subFn() : ""; return el("div", {class: "card tile"}, el("div", {class: "lbl"}, l), v, s); };
-  k1.append(tileL("Điện đã dùng", () => nf0.format(totalKwh) + " kWh", () => `trung bình ${nf0.format(perDay)} kWh/ngày`));
-  k1.append(tileL("Tiền điện", () => vnd(totalKwh * P.price), () => `${nf0.format(totalKwh)} kWh × ${nf0.format(P.price)} đồng`));
-  k1.append(tileL("Điện máy lạnh (ước tính)", () => vnd(totalKwh * P.share / 100 * P.price), () => `${P.share}% điện của tòa ≈ ${nf0.format(totalKwh * P.share / 100)} kWh`));
+  const tileL = (l, valFn, subFn, kind) => { const v = el("div", {class: "val"}), s = el("div", {class: "sub"}); dyn.push(() => { v.textContent = valFn(); s.textContent = subFn ? subFn() : ""; }); v.textContent = valFn(); s.textContent = subFn ? subFn() : ""; return el("div", {class: "card tile"}, el("div", {class: "lbl"}, ...(kind ? [el("span", {class: "tag"}, kind)] : []), l), v, s); };
+  k1.append(tileL("Điện đã dùng", () => nf0.format(totalKwh) + " kWh", () => `trung bình ${nf0.format(perDay)} kWh/ngày; công tơ cả tòa, không riêng máy lạnh`, "ĐO THỰC TẾ"));
+  k1.append(tileL("Tiền điện", () => vnd(totalKwh * P.price), () => `${nf0.format(totalKwh)} kWh × ${nf0.format(P.price)} đồng (đơn giá trung bình)`, "ƯỚC TÍNH"));
+  k1.append(tileL("Điện máy lạnh (theo tỷ lệ giả định)", () => vnd(totalKwh * P.share / 100 * P.price), () => `giả định ${P.share}% điện của tòa ≈ ${nf0.format(totalKwh * P.share / 100)} kWh`, "ƯỚC TÍNH · GIẢ ĐỊNH"));
   host.append(k1);
 
   const g1 = el("div", {class: "grid charts"}); host.append(g1);
@@ -824,9 +853,11 @@ function buildTab2(d) {
     ["Cách", "kWh mỗi giờ-máy", "Máy lạnh chiếm"].forEach(h => tr.append(el("th", {}, h))); th.append(tr); t.append(th);
     const tb = el("tbody"); t.append(tb);
     const a = el("td", {}), b2 = el("td", {});
-    tb.append(el("tr", {}, el("td", {}, "A. Hồi quy từ log máy lạnh (đo thực)"), el("td", {}, nf1.format(kL)), el("td", {}, pct(shareReg, 0) + " điện tòa")));
-    tb.append(el("tr", {}, el("td", {}, "B. Theo tỷ lệ bạn cung cấp"), live(a, () => nf1.format(kU())), live(b2, () => P.share + "% điện tòa")));
+    tb.append(el("tr", {}, el("td", {}, "A. Hồi quy từ log máy lạnh (ước tính)"), el("td", {}, nf1.format(kL)), el("td", {}, pct(shareReg, 0) + " điện tòa")));
+    tb.append(el("tr", {}, el("td", {}, "B. Giả định (tỷ lệ bạn cung cấp, chưa kiểm chứng)"), live(a, () => nf1.format(kU())), live(b2, () => P.share + "% điện tòa")));
     c.append(t);
+    { const bt = el("button", {class: "btn", type: "button", style: "margin-top:10px"}, `Đặt tỷ lệ giả định bằng kết quả hồi quy (${Math.round(shareReg * 100)}%)`);
+      bt.addEventListener("click", () => { inShare.value = String(Math.round(shareReg * 100)); upd(); }); c.append(bt); }
     c.append(el("p", {class: "how", style: "margin-top:10px"}, el("span", {class: "tag"}, "SUY LUẬN"), `Điện nền ban đêm của B08 vào khoảng ${nf0.format(cal.base_kwh_per_30min * 2)} kW và gần như không đổi theo giờ học. Nếu coi phần nền đó là điện không phải máy lạnh thì máy lạnh chiếm khoảng ${pct(shareReg, 0)}, thấp hơn 90%.`));
     c.append(el("p", {class: "how"}, el("span", {class: "tag"}, "CHƯA XÁC MINH"), "Nhưng hồi quy chỉ thấy phần máy lạnh có trong log SBMS. Máy lạnh ngoài hệ thống, hoặc quạt dàn nóng chạy kéo dài, sẽ nằm trong phần nền. Cần đối chiếu với kỹ thuật tòa nhà trước khi chọn một con số duy nhất."));
     c.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Mốc thời gian Q-energy hiểu là giờ kết thúc khoảng 30 phút (khớp với log tốt hơn mốc bắt đầu). ${cal.sessions_open_filled} phiên máy chưa đóng được tính chạy đến cuối dữ liệu. `));
@@ -839,12 +870,13 @@ function buildTab2(d) {
   const k3 = el("div", {class: "grid kpis four"});
   const oohMh = ov.ooh_machine_hours;
   const lo = () => oohMh * kL * P.price, hi = () => oohMh * kU() * P.price;
-  k3.append(tileL("Chạy thừa: tuần mẫu", () => vndRange(lo(), hi()), () => `${nf1.format(oohMh)} giờ-máy ngoài khung, T2–T6 05–09/10, gồm ngày khai giảng`));
-  k3.append(tileL("Điện chạy thừa: tuần mẫu", () => `${nf0.format(oohMh * kL)}–${nf0.format(oohMh * kU())} kWh`, () => `so với ${nf0.format(totalKwh)} kWh cả tuần của tòa`));
-  k3.append(tileL("Quy ra 1 học kỳ", () => vndRange(lo() * P.weeks, hi() * P.weeks), () => `nhân ${P.weeks} tuần học (khoảng ${nf1.format(P.weeks / 4.33)} tháng)`));
-  k3.append(tileL("Quy ra cả năm", () => vndRange(lo() * P.weeks * P.terms, hi() * P.weeks * P.terms), () => `nhân ${P.terms} kỳ × ${P.weeks} tuần = ${P.weeks * P.terms} tuần học`));
+  const dd = x => x.slice(8, 10) + "/" + x.slice(5, 7), wk = d.daily.map(x => x.date);
+  k3.append(tileL("Chạy thừa: tuần đang xem", () => vndRange(lo(), hi()), () => `${nf1.format(oohMh)} giờ-máy ngoài khung, T2–T6 ${dd(wk[0])}–${dd(wk[wk.length - 1])}${ov.event_day_room_hours ? ", gồm ngày sự kiện" : ""}`, "ƯỚC TÍNH"));
+  k3.append(tileL("Điện chạy thừa: tuần đang xem", () => `${nf0.format(oohMh * kL)}–${nf0.format(oohMh * kU())} kWh`, () => `so với ${nf0.format(totalKwh)} kWh cả tuần của tòa`, "ƯỚC TÍNH"));
+  k3.append(tileL("Quy ra 1 học kỳ", () => vndRange(lo() * P.weeks, hi() * P.weeks), () => `nhân ${P.weeks} tuần học (khoảng ${nf1.format(P.weeks / 4.33)} tháng)`, "DỰ ĐOÁN"));
+  k3.append(tileL("Quy ra cả năm", () => vndRange(lo() * P.weeks * P.terms, hi() * P.weeks * P.terms), () => `nhân ${P.terms} kỳ × ${P.weeks} tuần = ${P.weeks * P.terms} tuần học`, "DỰ ĐOÁN"));
   host.append(k3);
-  host.append(el("p", {class: "how"}, el("span", {class: "tag"}, "DỰ ĐOÁN"), "Đây là phép nhân thô, chưa tính nghỉ hè, nghỉ lễ hay mùa mát nên khó đúng. Dùng để định cỡ vấn đề, không dùng để cam kết số tiền. Tuần mẫu còn có ngày khai giảng (" + nf1.format(ov.event_day_room_hours) + " giờ phòng chạy khi lớp nghỉ), nên có thể cao hơn một tuần học bình thường."));
+  host.append(el("p", {class: "how"}, el("span", {class: "tag"}, "DỰ ĐOÁN"), "Đây là phép nhân thô, chưa tính nghỉ hè, nghỉ lễ hay mùa mát nên khó đúng. Dùng để định cỡ vấn đề, không dùng để cam kết số tiền. " + (ov.event_day_room_hours ? "Tuần này còn có ngày sự kiện (" + nf1.format(ov.event_day_room_hours) + " giờ phòng chạy khi lớp nghỉ), nên có thể cao hơn một tuần học bình thường." : "")));
 
   /* việc cần xử lý */
   {
