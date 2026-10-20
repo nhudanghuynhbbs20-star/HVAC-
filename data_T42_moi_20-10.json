@@ -1,0 +1,6463 @@
+{
+ "generated_at": "2026-10-20T10:42:00",
+ "cutoff": "2026-10-16 22:00:00",
+ "params": {
+  "building_suffix": ".B08",
+  "soft_start_min": 15,
+  "bridge_gap_min": 30,
+  "tol_min": 5,
+  "func_start": "08:00",
+  "func_end": "17:00",
+  "func_weekdays": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "cutoff": null,
+  "short_seg_min": 10.0,
+  "room_alias": {
+   "SYCAMORE.B08": "107.B08"
+  },
+  "night_from": "22:05",
+  "night_to": "05:00",
+  "night_min_overlap_min": 10.0,
+  "chain_gap_s": 120.0,
+  "room_hours": {
+   "101.B08": {
+    "start": "06:00",
+    "end": "22:00",
+    "weekdays": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "note": "Family Mart (đơn vị thuê) - tạm theo thông tin người dùng cung cấp 14/10/2026; chờ giờ chính thức"
+   }
+  }
+ },
+ "qa": {
+  "sched_rows_in": 1254,
+  "ac_rows_in": 1579,
+  "sched_rows_other_building": 772,
+  "sched_dup_in_file": 0,
+  "ac_rows_other_building": 191,
+  "ac_rows_nonpositive_duration": 0,
+  "unit_ids_used_in_multiple_rooms": 76,
+  "ac_dup_in_file": 0,
+  "ac_rows_total_warehouse": 1388,
+  "slots_total_warehouse": 482,
+  "rooms_in_schedule_without_ac_data": [],
+  "slots_without_ac_room": 0,
+  "rooms_functional": [
+   "101.B08",
+   "103.B08",
+   "104.B08",
+   "108.B08",
+   "109.B08",
+   "110.B08",
+   "111.B08",
+   "112.B08",
+   "116.B08",
+   "212.B08",
+   "312.B08",
+   "402.B08",
+   "406.B08",
+   "408.B08",
+   "410.B08",
+   "411.B08",
+   "412.B08",
+   "414.B08",
+   "416.B08",
+   "418.B08",
+   "420.B08"
+  ],
+  "unmatched_override_rules": [
+   "2026-10-06 403.B08 12:30"
+  ],
+  "config_source": "nhat_ky_bat_thuong.xlsx (17 quy tắc nguyên nhân)",
+  "run_id": "20261020_104156"
+ },
+ "overview": {
+  "slots_kpi": 482,
+  "minute_coverage": 0.973584844880563,
+  "zero_slots": 2,
+  "early_off_hours": 21.03666666666667,
+  "ooh_hours_total": 245.8763888888889,
+  "ooh_machine_hours": 469.7777777777778,
+  "explained_share": 0.7952708847602962,
+  "event_day_room_hours": 0.0,
+  "design_lead_min": 15,
+  "on_lead_design_share": 0.391812865497076,
+  "on_lead_15_25_share": 0.391812865497076,
+  "off_within_5_share": 0.8070175438596491
+ },
+ "ooh_by_day_group": [
+  {
+   "date": "2026-10-12",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 3.31
+  },
+  {
+   "date": "2026-10-12",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 4.1
+  },
+  {
+   "date": "2026-10-12",
+   "cause_group": "Người dùng",
+   "gio_phong": 31.34
+  },
+  {
+   "date": "2026-10-13",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 4.09
+  },
+  {
+   "date": "2026-10-13",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 7.32
+  },
+  {
+   "date": "2026-10-13",
+   "cause_group": "Người dùng",
+   "gio_phong": 32.41
+  },
+  {
+   "date": "2026-10-14",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 5.74
+  },
+  {
+   "date": "2026-10-14",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 1.24
+  },
+  {
+   "date": "2026-10-14",
+   "cause_group": "Người dùng",
+   "gio_phong": 31.76
+  },
+  {
+   "date": "2026-10-15",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 4.45
+  },
+  {
+   "date": "2026-10-15",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 2.03
+  },
+  {
+   "date": "2026-10-15",
+   "cause_group": "Người dùng",
+   "gio_phong": 48.21
+  },
+  {
+   "date": "2026-10-16",
+   "cause_group": "Chưa phân loại",
+   "gio_phong": 4.79
+  },
+  {
+   "date": "2026-10-16",
+   "cause_group": "Lịch / quy trình",
+   "gio_phong": 10.77
+  },
+  {
+   "date": "2026-10-16",
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "gio_phong": 13.27
+  },
+  {
+   "date": "2026-10-16",
+   "cause_group": "Người dùng",
+   "gio_phong": 41.05
+  }
+ ],
+ "ooh_by_day_kind": [
+  {
+   "date": "2026-10-12",
+   "kind": "Phòng chức năng",
+   "gio_phong": 4.1
+  },
+  {
+   "date": "2026-10-12",
+   "kind": "Phòng học",
+   "gio_phong": 34.66
+  },
+  {
+   "date": "2026-10-13",
+   "kind": "Phòng chức năng",
+   "gio_phong": 7.32
+  },
+  {
+   "date": "2026-10-13",
+   "kind": "Phòng học",
+   "gio_phong": 36.5
+  },
+  {
+   "date": "2026-10-14",
+   "kind": "Phòng chức năng",
+   "gio_phong": 1.24
+  },
+  {
+   "date": "2026-10-14",
+   "kind": "Phòng học",
+   "gio_phong": 37.49
+  },
+  {
+   "date": "2026-10-15",
+   "kind": "Phòng chức năng",
+   "gio_phong": 2.03
+  },
+  {
+   "date": "2026-10-15",
+   "kind": "Phòng học",
+   "gio_phong": 52.66
+  },
+  {
+   "date": "2026-10-16",
+   "kind": "Phòng chức năng",
+   "gio_phong": 13.27
+  },
+  {
+   "date": "2026-10-16",
+   "kind": "Phòng học",
+   "gio_phong": 56.61
+  }
+ ],
+ "on_lead_hist": [
+  {
+   "nhom": "Sau giờ học",
+   "so_luong": 2
+  },
+  {
+   "nhom": "0–10",
+   "so_luong": 1
+  },
+  {
+   "nhom": "10–20 (thiết kế 15)",
+   "so_luong": 134
+  },
+  {
+   "nhom": "20–40",
+   "so_luong": 92
+  },
+  {
+   "nhom": "40–60",
+   "so_luong": 84
+  },
+  {
+   "nhom": "60–120",
+   "so_luong": 20
+  },
+  {
+   "nhom": ">120",
+   "so_luong": 7
+  }
+ ],
+ "off_lag_hist": [
+  {
+   "nhom": "Tắt sớm >30",
+   "so_luong": 6
+  },
+  {
+   "nhom": "Tắt sớm 5–30",
+   "so_luong": 57
+  },
+  {
+   "nhom": "Đúng giờ ±5",
+   "so_luong": 276
+  },
+  {
+   "nhom": "Trễ 5–15",
+   "so_luong": 1
+  },
+  {
+   "nhom": "Trễ >15",
+   "so_luong": 0
+  }
+ ],
+ "blocks_detail": [
+  {
+   "room_id": "105.B08",
+   "date": "2026-10-14",
+   "start": "18:00",
+   "end": "21:00",
+   "first_on": "16:55",
+   "last_off": "21:00",
+   "lead_min": 64.4,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-12",
+   "start": "08:30",
+   "end": "11:30",
+   "first_on": "08:07",
+   "last_off": "11:30",
+   "lead_min": 22.1,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "18:30",
+   "first_on": "12:11",
+   "last_off": "18:28",
+   "lead_min": 18.2,
+   "lag_min": -1.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:29",
+   "lead_min": 15.0,
+   "lag_min": -0.1,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": "11:09",
+   "last_off": "15:13",
+   "lead_min": 81.0,
+   "lag_min": -16.5,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-14",
+   "start": "08:30",
+   "end": "11:30",
+   "first_on": "08:02",
+   "last_off": "11:30",
+   "lead_min": 27.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:38",
+   "last_off": "16:16",
+   "lead_min": 51.1,
+   "lag_min": -13.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:11",
+   "last_off": "11:21",
+   "lead_min": 18.1,
+   "lag_min": -8.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "18:30",
+   "first_on": "11:58",
+   "last_off": "18:30",
+   "lead_min": 31.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "15:30",
+   "first_on": "07:12",
+   "last_off": "15:10",
+   "lead_min": 17.6,
+   "lag_min": -19.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "106.B08",
+   "date": "2026-10-16",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:15",
+   "last_off": "18:11",
+   "lead_min": 15.0,
+   "lag_min": -78.1,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm >30"
+  },
+  {
+   "room_id": "107.B08",
+   "date": "2026-10-14",
+   "start": "18:00",
+   "end": "21:00",
+   "first_on": "17:45",
+   "last_off": "21:00",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "114.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:54",
+   "last_off": "16:18",
+   "lead_min": 35.7,
+   "lag_min": -11.5,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "114.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:25",
+   "lead_min": 15.0,
+   "lag_min": -4.6,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:30",
+   "last_off": "16:25",
+   "lead_min": 59.4,
+   "lag_min": -4.9,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:04",
+   "last_off": "11:30",
+   "lead_min": 25.4,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:40",
+   "last_off": "14:23",
+   "lead_min": 49.4,
+   "lag_min": -6.5,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-14",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "07:16",
+   "last_off": "11:30",
+   "lead_min": 133.8,
+   "lag_min": 0.0,
+   "lead_bucket": ">120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:03",
+   "last_off": "11:30",
+   "lead_min": 26.5,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:46",
+   "last_off": "14:22",
+   "lead_min": 43.1,
+   "lag_min": -7.3,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-16",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "201.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:41",
+   "last_off": "16:28",
+   "lead_min": 48.6,
+   "lag_min": -1.8,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:07",
+   "last_off": "11:24",
+   "lead_min": 22.2,
+   "lag_min": -5.7,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-12",
+   "start": "16:30",
+   "end": "18:30",
+   "first_on": "15:34",
+   "last_off": "18:28",
+   "lead_min": 55.6,
+   "lag_min": -1.6,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:11",
+   "last_off": "11:30",
+   "lead_min": 18.3,
+   "lag_min": 0.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "18:30",
+   "first_on": "11:48",
+   "last_off": "18:04",
+   "lead_min": 41.8,
+   "lag_min": -25.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:08",
+   "last_off": "11:29",
+   "lead_min": 21.2,
+   "lag_min": -0.3,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-14",
+   "start": "13:30",
+   "end": "18:30",
+   "first_on": "13:15",
+   "last_off": "18:26",
+   "lead_min": 15.0,
+   "lag_min": -3.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:09",
+   "last_off": "11:30",
+   "lead_min": 20.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "18:30",
+   "first_on": "14:15",
+   "last_off": "18:15",
+   "lead_min": 15.0,
+   "lag_min": -14.7,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:26",
+   "lead_min": 15.0,
+   "lag_min": -3.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "202.B08",
+   "date": "2026-10-16",
+   "start": "14:30",
+   "end": "17:30",
+   "first_on": "14:15",
+   "last_off": "17:16",
+   "lead_min": 15.0,
+   "lag_min": -13.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-12",
+   "start": "08:30",
+   "end": "11:30",
+   "first_on": "08:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:51",
+   "last_off": "11:30",
+   "lead_min": 38.2,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-14",
+   "start": "08:30",
+   "end": "12:30",
+   "first_on": "08:15",
+   "last_off": "12:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:53",
+   "last_off": "11:30",
+   "lead_min": 36.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:12",
+   "last_off": "14:30",
+   "lead_min": 17.6,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-16",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "203.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:37",
+   "last_off": "14:30",
+   "lead_min": 52.1,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.6,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": "11:35",
+   "last_off": "15:30",
+   "lead_min": 54.9,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-12",
+   "start": "16:30",
+   "end": "19:30",
+   "first_on": "16:13",
+   "last_off": "19:07",
+   "lead_min": 17.0,
+   "lag_min": -22.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:08",
+   "last_off": "16:30",
+   "lead_min": 21.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:10",
+   "last_off": "11:21",
+   "lead_min": 19.7,
+   "lag_min": -8.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:49",
+   "last_off": "14:30",
+   "lead_min": 40.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:22",
+   "lead_min": 15.0,
+   "lag_min": -7.1,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "18:30",
+   "first_on": "14:15",
+   "last_off": "18:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:25",
+   "lead_min": 15.0,
+   "lag_min": -4.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "204.B08",
+   "date": "2026-10-16",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:47",
+   "last_off": "11:30",
+   "lead_min": 42.3,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:07",
+   "last_off": "09:26",
+   "lead_min": 22.2,
+   "lag_min": -3.6,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:25",
+   "last_off": "14:30",
+   "lead_min": 64.7,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:04",
+   "last_off": "11:30",
+   "lead_min": 25.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:15",
+   "last_off": "14:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:35",
+   "last_off": "14:30",
+   "lead_min": 54.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "205.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.7,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:46",
+   "last_off": "14:23",
+   "lead_min": 43.3,
+   "lag_min": -6.3,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:06",
+   "last_off": "11:30",
+   "lead_min": 23.4,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:02",
+   "last_off": "16:29",
+   "lead_min": 27.2,
+   "lag_min": -0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:36",
+   "last_off": "14:21",
+   "lead_min": 54.0,
+   "lag_min": -8.6,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:14",
+   "last_off": "09:24",
+   "lead_min": 16.0,
+   "lag_min": -5.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "206.B08",
+   "date": "2026-10-16",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:07",
+   "last_off": "11:30",
+   "lead_min": 22.3,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-13",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:53",
+   "last_off": "11:30",
+   "lead_min": 36.6,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:13",
+   "last_off": "14:30",
+   "lead_min": 17.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:56",
+   "last_off": "11:30",
+   "lead_min": 33.3,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:01",
+   "last_off": "14:30",
+   "lead_min": 28.3,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "12:20",
+   "last_off": "16:30",
+   "lead_min": 129.6,
+   "lag_min": 0.0,
+   "lead_bucket": ">120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "06:56",
+   "last_off": "09:42",
+   "lead_min": 33.2,
+   "lag_min": 12.5,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Trễ 5–15"
+  },
+  {
+   "room_id": "207.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:10",
+   "last_off": "14:28",
+   "lead_min": 19.3,
+   "lag_min": -1.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "07:44",
+   "last_off": "11:30",
+   "lead_min": 105.4,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:27",
+   "lead_min": 15.0,
+   "lag_min": -2.6,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:14",
+   "last_off": "11:30",
+   "lead_min": 15.8,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:53",
+   "last_off": "14:30",
+   "lead_min": 36.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:29",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:12",
+   "last_off": "09:30",
+   "lead_min": 17.6,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "208.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:47",
+   "last_off": "16:25",
+   "lead_min": 42.1,
+   "lag_min": -4.6,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:42",
+   "last_off": "11:30",
+   "lead_min": 47.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:31",
+   "last_off": "14:30",
+   "lead_min": 58.7,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:06",
+   "last_off": "09:30",
+   "lead_min": 23.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "09:40",
+   "last_off": "14:30",
+   "lead_min": 170.0,
+   "lag_min": 0.0,
+   "lead_bucket": ">120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:22",
+   "last_off": "11:30",
+   "lead_min": 67.7,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:34",
+   "last_off": "14:30",
+   "lead_min": 55.8,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "209.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:37",
+   "last_off": "14:30",
+   "lead_min": 52.6,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:11",
+   "last_off": "11:23",
+   "lead_min": 18.3,
+   "lag_min": -7.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-14",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:36",
+   "last_off": "11:28",
+   "lead_min": 53.0,
+   "lag_min": -1.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:57",
+   "last_off": "14:22",
+   "lead_min": 32.7,
+   "lag_min": -7.7,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:03",
+   "lead_min": 15.0,
+   "lag_min": -26.9,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "210.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:00",
+   "last_off": "16:30",
+   "lead_min": 29.1,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "211.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:01",
+   "last_off": "11:30",
+   "lead_min": 28.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "211.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:03",
+   "last_off": "09:28",
+   "lead_min": 26.9,
+   "lag_min": -1.4,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "211.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.7,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "12:35",
+   "last_off": "16:30",
+   "lead_min": 114.2,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:44",
+   "last_off": "09:32",
+   "lead_min": 46.0,
+   "lag_min": -117.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm >30"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:33",
+   "last_off": "14:30",
+   "lead_min": 56.3,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:45",
+   "last_off": "11:17",
+   "lead_min": 44.6,
+   "lag_min": -12.9,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "11:38",
+   "last_off": "16:30",
+   "lead_min": 171.6,
+   "lag_min": 0.0,
+   "lead_bucket": ">120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-16",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "07:46",
+   "last_off": "11:30",
+   "lead_min": 103.4,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "213.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:15",
+   "last_off": "14:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-13",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "07:42",
+   "last_off": "11:16",
+   "lead_min": 108.0,
+   "lag_min": -13.6,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:42",
+   "last_off": "16:21",
+   "lead_min": 47.1,
+   "lag_min": -8.1,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-13",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:15",
+   "last_off": "19:18",
+   "lead_min": 15.0,
+   "lag_min": -11.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:12",
+   "last_off": "11:25",
+   "lead_min": 17.9,
+   "lag_min": -4.9,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:35",
+   "last_off": "14:27",
+   "lead_min": 54.5,
+   "lag_min": -2.1,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "10:30",
+   "first_on": "07:15",
+   "last_off": "10:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-15",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:14",
+   "last_off": "19:30",
+   "lead_min": 15.4,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:59",
+   "last_off": "11:30",
+   "lead_min": 30.5,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:33",
+   "last_off": "16:16",
+   "lead_min": 56.5,
+   "lag_min": -13.5,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "214.B08",
+   "date": "2026-10-16",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:15",
+   "last_off": "19:29",
+   "lead_min": 15.0,
+   "lag_min": -0.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:58",
+   "last_off": "11:30",
+   "lead_min": 31.4,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:22",
+   "lead_min": 15.0,
+   "lag_min": -7.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:51",
+   "last_off": "11:24",
+   "lead_min": 38.5,
+   "lag_min": -5.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:48",
+   "last_off": "16:29",
+   "lead_min": 41.1,
+   "lag_min": -0.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:00",
+   "last_off": "09:30",
+   "lead_min": 29.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:33",
+   "last_off": "11:30",
+   "lead_min": -3.1,
+   "lag_min": 0.0,
+   "lead_bucket": "Sau giờ học",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "12:38",
+   "last_off": "16:28",
+   "lead_min": 111.3,
+   "lag_min": -1.1,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "06:25",
+   "last_off": "09:30",
+   "lead_min": 64.4,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "215.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:35",
+   "last_off": "14:30",
+   "lead_min": 54.9,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:23",
+   "lead_min": 15.0,
+   "lag_min": -6.6,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:55",
+   "last_off": "11:30",
+   "lead_min": 34.8,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:38",
+   "last_off": "16:18",
+   "lead_min": 51.5,
+   "lag_min": -11.9,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-13",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:09",
+   "last_off": "19:21",
+   "lead_min": 20.6,
+   "lag_min": -8.8,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-14",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:56",
+   "last_off": "11:22",
+   "lead_min": 33.9,
+   "lag_min": -7.7,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:14",
+   "last_off": "14:23",
+   "lead_min": 15.8,
+   "lag_min": -6.8,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:24",
+   "lead_min": 15.0,
+   "lag_min": -6.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:33",
+   "last_off": "16:30",
+   "lead_min": 56.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-15",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "16:58",
+   "last_off": "19:30",
+   "lead_min": 31.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "216.B08",
+   "date": "2026-10-16",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:15",
+   "last_off": "19:21",
+   "lead_min": 15.0,
+   "lag_min": -8.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "217.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "217.B08",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:18",
+   "lead_min": 15.0,
+   "lag_min": -11.8,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "217.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "217.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.6,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "217.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "217.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "13:15",
+   "last_off": "16:30",
+   "lead_min": 74.2,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "12:30",
+   "first_on": "09:15",
+   "last_off": "12:26",
+   "lead_min": 15.0,
+   "lag_min": -3.5,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-12",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:15",
+   "last_off": "17:39",
+   "lead_min": 15.0,
+   "lag_min": -110.6,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm >30"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:09",
+   "last_off": "09:25",
+   "lead_min": 20.4,
+   "lag_min": -4.5,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:06",
+   "last_off": "14:30",
+   "lead_min": 23.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-14",
+   "start": "13:30",
+   "end": "15:30",
+   "first_on": "13:15",
+   "last_off": "15:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-14",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "17:10",
+   "last_off": "19:30",
+   "lead_min": 19.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "14:30",
+   "first_on": "07:12",
+   "last_off": "14:28",
+   "lead_min": 17.6,
+   "lag_min": -1.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "218.B08",
+   "date": "2026-10-16",
+   "start": "17:30",
+   "end": "19:30",
+   "first_on": "16:45",
+   "last_off": "19:21",
+   "lead_min": 44.0,
+   "lag_min": -8.5,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:14",
+   "last_off": "11:30",
+   "lead_min": 15.6,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:29",
+   "lead_min": 15.0,
+   "lag_min": -0.6,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:15",
+   "last_off": "14:28",
+   "lead_min": 15.0,
+   "lag_min": -1.9,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:28",
+   "lead_min": 15.0,
+   "lag_min": -1.9,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:32",
+   "last_off": "16:30",
+   "lead_min": 57.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:05",
+   "last_off": "11:09",
+   "lead_min": 24.9,
+   "lag_min": -20.1,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "219.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:42",
+   "last_off": "14:30",
+   "lead_min": 47.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:10",
+   "last_off": "11:30",
+   "lead_min": 19.4,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.0,
+   "lag_min": 0.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:43",
+   "last_off": "16:28",
+   "lead_min": 46.2,
+   "lag_min": -1.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:14",
+   "last_off": "11:30",
+   "lead_min": 15.6,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "12:14",
+   "last_off": "14:23",
+   "lead_min": 15.6,
+   "lag_min": -6.5,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-14",
+   "start": "17:00",
+   "end": "18:00",
+   "first_on": "16:20",
+   "last_off": "17:59",
+   "lead_min": 39.9,
+   "lag_min": -0.5,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "18:00",
+   "first_on": "12:15",
+   "last_off": "17:02",
+   "lead_min": 15.0,
+   "lag_min": -57.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm >30"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.3,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "220.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:48",
+   "last_off": "14:30",
+   "lead_min": 42.0,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "221.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:12",
+   "last_off": "11:30",
+   "lead_min": 18.0,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "221.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:08",
+   "last_off": "09:30",
+   "lead_min": 21.2,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "221.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:12",
+   "last_off": "11:30",
+   "lead_min": 17.5,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "221.B08",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "17:30",
+   "first_on": "11:49",
+   "last_off": "17:16",
+   "lead_min": 160.7,
+   "lag_min": -13.0,
+   "lead_bucket": ">120",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "221.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "301.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:28",
+   "lead_min": 15.0,
+   "lag_min": -1.8,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:04",
+   "last_off": "11:30",
+   "lead_min": 25.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:03",
+   "last_off": "11:30",
+   "lead_min": 26.0,
+   "lag_min": 0.3,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:49",
+   "last_off": "14:25",
+   "lead_min": 40.4,
+   "lag_min": -4.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:50",
+   "last_off": "11:30",
+   "lead_min": 39.4,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:50",
+   "last_off": "11:30",
+   "lead_min": 39.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:31",
+   "last_off": "14:21",
+   "lead_min": 58.5,
+   "lag_min": -8.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "302.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:03",
+   "last_off": "11:30",
+   "lead_min": 26.5,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:08",
+   "last_off": "11:29",
+   "lead_min": 21.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:31",
+   "last_off": "16:30",
+   "lead_min": 58.7,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:40",
+   "last_off": "11:30",
+   "lead_min": 49.8,
+   "lag_min": 0.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:42",
+   "last_off": "16:30",
+   "lead_min": 47.8,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:05",
+   "last_off": "11:30",
+   "lead_min": 24.3,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:32",
+   "last_off": "16:19",
+   "lead_min": 57.8,
+   "lag_min": -10.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:55",
+   "last_off": "11:30",
+   "lead_min": 34.1,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:48",
+   "last_off": "16:29",
+   "lead_min": 41.7,
+   "lag_min": -0.6,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:31",
+   "last_off": "11:30",
+   "lead_min": 58.1,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "303.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:46",
+   "last_off": "14:30",
+   "lead_min": 43.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": "11:54",
+   "last_off": "15:22",
+   "lead_min": 35.6,
+   "lag_min": -7.4,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:09",
+   "last_off": "11:30",
+   "lead_min": 20.2,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "304.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": "11:49",
+   "last_off": "15:27",
+   "lead_min": 40.0,
+   "lag_min": -2.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "06:43",
+   "last_off": "09:30",
+   "lead_min": 46.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:17",
+   "last_off": "16:30",
+   "lead_min": 72.7,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:02",
+   "last_off": "11:09",
+   "lead_min": 87.2,
+   "lag_min": -20.4,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:41",
+   "last_off": "16:30",
+   "lead_min": 48.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:39",
+   "last_off": "11:30",
+   "lead_min": 50.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:06",
+   "last_off": "16:30",
+   "lead_min": 23.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:17",
+   "last_off": "11:30",
+   "lead_min": 72.4,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:34",
+   "last_off": "16:28",
+   "lead_min": 55.4,
+   "lag_min": -1.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:01",
+   "last_off": "11:30",
+   "lead_min": 88.6,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "305.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:43",
+   "last_off": "16:30",
+   "lead_min": 46.5,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "306.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:11",
+   "last_off": "11:30",
+   "lead_min": 18.1,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "306.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:10",
+   "last_off": "11:30",
+   "lead_min": 19.2,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "306.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:05",
+   "last_off": "11:30",
+   "lead_min": 24.2,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "306.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:43",
+   "last_off": "11:30",
+   "lead_min": 46.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "306.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:10",
+   "last_off": "11:30",
+   "lead_min": 19.1,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:02",
+   "last_off": "11:28",
+   "lead_min": 27.1,
+   "lag_min": -1.4,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:02",
+   "last_off": "11:30",
+   "lead_min": 27.3,
+   "lag_min": 0.4,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:11",
+   "last_off": "16:30",
+   "lead_min": 18.2,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:06",
+   "last_off": "11:30",
+   "lead_min": 23.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:43",
+   "last_off": "16:30",
+   "lead_min": 46.5,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:57",
+   "last_off": "11:30",
+   "lead_min": 32.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:46",
+   "last_off": "14:30",
+   "lead_min": 43.1,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:08",
+   "last_off": "11:30",
+   "lead_min": 21.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "307.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:31",
+   "last_off": "14:30",
+   "lead_min": 58.1,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "308.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:39",
+   "last_off": "11:30",
+   "lead_min": 50.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "308.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:44",
+   "last_off": "11:30",
+   "lead_min": 45.4,
+   "lag_min": 0.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "308.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:29",
+   "last_off": "11:30",
+   "lead_min": 60.5,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "308.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:39",
+   "last_off": "11:30",
+   "lead_min": 50.6,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "308.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:45",
+   "last_off": "11:30",
+   "lead_min": 44.5,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "309.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:02",
+   "last_off": "11:30",
+   "lead_min": 28.0,
+   "lag_min": 0.4,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "309.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:47",
+   "last_off": "16:30",
+   "lead_min": 42.5,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "309.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:57",
+   "last_off": "11:30",
+   "lead_min": 32.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "309.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:30",
+   "last_off": "16:30",
+   "lead_min": 59.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "309.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:04",
+   "last_off": "09:30",
+   "lead_min": 25.3,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "309.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:31",
+   "last_off": "16:30",
+   "lead_min": 58.7,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "310.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:04",
+   "last_off": "11:30",
+   "lead_min": 25.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "310.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:00",
+   "last_off": "11:30",
+   "lead_min": 29.2,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "310.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:01",
+   "last_off": "11:30",
+   "lead_min": 28.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "310.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:04",
+   "last_off": "11:30",
+   "lead_min": 25.2,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "310.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:59",
+   "last_off": "11:30",
+   "lead_min": 30.2,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "311.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:05",
+   "last_off": "11:30",
+   "lead_min": 24.8,
+   "lag_min": 0.3,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "311.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:32",
+   "last_off": "16:30",
+   "lead_min": 57.7,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "311.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:59",
+   "last_off": "11:30",
+   "lead_min": 31.0,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "311.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:38",
+   "last_off": "14:29",
+   "lead_min": 51.4,
+   "lag_min": -1.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "311.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:02",
+   "last_off": "09:30",
+   "lead_min": 27.2,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "314.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:10",
+   "last_off": "11:30",
+   "lead_min": 19.9,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "314.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:05",
+   "last_off": "11:30",
+   "lead_min": 24.5,
+   "lag_min": 0.3,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "314.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:11",
+   "last_off": "11:30",
+   "lead_min": 18.1,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "314.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "314.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:07",
+   "last_off": "11:30",
+   "lead_min": 23.0,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "316.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "316.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:54",
+   "last_off": "11:30",
+   "lead_min": 35.7,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "316.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "316.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:00",
+   "last_off": "11:30",
+   "lead_min": 29.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "316.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:59",
+   "last_off": "11:30",
+   "lead_min": 30.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "318.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "318.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:06",
+   "last_off": "11:30",
+   "lead_min": 23.2,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "318.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "318.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "318.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:11",
+   "last_off": "11:30",
+   "lead_min": 18.1,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "320.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:06",
+   "last_off": "11:30",
+   "lead_min": 23.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "320.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:00",
+   "last_off": "11:30",
+   "lead_min": 29.1,
+   "lag_min": 0.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "320.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:58",
+   "last_off": "11:30",
+   "lead_min": 31.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "320.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:04",
+   "last_off": "11:30",
+   "lead_min": 25.0,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "320.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:00",
+   "last_off": "11:30",
+   "lead_min": 29.8,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:40",
+   "last_off": "11:30",
+   "lead_min": 49.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:32",
+   "last_off": "14:30",
+   "lead_min": 57.6,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-12",
+   "start": "16:30",
+   "end": "18:30",
+   "first_on": "16:05",
+   "last_off": "18:30",
+   "lead_min": 24.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:12",
+   "last_off": "11:30",
+   "lead_min": 17.3,
+   "lag_min": 0.2,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:07",
+   "last_off": "16:30",
+   "lead_min": 22.9,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-14",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "06:56",
+   "last_off": "11:26",
+   "lead_min": 153.6,
+   "lag_min": -3.1,
+   "lead_bucket": ">120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:48",
+   "last_off": "16:30",
+   "lead_min": 41.9,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:37",
+   "last_off": "14:30",
+   "lead_min": 52.5,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-15",
+   "start": "16:30",
+   "end": "18:30",
+   "first_on": "16:07",
+   "last_off": "18:30",
+   "lead_min": 22.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "401.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:01",
+   "last_off": "16:30",
+   "lead_min": 28.4,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:09",
+   "last_off": "11:30",
+   "lead_min": 20.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:32",
+   "last_off": "16:30",
+   "lead_min": 57.1,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-13",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:48",
+   "last_off": "11:15",
+   "lead_min": 41.7,
+   "lag_min": -14.6,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:33",
+   "last_off": "16:29",
+   "lead_min": 56.2,
+   "lag_min": -0.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "19:30",
+   "first_on": "11:37",
+   "last_off": "19:30",
+   "lead_min": 52.7,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "403.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "404.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:05",
+   "last_off": "11:21",
+   "lead_min": 25.0,
+   "lag_min": -8.6,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:48",
+   "last_off": "11:19",
+   "lead_min": 41.8,
+   "lag_min": -10.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:50",
+   "last_off": "16:20",
+   "lead_min": 39.2,
+   "lag_min": -9.6,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-14",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:31",
+   "last_off": "11:20",
+   "lead_min": -1.0,
+   "lag_min": -9.6,
+   "lead_bucket": "Sau giờ học",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:47",
+   "last_off": "16:28",
+   "lead_min": 42.3,
+   "lag_min": -1.1,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": null,
+   "last_off": null,
+   "lead_min": null,
+   "lag_min": null,
+   "lead_bucket": null,
+   "lag_bucket": null
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:12",
+   "last_off": "16:22",
+   "lead_min": 17.4,
+   "lag_min": -7.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:19",
+   "lead_min": 16.5,
+   "lag_min": -10.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "405.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:47",
+   "last_off": "16:26",
+   "lead_min": 42.6,
+   "lag_min": -3.7,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:32",
+   "last_off": "16:23",
+   "lead_min": 57.3,
+   "lag_min": -6.5,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:30",
+   "last_off": "16:23",
+   "lead_min": 59.2,
+   "lag_min": -6.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:17",
+   "lead_min": 15.0,
+   "lag_min": -12.3,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:48",
+   "last_off": "16:30",
+   "lead_min": 41.9,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "09:56",
+   "last_off": "16:20",
+   "lead_min": 154.0,
+   "lag_min": -9.9,
+   "lead_bucket": ">120",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "06:55",
+   "last_off": "11:29",
+   "lead_min": 34.9,
+   "lag_min": -1.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "407.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:30",
+   "last_off": "16:19",
+   "lead_min": 59.0,
+   "lag_min": -10.2,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-12",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:59",
+   "last_off": "14:30",
+   "lead_min": 30.6,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:14",
+   "last_off": "16:29",
+   "lead_min": 75.6,
+   "lag_min": -0.4,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": "12:07",
+   "last_off": "15:26",
+   "lead_min": 22.7,
+   "lag_min": -3.3,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-15",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:12",
+   "last_off": "09:28",
+   "lead_min": 17.9,
+   "lag_min": -1.8,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": "11:36",
+   "last_off": "15:27",
+   "lead_min": 53.2,
+   "lag_min": -2.4,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:13",
+   "last_off": "11:30",
+   "lead_min": 16.3,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "409.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "411.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:44",
+   "last_off": "16:30",
+   "lead_min": 45.2,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "413.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "413.B08",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "15:26",
+   "lead_min": 15.0,
+   "lag_min": -63.9,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm >30"
+  },
+  {
+   "room_id": "413.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:15",
+   "last_off": "09:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "413.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "15:30",
+   "first_on": null,
+   "last_off": null,
+   "lead_min": null,
+   "lag_min": null,
+   "lead_bucket": null,
+   "lag_bucket": null
+  },
+  {
+   "room_id": "413.B08",
+   "date": "2026-10-14",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "09:49",
+   "lead_min": 15.0,
+   "lag_min": -100.8,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm >30"
+  },
+  {
+   "room_id": "413.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "09:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "415.B08",
+   "date": "2026-10-12",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:33",
+   "last_off": "11:30",
+   "lead_min": 56.0,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "415.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:48",
+   "last_off": "14:30",
+   "lead_min": 41.4,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "415.B08",
+   "date": "2026-10-15",
+   "start": "09:30",
+   "end": "11:30",
+   "first_on": "08:24",
+   "last_off": "11:28",
+   "lead_min": 65.9,
+   "lag_min": -1.9,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-13",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:18",
+   "lead_min": 15.0,
+   "lag_min": -11.6,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-13",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:54",
+   "last_off": "16:27",
+   "lead_min": 35.4,
+   "lag_min": -2.2,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-14",
+   "start": "07:30",
+   "end": "09:30",
+   "first_on": "07:22",
+   "last_off": "09:28",
+   "lead_min": 7.3,
+   "lag_min": -1.7,
+   "lead_bucket": "0–10",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-14",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:28",
+   "last_off": "16:14",
+   "lead_min": 61.2,
+   "lag_min": -15.5,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Tắt sớm 5–30"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-15",
+   "start": "08:30",
+   "end": "11:30",
+   "first_on": "08:15",
+   "last_off": "11:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:51",
+   "last_off": "14:30",
+   "lead_min": 38.4,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-16",
+   "start": "07:30",
+   "end": "11:30",
+   "first_on": "07:15",
+   "last_off": "11:27",
+   "lead_min": 15.0,
+   "lag_min": -2.7,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "417.B08",
+   "date": "2026-10-16",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "12:15",
+   "last_off": "16:29",
+   "lead_min": 15.0,
+   "lag_min": -0.4,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "419.B08",
+   "date": "2026-10-12",
+   "start": "12:30",
+   "end": "16:30",
+   "first_on": "11:44",
+   "last_off": "16:30",
+   "lead_min": 45.6,
+   "lag_min": 0.0,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "419.B08",
+   "date": "2026-10-13",
+   "start": "09:30",
+   "end": "12:30",
+   "first_on": "09:00",
+   "last_off": "12:30",
+   "lead_min": 29.7,
+   "lag_min": 0.0,
+   "lead_bucket": "20–40",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "419.B08",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "16:30",
+   "first_on": "14:15",
+   "last_off": "16:30",
+   "lead_min": 15.0,
+   "lag_min": 0.0,
+   "lead_bucket": "10–20 (thiết kế 15)",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "419.B08",
+   "date": "2026-10-15",
+   "start": "12:30",
+   "end": "14:30",
+   "first_on": "11:37",
+   "last_off": "14:28",
+   "lead_min": 52.9,
+   "lag_min": -1.5,
+   "lead_bucket": "40–60",
+   "lag_bucket": "Đúng giờ ±5"
+  },
+  {
+   "room_id": "419.B08",
+   "date": "2026-10-16",
+   "start": "09:30",
+   "end": "16:30",
+   "first_on": "08:00",
+   "last_off": "16:30",
+   "lead_min": 89.7,
+   "lag_min": 0.0,
+   "lead_bucket": "60–120",
+   "lag_bucket": "Đúng giờ ±5"
+  }
+ ],
+ "room_day": [
+  {
+   "room_id": "101.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-12",
+   "gio_phong": 0.79,
+   "gio_may": 1.59
+  },
+  {
+   "room_id": "101.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-13",
+   "gio_phong": 0.0,
+   "gio_may": 0.01
+  },
+  {
+   "room_id": "101.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-14",
+   "gio_phong": 0.31,
+   "gio_may": 0.63
+  },
+  {
+   "room_id": "101.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-15",
+   "gio_phong": 0.52,
+   "gio_may": 1.05
+  },
+  {
+   "room_id": "103.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 0.02,
+   "gio_may": 0.09
+  },
+  {
+   "room_id": "104.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-13",
+   "gio_phong": 1.54,
+   "gio_may": 3.09
+  },
+  {
+   "room_id": "105.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.77,
+   "gio_may": 1.54
+  },
+  {
+   "room_id": "105.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 2.57,
+   "gio_may": 5.99
+  },
+  {
+   "room_id": "105.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.74,
+   "gio_may": 2.94
+  },
+  {
+   "room_id": "105.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 3.13,
+   "gio_may": 8.46
+  },
+  {
+   "room_id": "105.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.47,
+   "gio_may": 0.7
+  },
+  {
+   "room_id": "106.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.04,
+   "gio_may": 0.07
+  },
+  {
+   "room_id": "106.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.2,
+   "gio_may": 2.41
+  },
+  {
+   "room_id": "106.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.65,
+   "gio_may": 1.3
+  },
+  {
+   "room_id": "106.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.2,
+   "gio_may": 0.39
+  },
+  {
+   "room_id": "107.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.31,
+   "gio_may": 1.18
+  },
+  {
+   "room_id": "108.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-14",
+   "gio_phong": 0.12,
+   "gio_may": 0.12
+  },
+  {
+   "room_id": "109.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-12",
+   "gio_phong": 0.64,
+   "gio_may": 2.51
+  },
+  {
+   "room_id": "109.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-13",
+   "gio_phong": 2.51,
+   "gio_may": 9.04
+  },
+  {
+   "room_id": "109.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-14",
+   "gio_phong": 0.27,
+   "gio_may": 0.94
+  },
+  {
+   "room_id": "109.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-15",
+   "gio_phong": 0.6,
+   "gio_may": 2.4
+  },
+  {
+   "room_id": "109.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 2.99,
+   "gio_may": 11.32
+  },
+  {
+   "room_id": "111.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-12",
+   "gio_phong": 0.16,
+   "gio_may": 0.62
+  },
+  {
+   "room_id": "111.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-13",
+   "gio_phong": 0.49,
+   "gio_may": 1.5
+  },
+  {
+   "room_id": "111.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-14",
+   "gio_phong": 0.09,
+   "gio_may": 0.18
+  },
+  {
+   "room_id": "111.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 2.62,
+   "gio_may": 10.47
+  },
+  {
+   "room_id": "112.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-13",
+   "gio_phong": 2.53,
+   "gio_may": 5.06
+  },
+  {
+   "room_id": "114.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.25,
+   "gio_may": 0.79
+  },
+  {
+   "room_id": "114.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.31,
+   "gio_may": 2.61
+  },
+  {
+   "room_id": "114.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.23,
+   "gio_may": 0.87
+  },
+  {
+   "room_id": "116.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-12",
+   "gio_phong": 0.23,
+   "gio_may": 0.85
+  },
+  {
+   "room_id": "201.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 2.65,
+   "gio_may": 5.29
+  },
+  {
+   "room_id": "201.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.69,
+   "gio_may": 1.39
+  },
+  {
+   "room_id": "201.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.9,
+   "gio_may": 3.79
+  },
+  {
+   "room_id": "201.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.49,
+   "gio_may": 0.99
+  },
+  {
+   "room_id": "201.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.48,
+   "gio_may": 0.97
+  },
+  {
+   "room_id": "202.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.77,
+   "gio_may": 1.54
+  },
+  {
+   "room_id": "202.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.36,
+   "gio_may": 0.73
+  },
+  {
+   "room_id": "202.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.02,
+   "gio_may": 0.04
+  },
+  {
+   "room_id": "202.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.48,
+   "gio_may": 0.57
+  },
+  {
+   "room_id": "203.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 3.96,
+   "gio_may": 7.93
+  },
+  {
+   "room_id": "203.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.28,
+   "gio_may": 0.56
+  },
+  {
+   "room_id": "203.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.54,
+   "gio_may": 1.07
+  },
+  {
+   "room_id": "204.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.58,
+   "gio_may": 1.16
+  },
+  {
+   "room_id": "204.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.03,
+   "gio_may": 0.05
+  },
+  {
+   "room_id": "204.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.89,
+   "gio_may": 1.23
+  },
+  {
+   "room_id": "204.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.98,
+   "gio_may": 1.95
+  },
+  {
+   "room_id": "205.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.37,
+   "gio_may": 0.74
+  },
+  {
+   "room_id": "205.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.78,
+   "gio_may": 1.56
+  },
+  {
+   "room_id": "205.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.1,
+   "gio_may": 0.19
+  },
+  {
+   "room_id": "205.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.57,
+   "gio_may": 1.15
+  },
+  {
+   "room_id": "206.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.54,
+   "gio_may": 1.08
+  },
+  {
+   "room_id": "206.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.58,
+   "gio_may": 1.16
+  },
+  {
+   "room_id": "206.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.59,
+   "gio_may": 1.16
+  },
+  {
+   "room_id": "207.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.01,
+   "gio_may": 1.05
+  },
+  {
+   "room_id": "207.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.28,
+   "gio_may": 0.55
+  },
+  {
+   "room_id": "207.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.36,
+   "gio_may": 0.72
+  },
+  {
+   "room_id": "207.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.83,
+   "gio_may": 3.65
+  },
+  {
+   "room_id": "207.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.86,
+   "gio_may": 2.99
+  },
+  {
+   "room_id": "208.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.43,
+   "gio_may": 2.86
+  },
+  {
+   "room_id": "208.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.28,
+   "gio_may": 0.55
+  },
+  {
+   "room_id": "208.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.28,
+   "gio_may": 0.57
+  },
+  {
+   "room_id": "208.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.37,
+   "gio_may": 0.74
+  },
+  {
+   "room_id": "209.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.04,
+   "gio_may": 2.08
+  },
+  {
+   "room_id": "209.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 2.56,
+   "gio_may": 5.06
+  },
+  {
+   "room_id": "209.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.11,
+   "gio_may": 1.82
+  },
+  {
+   "room_id": "209.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.38,
+   "gio_may": 1.96
+  },
+  {
+   "room_id": "209.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.54,
+   "gio_may": 1.09
+  },
+  {
+   "room_id": "210.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.93,
+   "gio_may": 3.87
+  },
+  {
+   "room_id": "210.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.64,
+   "gio_may": 1.81
+  },
+  {
+   "room_id": "210.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.76,
+   "gio_may": 1.52
+  },
+  {
+   "room_id": "210.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.15,
+   "gio_may": 0.3
+  },
+  {
+   "room_id": "210.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 3.39,
+   "gio_may": 3.82
+  },
+  {
+   "room_id": "211.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.15,
+   "gio_may": 0.3
+  },
+  {
+   "room_id": "211.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.71,
+   "gio_may": 1.83
+  },
+  {
+   "room_id": "211.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.33,
+   "gio_may": 2.65
+  },
+  {
+   "room_id": "211.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 2.77,
+   "gio_may": 5.53
+  },
+  {
+   "room_id": "213.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.57,
+   "gio_may": 1.57
+  },
+  {
+   "room_id": "213.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.02,
+   "gio_may": 2.03
+  },
+  {
+   "room_id": "213.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.57,
+   "gio_may": 1.57
+  },
+  {
+   "room_id": "213.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 2.94,
+   "gio_may": 3.35
+  },
+  {
+   "room_id": "213.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.39,
+   "gio_may": 2.78
+  },
+  {
+   "room_id": "214.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.52,
+   "gio_may": 1.05
+  },
+  {
+   "room_id": "214.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.92,
+   "gio_may": 3.84
+  },
+  {
+   "room_id": "214.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.57,
+   "gio_may": 1.15
+  },
+  {
+   "room_id": "214.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.76,
+   "gio_may": 1.52
+  },
+  {
+   "room_id": "215.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.19,
+   "gio_may": 0.38
+  },
+  {
+   "room_id": "215.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.66,
+   "gio_may": 1.32
+  },
+  {
+   "room_id": "215.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.47,
+   "gio_may": 1.63
+  },
+  {
+   "room_id": "215.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.8,
+   "gio_may": 1.8
+  },
+  {
+   "room_id": "215.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.32,
+   "gio_may": 2.64
+  },
+  {
+   "room_id": "216.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.13,
+   "gio_may": 1.13
+  },
+  {
+   "room_id": "216.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.78,
+   "gio_may": 1.56
+  },
+  {
+   "room_id": "216.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.23,
+   "gio_may": 0.46
+  },
+  {
+   "room_id": "216.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.79,
+   "gio_may": 1.57
+  },
+  {
+   "room_id": "217.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 2.06,
+   "gio_may": 4.12
+  },
+  {
+   "room_id": "217.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.19,
+   "gio_may": 2.09
+  },
+  {
+   "room_id": "217.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 2.55,
+   "gio_may": 2.55
+  },
+  {
+   "room_id": "218.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.66,
+   "gio_may": 0.73
+  },
+  {
+   "room_id": "218.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.55,
+   "gio_may": 3.09
+  },
+  {
+   "room_id": "218.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.4,
+   "gio_may": 0.8
+  },
+  {
+   "room_id": "219.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.58,
+   "gio_may": 1.17
+  },
+  {
+   "room_id": "219.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.54,
+   "gio_may": 1.07
+  },
+  {
+   "room_id": "220.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.44,
+   "gio_may": 0.87
+  },
+  {
+   "room_id": "220.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.33,
+   "gio_may": 0.66
+  },
+  {
+   "room_id": "220.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.09,
+   "gio_may": 0.17
+  },
+  {
+   "room_id": "220.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.37,
+   "gio_may": 0.73
+  },
+  {
+   "room_id": "221.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 2.69,
+   "gio_may": 5.38
+  },
+  {
+   "room_id": "221.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.43,
+   "gio_may": 0.45
+  },
+  {
+   "room_id": "221.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 2.34,
+   "gio_may": 4.69
+  },
+  {
+   "room_id": "301.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.39,
+   "gio_may": 2.78
+  },
+  {
+   "room_id": "301.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.63,
+   "gio_may": 1.09
+  },
+  {
+   "room_id": "301.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 6.48,
+   "gio_may": 12.04
+  },
+  {
+   "room_id": "302.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.89,
+   "gio_may": 2.5
+  },
+  {
+   "room_id": "302.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.01,
+   "gio_may": 2.02
+  },
+  {
+   "room_id": "302.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 2.59,
+   "gio_may": 3.48
+  },
+  {
+   "room_id": "302.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.92,
+   "gio_may": 1.83
+  },
+  {
+   "room_id": "302.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 2.17,
+   "gio_may": 2.82
+  },
+  {
+   "room_id": "303.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.61,
+   "gio_may": 1.22
+  },
+  {
+   "room_id": "303.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.96,
+   "gio_may": 1.92
+  },
+  {
+   "room_id": "303.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.66,
+   "gio_may": 1.31
+  },
+  {
+   "room_id": "303.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.6,
+   "gio_may": 2.31
+  },
+  {
+   "room_id": "303.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.02,
+   "gio_may": 2.04
+  },
+  {
+   "room_id": "304.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.26,
+   "gio_may": 0.52
+  },
+  {
+   "room_id": "304.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.78,
+   "gio_may": 1.56
+  },
+  {
+   "room_id": "304.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.34,
+   "gio_may": 0.67
+  },
+  {
+   "room_id": "305.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.32,
+   "gio_may": 3.99
+  },
+  {
+   "room_id": "305.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 1.59,
+   "gio_may": 3.72
+  },
+  {
+   "room_id": "305.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.76,
+   "gio_may": 1.51
+  },
+  {
+   "room_id": "305.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.46,
+   "gio_may": 4.64
+  },
+  {
+   "room_id": "305.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.58,
+   "gio_may": 4.03
+  },
+  {
+   "room_id": "306.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.07,
+   "gio_may": 0.14
+  },
+  {
+   "room_id": "306.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.44,
+   "gio_may": 0.87
+  },
+  {
+   "room_id": "306.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.01,
+   "gio_may": 0.01
+  },
+  {
+   "room_id": "307.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.12,
+   "gio_may": 0.45
+  },
+  {
+   "room_id": "307.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.12,
+   "gio_may": 0.46
+  },
+  {
+   "room_id": "307.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.71,
+   "gio_may": 1.4
+  },
+  {
+   "room_id": "307.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.6,
+   "gio_may": 1.37
+  },
+  {
+   "room_id": "307.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.61,
+   "gio_may": 1.33
+  },
+  {
+   "room_id": "308.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.56,
+   "gio_may": 1.12
+  },
+  {
+   "room_id": "308.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.42,
+   "gio_may": 0.85
+  },
+  {
+   "room_id": "308.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.67,
+   "gio_may": 1.35
+  },
+  {
+   "room_id": "308.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.68,
+   "gio_may": 1.35
+  },
+  {
+   "room_id": "308.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.53,
+   "gio_may": 1.06
+  },
+  {
+   "room_id": "309.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.62,
+   "gio_may": 1.24
+  },
+  {
+   "room_id": "309.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.51,
+   "gio_may": 1.02
+  },
+  {
+   "room_id": "309.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.07,
+   "gio_may": 2.03
+  },
+  {
+   "room_id": "309.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 3.74,
+   "gio_may": 6.68
+  },
+  {
+   "room_id": "309.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.73,
+   "gio_may": 1.46
+  },
+  {
+   "room_id": "310.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.1,
+   "gio_may": 0.2
+  },
+  {
+   "room_id": "310.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.15,
+   "gio_may": 0.31
+  },
+  {
+   "room_id": "310.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.3,
+   "gio_may": 0.61
+  },
+  {
+   "room_id": "310.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.09,
+   "gio_may": 0.17
+  },
+  {
+   "room_id": "310.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.27,
+   "gio_may": 0.44
+  },
+  {
+   "room_id": "311.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.36,
+   "gio_may": 2.72
+  },
+  {
+   "room_id": "311.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.66,
+   "gio_may": 1.33
+  },
+  {
+   "room_id": "311.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.8,
+   "gio_may": 1.59
+  },
+  {
+   "room_id": "311.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 6.89,
+   "gio_may": 13.81
+  },
+  {
+   "room_id": "311.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.04,
+   "gio_may": 2.08
+  },
+  {
+   "room_id": "312.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-12",
+   "gio_phong": 2.07,
+   "gio_may": 2.26
+  },
+  {
+   "room_id": "312.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-13",
+   "gio_phong": 0.24,
+   "gio_may": 0.24
+  },
+  {
+   "room_id": "312.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-14",
+   "gio_phong": 0.27,
+   "gio_may": 0.27
+  },
+  {
+   "room_id": "312.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 0.25,
+   "gio_may": 0.25
+  },
+  {
+   "room_id": "314.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 2.52,
+   "gio_may": 5.03
+  },
+  {
+   "room_id": "314.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.16,
+   "gio_may": 0.31
+  },
+  {
+   "room_id": "314.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.98,
+   "gio_may": 3.95
+  },
+  {
+   "room_id": "314.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 2.92,
+   "gio_may": 5.84
+  },
+  {
+   "room_id": "314.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 3.1,
+   "gio_may": 6.2
+  },
+  {
+   "room_id": "316.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.14,
+   "gio_may": 0.28
+  },
+  {
+   "room_id": "316.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.41,
+   "gio_may": 0.81
+  },
+  {
+   "room_id": "316.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.12,
+   "gio_may": 0.23
+  },
+  {
+   "room_id": "316.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.64,
+   "gio_may": 0.93
+  },
+  {
+   "room_id": "316.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 2.58,
+   "gio_may": 5.16
+  },
+  {
+   "room_id": "318.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.05,
+   "gio_may": 0.11
+  },
+  {
+   "room_id": "320.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.07,
+   "gio_may": 0.13
+  },
+  {
+   "room_id": "320.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 4.9,
+   "gio_may": 5.63
+  },
+  {
+   "room_id": "320.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 4.86,
+   "gio_may": 7.43
+  },
+  {
+   "room_id": "320.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 4.03,
+   "gio_may": 5.33
+  },
+  {
+   "room_id": "320.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 4.89,
+   "gio_may": 5.05
+  },
+  {
+   "room_id": "401.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.15,
+   "gio_may": 1.84
+  },
+  {
+   "room_id": "401.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.05,
+   "gio_may": 0.1
+  },
+  {
+   "room_id": "401.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 2.59,
+   "gio_may": 4.82
+  },
+  {
+   "room_id": "401.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.58,
+   "gio_may": 0.8
+  },
+  {
+   "room_id": "401.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.14,
+   "gio_may": 0.28
+  },
+  {
+   "room_id": "403.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.6,
+   "gio_may": 1.19
+  },
+  {
+   "room_id": "403.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.95,
+   "gio_may": 1.89
+  },
+  {
+   "room_id": "403.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.85,
+   "gio_may": 1.69
+  },
+  {
+   "room_id": "404.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.08,
+   "gio_may": 0.16
+  },
+  {
+   "room_id": "405.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.68,
+   "gio_may": 1.37
+  },
+  {
+   "room_id": "405.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.45,
+   "gio_may": 0.91
+  },
+  {
+   "room_id": "405.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.24,
+   "gio_may": 0.48
+  },
+  {
+   "room_id": "405.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.38,
+   "gio_may": 0.75
+  },
+  {
+   "room_id": "406.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 1.14,
+   "gio_may": 2.28
+  },
+  {
+   "room_id": "407.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.58,
+   "gio_may": 1.17
+  },
+  {
+   "room_id": "407.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.65,
+   "gio_may": 0.84
+  },
+  {
+   "room_id": "407.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.68,
+   "gio_may": 1.37
+  },
+  {
+   "room_id": "407.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 2.23,
+   "gio_may": 4.47
+  },
+  {
+   "room_id": "407.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 0.83,
+   "gio_may": 1.66
+  },
+  {
+   "room_id": "408.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 1.12,
+   "gio_may": 2.24
+  },
+  {
+   "room_id": "409.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.18,
+   "gio_may": 0.35
+  },
+  {
+   "room_id": "409.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.93,
+   "gio_may": 0.93
+  },
+  {
+   "room_id": "409.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.63,
+   "gio_may": 1.25
+  },
+  {
+   "room_id": "409.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.56,
+   "gio_may": 1.12
+  },
+  {
+   "room_id": "410.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 0.94,
+   "gio_may": 1.87
+  },
+  {
+   "room_id": "411.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 0.88,
+   "gio_may": 3.12
+  },
+  {
+   "room_id": "412.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-12",
+   "gio_phong": 0.21,
+   "gio_may": 0.41
+  },
+  {
+   "room_id": "412.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-14",
+   "gio_phong": 0.18,
+   "gio_may": 0.35
+  },
+  {
+   "room_id": "412.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-15",
+   "gio_phong": 0.91,
+   "gio_may": 1.35
+  },
+  {
+   "room_id": "412.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 1.75,
+   "gio_may": 3.49
+  },
+  {
+   "room_id": "413.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.17,
+   "gio_may": 0.35
+  },
+  {
+   "room_id": "413.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.99,
+   "gio_may": 1.97
+  },
+  {
+   "room_id": "413.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 10.77,
+   "gio_may": 21.54
+  },
+  {
+   "room_id": "414.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 1.24,
+   "gio_may": 2.49
+  },
+  {
+   "room_id": "415.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.6,
+   "gio_may": 1.2
+  },
+  {
+   "room_id": "415.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.42,
+   "gio_may": 0.78
+  },
+  {
+   "room_id": "415.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 1.08,
+   "gio_may": 2.17
+  },
+  {
+   "room_id": "417.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 1.45,
+   "gio_may": 1.45
+  },
+  {
+   "room_id": "417.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.26,
+   "gio_may": 0.51
+  },
+  {
+   "room_id": "417.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 0.74,
+   "gio_may": 1.47
+  },
+  {
+   "room_id": "417.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.31,
+   "gio_may": 0.61
+  },
+  {
+   "room_id": "419.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-12",
+   "gio_phong": 0.43,
+   "gio_may": 0.85
+  },
+  {
+   "room_id": "419.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-13",
+   "gio_phong": 0.16,
+   "gio_may": 0.32
+  },
+  {
+   "room_id": "419.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-14",
+   "gio_phong": 1.09,
+   "gio_may": 1.23
+  },
+  {
+   "room_id": "419.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-15",
+   "gio_phong": 0.55,
+   "gio_may": 1.1
+  },
+  {
+   "room_id": "419.B08",
+   "kind": "Phòng học",
+   "date": "2026-10-16",
+   "gio_phong": 1.16,
+   "gio_may": 1.73
+  },
+  {
+   "room_id": "420.B08",
+   "kind": "Phòng chức năng",
+   "date": "2026-10-16",
+   "gio_phong": 0.32,
+   "gio_may": 0.32
+  }
+ ],
+ "night_events": {
+  "summary": {
+   "events": 3,
+   "rooms": 1,
+   "night_hours": 1.62,
+   "seg_hours": 1.62,
+   "machine_hours": 3.27,
+   "restart_events": 3,
+   "longest_chain_hours": 0.79
+  },
+  "rows": [
+   {
+    "room_id": "101.B08",
+    "date": "2026-10-12",
+    "start": "2026-10-12 23:03",
+    "end": "2026-10-12 23:51",
+    "seg_hours": 0.79,
+    "night_hours": 0.79,
+    "units_on": 2,
+    "machine_hours": 1.59,
+    "chain_start": "2026-10-12 23:03",
+    "chain_end": "2026-10-12 23:51",
+    "chain_hours": 0.79,
+    "restart_after_lockdown": true,
+    "rule_id": "DEFAULT_FUNC",
+    "cause": "Phòng chức năng – ngoài phạm vi Giai đoạn 1",
+    "cause_group": "Ngoài phạm vi GĐ1"
+   },
+   {
+    "room_id": "101.B08",
+    "date": "2026-10-14",
+    "start": "2026-10-14 22:43",
+    "end": "2026-10-14 23:02",
+    "seg_hours": 0.31,
+    "night_hours": 0.31,
+    "units_on": 2,
+    "machine_hours": 0.63,
+    "chain_start": "2026-10-14 22:43",
+    "chain_end": "2026-10-14 23:02",
+    "chain_hours": 0.31,
+    "restart_after_lockdown": true,
+    "rule_id": "DEFAULT_FUNC",
+    "cause": "Phòng chức năng – ngoài phạm vi Giai đoạn 1",
+    "cause_group": "Ngoài phạm vi GĐ1"
+   },
+   {
+    "room_id": "101.B08",
+    "date": "2026-10-15",
+    "start": "2026-10-15 22:37",
+    "end": "2026-10-15 23:08",
+    "seg_hours": 0.52,
+    "night_hours": 0.52,
+    "units_on": 2,
+    "machine_hours": 1.05,
+    "chain_start": "2026-10-15 22:37",
+    "chain_end": "2026-10-15 23:08",
+    "chain_hours": 0.52,
+    "restart_after_lockdown": true,
+    "rule_id": "DEFAULT_FUNC",
+    "cause": "Phòng chức năng – ngoài phạm vi Giai đoạn 1",
+    "cause_group": "Ngoài phạm vi GĐ1"
+   }
+  ]
+ },
+ "coverage_buckets": [
+  {
+   "nhom": "Không chạy",
+   "so_luong": 2
+  },
+  {
+   "nhom": "<50%",
+   "so_luong": 6
+  },
+  {
+   "nhom": "50–80%",
+   "so_luong": 2
+  },
+  {
+   "nhom": "80–95%",
+   "so_luong": 44
+  },
+  {
+   "nhom": "≥95%",
+   "so_luong": 428
+  }
+ ],
+ "event_day_rooms": [],
+ "slots_total": 482,
+ "daily": [
+  {
+   "date": "2026-10-12",
+   "slots_total": 87,
+   "slots_kpi": 87,
+   "minute_coverage": 0.9747450142,
+   "zero_slots": 0,
+   "slots_lt95": 8,
+   "early_off_hours": 4.6777777778,
+   "ooh_hours_classroom": 34.6558333333,
+   "ooh_hours_function": 4.0997222222,
+   "ooh_hours_total": 38.7555555556,
+   "ooh_machine_hours": 72.5105555556,
+   "explained_hours": 31.3419444444,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-13",
+   "slots_total": 108,
+   "slots_kpi": 108,
+   "minute_coverage": 0.9676182726,
+   "zero_slots": 1,
+   "slots_lt95": 12,
+   "early_off_hours": 4.8777777778,
+   "ooh_hours_classroom": 36.4952777778,
+   "ooh_hours_function": 7.3238888889,
+   "ooh_hours_total": 43.8191666667,
+   "ooh_machine_hours": 84.1922222222,
+   "explained_hours": 32.4055555556,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-14",
+   "slots_total": 86,
+   "slots_kpi": 86,
+   "minute_coverage": 0.9793359788,
+   "zero_slots": 0,
+   "slots_lt95": 12,
+   "early_off_hours": 4.1830555556,
+   "ooh_hours_classroom": 37.4944444444,
+   "ooh_hours_function": 1.2363888889,
+   "ooh_hours_total": 38.7308333333,
+   "ooh_machine_hours": 69.6427777778,
+   "explained_hours": 31.7569444444,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-15",
+   "slots_total": 109,
+   "slots_kpi": 109,
+   "minute_coverage": 0.9668476256,
+   "zero_slots": 1,
+   "slots_lt95": 13,
+   "early_off_hours": 3.6813888889,
+   "ooh_hours_classroom": 52.6619444444,
+   "ooh_hours_function": 2.0297222222,
+   "ooh_hours_total": 54.6916666667,
+   "ooh_machine_hours": 105.2466666667,
+   "explained_hours": 48.2108333333,
+   "event_day": false
+  },
+  {
+   "date": "2026-10-16",
+   "slots_total": 92,
+   "slots_kpi": 92,
+   "minute_coverage": 0.9814256722,
+   "zero_slots": 0,
+   "slots_lt95": 9,
+   "early_off_hours": 3.6166666667,
+   "ooh_hours_classroom": 56.6133333333,
+   "ooh_hours_function": 13.2658333333,
+   "ooh_hours_total": 69.8791666667,
+   "ooh_machine_hours": 138.1855555556,
+   "explained_hours": 51.8230555556,
+   "event_day": false
+  }
+ ],
+ "ooh_by_group": [
+  {
+   "cause_group": "Chưa phân loại",
+   "luot": 53,
+   "gio_phong": 22.38,
+   "gio_may": 45.42
+  },
+  {
+   "cause_group": "Lịch / quy trình",
+   "luot": 1,
+   "gio_phong": 10.77,
+   "gio_may": 21.54
+  },
+  {
+   "cause_group": "Ngoài phạm vi GĐ1",
+   "luot": 45,
+   "gio_phong": 27.96,
+   "gio_may": 72.39
+  },
+  {
+   "cause_group": "Người dùng",
+   "luot": 289,
+   "gio_phong": 184.77,
+   "gio_may": 330.43
+  }
+ ],
+ "top_rooms_ooh": [
+  {
+   "room_id": "320.B08",
+   "gio_phong": 18.75
+  },
+  {
+   "room_id": "413.B08",
+   "gio_phong": 11.93
+  },
+  {
+   "room_id": "311.B08",
+   "gio_phong": 10.74
+  },
+  {
+   "room_id": "314.B08",
+   "gio_phong": 10.67
+  },
+  {
+   "room_id": "302.B08",
+   "gio_phong": 8.58
+  },
+  {
+   "room_id": "301.B08",
+   "gio_phong": 8.5
+  },
+  {
+   "room_id": "213.B08",
+   "gio_phong": 8.48
+  },
+  {
+   "room_id": "210.B08",
+   "gio_phong": 7.87
+  },
+  {
+   "room_id": "105.B08",
+   "gio_phong": 7.68
+  },
+  {
+   "room_id": "305.B08",
+   "gio_phong": 6.7
+  },
+  {
+   "room_id": "309.B08",
+   "gio_phong": 6.67
+  },
+  {
+   "room_id": "209.B08",
+   "gio_phong": 6.63
+  },
+  {
+   "room_id": "201.B08",
+   "gio_phong": 6.22
+  },
+  {
+   "room_id": "211.B08",
+   "gio_phong": 5.95
+  },
+  {
+   "room_id": "217.B08",
+   "gio_phong": 5.79
+  }
+ ],
+ "ooh_by_start_hour": [
+  {
+   "h": 5,
+   "gio_phong": 9.27
+  },
+  {
+   "h": 6,
+   "gio_phong": 21.96
+  },
+  {
+   "h": 7,
+   "gio_phong": 31.53
+  },
+  {
+   "h": 8,
+   "gio_phong": 7.77
+  },
+  {
+   "h": 9,
+   "gio_phong": 24.57
+  },
+  {
+   "h": 10,
+   "gio_phong": 7.1
+  },
+  {
+   "h": 11,
+   "gio_phong": 71.25
+  },
+  {
+   "h": 12,
+   "gio_phong": 30.55
+  },
+  {
+   "h": 13,
+   "gio_phong": 10.39
+  },
+  {
+   "h": 14,
+   "gio_phong": 7.14
+  },
+  {
+   "h": 15,
+   "gio_phong": 2.99
+  },
+  {
+   "h": 16,
+   "gio_phong": 2.45
+  },
+  {
+   "h": 17,
+   "gio_phong": 13.33
+  },
+  {
+   "h": 19,
+   "gio_phong": 2.55
+  },
+  {
+   "h": 20,
+   "gio_phong": 1.4
+  },
+  {
+   "h": 22,
+   "gio_phong": 0.84
+  },
+  {
+   "h": 23,
+   "gio_phong": 0.79
+  }
+ ],
+ "repeat_pattern_candidates": [
+  {
+   "room_id": "201.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 3,
+   "so_ngay": 3,
+   "gio_phong": 1.35,
+   "khung_gio": "11:40-11:46",
+   "cac_ngay": "2026-10-13, 2026-10-15, 2026-10-16"
+  },
+  {
+   "room_id": "205.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 1.32,
+   "khung_gio": "11:25-11:35",
+   "cac_ngay": "2026-10-13, 2026-10-15"
+  },
+  {
+   "room_id": "206.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 5,
+   "so_ngay": 3,
+   "gio_phong": 1.63,
+   "khung_gio": "11:35-12:02",
+   "cac_ngay": "2026-10-12, 2026-10-14, 2026-10-15"
+  },
+  {
+   "room_id": "208.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 0.64,
+   "khung_gio": "11:47-11:53",
+   "cac_ngay": "2026-10-14, 2026-10-16"
+  },
+  {
+   "room_id": "210.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 0.36,
+   "khung_gio": "11:57-12:00",
+   "cac_ngay": "2026-10-14, 2026-10-15"
+  },
+  {
+   "room_id": "214.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 4,
+   "so_ngay": 4,
+   "gio_phong": 2.13,
+   "khung_gio": "11:35-11:42",
+   "cac_ngay": "2026-10-12, 2026-10-13, 2026-10-14, 2026-10-16"
+  },
+  {
+   "room_id": "219.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 1.04,
+   "khung_gio": "11:35-11:42",
+   "cac_ngay": "2026-10-15, 2026-10-16"
+  },
+  {
+   "room_id": "302.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 3,
+   "so_ngay": 2,
+   "gio_phong": 1.05,
+   "khung_gio": "11:35-11:49",
+   "cac_ngay": "2026-10-13, 2026-10-15"
+  },
+  {
+   "room_id": "303.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 5,
+   "so_ngay": 5,
+   "gio_phong": 2.38,
+   "khung_gio": "11:35-11:48",
+   "cac_ngay": "2026-10-12, 2026-10-13, 2026-10-14, 2026-10-15, 2026-10-16"
+  },
+  {
+   "room_id": "304.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 0.59,
+   "khung_gio": "11:49-11:54",
+   "cac_ngay": "2026-10-13, 2026-10-16"
+  },
+  {
+   "room_id": "307.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 5,
+   "so_ngay": 3,
+   "gio_phong": 1.42,
+   "khung_gio": "11:35-11:46",
+   "cac_ngay": "2026-10-14, 2026-10-15, 2026-10-16"
+  },
+  {
+   "room_id": "309.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 3,
+   "so_ngay": 3,
+   "gio_phong": 1.6,
+   "khung_gio": "11:31-11:47",
+   "cac_ngay": "2026-10-13, 2026-10-14, 2026-10-16"
+  },
+  {
+   "room_id": "311.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 1.11,
+   "khung_gio": "11:35-11:38",
+   "cac_ngay": "2026-10-13, 2026-10-14"
+  },
+  {
+   "room_id": "403.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 1.17,
+   "khung_gio": "11:35-11:35",
+   "cac_ngay": "2026-10-12, 2026-10-14"
+  },
+  {
+   "room_id": "405.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 3,
+   "so_ngay": 3,
+   "gio_phong": 1.07,
+   "khung_gio": "11:47-11:50",
+   "cac_ngay": "2026-10-12, 2026-10-14, 2026-10-16"
+  },
+  {
+   "room_id": "407.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 3,
+   "so_ngay": 3,
+   "gio_phong": 1.53,
+   "khung_gio": "11:35-11:48",
+   "cac_ngay": "2026-10-12, 2026-10-14, 2026-10-16"
+  },
+  {
+   "room_id": "409.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 2,
+   "so_ngay": 2,
+   "gio_phong": 0.73,
+   "khung_gio": "11:36-11:59",
+   "cac_ngay": "2026-10-12, 2026-10-15"
+  },
+  {
+   "room_id": "417.B08",
+   "position": "Giữa các ca (nghỉ > ngưỡng nối)",
+   "so_lan": 3,
+   "so_ngay": 3,
+   "gio_phong": 1.25,
+   "khung_gio": "11:28-11:54",
+   "cac_ngay": "2026-10-13, 2026-10-14, 2026-10-15"
+  }
+ ]
+}
