@@ -518,8 +518,20 @@ function build(d) {
     tv.querySelectorAll("tbody tr").forEach((tr, i) => { tr.classList.add("pick"); tr.title = "Bấm để xem danh sách phòng"; tr.addEventListener("click", () => { sel = hist[i].nhom; draw(); render(); }); });
     c.card.append(tv);
   }
-  const fmtLead = x => x.lead_min >= 0 ? `bật ${x.first_on}, ca bắt đầu ${x.start} (sớm ${nf0.format(x.lead_min)} phút)` : `ca bắt đầu ${x.start}, bật lúc ${x.first_on} (trễ ${nf0.format(-x.lead_min)} phút)`;
-  const fmtLag = x => x.lag_min >= 0 ? `ca kết thúc ${x.end}, tắt ${x.last_off} (trễ ${nf0.format(x.lag_min)} phút)` : `ca kết thúc ${x.end}, tắt ${x.last_off} (sớm ${nf0.format(-x.lag_min)} phút)`;
+  const fmtHM = m => { m = Math.round(Math.abs(m)); return m < 60 ? `${m} phút` : `${Math.floor(m / 60)} giờ${m % 60 ? " " + (m % 60) + " phút" : ""}`; };
+  const classTag = (code, name, lect) => code ? `lớp ${code}${lect ? " (GV " + lect + ")" : ""}` : "tiết học (không rõ mã lớp)";
+  const fmtLead = x => {
+    const who = classTag(x.first_course, x.first_course_name, x.first_lecturer);
+    return x.lead_min >= 0
+      ? `${who}, vào tiết ${x.start} — phòng đã bật máy từ ${x.first_on}, tức sớm ${fmtHM(x.lead_min)} trước giờ học`
+      : `${who}, vào tiết ${x.start} — phòng bật trễ, mãi ${x.first_on} mới bật (trễ ${fmtHM(-x.lead_min)} sau giờ học)`;
+  };
+  const fmtLag = x => {
+    const who = classTag(x.last_course, x.last_course_name, x.last_lecturer);
+    return x.lag_min >= 0
+      ? `${who}, tiết kết thúc ${x.end} — máy chạy thừa đến ${x.last_off}, tức trễ ${fmtHM(x.lag_min)} sau khi lớp tan`
+      : `${who}, tiết kết thúc ${x.end} — máy tắt lúc ${x.last_off}, tức sớm ${fmtHM(-x.lag_min)} trước khi lớp tan`;
+  };
   /* Bảng "phòng đáng chú ý" hiện sẵn (không cần bấm) cho các nhóm lệch nhiều nhất */
   function topTable(card_, title, note, buckets, spec) {
     const blocks = Array.isArray(d.blocks_detail) ? d.blocks_detail : null;
