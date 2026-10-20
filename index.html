@@ -480,6 +480,25 @@ function build(d) {
     const cats = d.coverage_buckets.map(b => ({label: b.nhom, value: b.so_luong}));
     register(c.box, () => columns(c.box, cats.map(x => ({...x, color: x.label === "≥95%" ? css("--s1") : css("--neutral")})), {unit: "Số ca", aria: "Phân bố độ phủ từng ca"}));
     c.card.append(tableView(["Mức phủ", "Số ca"], cats.map(x => [x.label, x.value])));
+    /* Danh sách đầy đủ các tiết hoàn toàn không có máy chạy (0 phút) — hiện sẵn để tra nhanh */
+    if (Array.isArray(d.slot_coverage_detail)) {
+      const zero = d.slot_coverage_detail.filter(x => x.coverage_pct === 0);
+      const wrap = el("div", {class: "drill"});
+      wrap.append(el("h3", {}, "Danh sách tiết máy lạnh không chạy phút nào"));
+      if (!zero.length) {
+        wrap.append(el("p", {class: "hint"}, "Không có tiết nào 0 phút chạy tuần này."));
+      } else {
+        wrap.append(el("p", {class: "sum"}, el("b", {}, `${zero.length} tiết`), ` trong số ${nf0.format(ov.slots_kpi)} ca có lịch học.`));
+        const t = el("table"), th = el("thead"), tr = el("tr");
+        ["Ngày", "Phòng", "Tiết (giờ học)", "Lớp", "Giảng viên", "SV"].forEach((h, i) => tr.append(el("th", {style: i === 3 ? "text-align:left" : ""}, h))); th.append(tr); t.append(th);
+        const tb = el("tbody"); t.append(tb);
+        zero.sort((a, b) => a.date.localeCompare(b.date) || a.start.localeCompare(b.start)).forEach(x => tb.append(el("tr", {},
+          el("td", {}, dlabel(x.date)), el("td", {}, x.room_id.replace(".B08", "")), el("td", {}, `${x.start}–${x.end}`),
+          el("td", {class: "det"}, x.course_name || "(không có mã lớp)"), el("td", {}, x.lecturer || "–"), el("td", {}, String(x.students ?? "–")))));
+        wrap.append(el("div", {class: "scroll"}, t));
+      }
+      c.card.append(wrap);
+    }
     gridA.append(c.card);
   }
   /* khối ca: bấm cột để liệt kê phòng và khung giờ */
@@ -528,9 +547,9 @@ function build(d) {
   };
   const fmtLag = x => {
     const who = classTag(x.last_course, x.last_course_name, x.last_lecturer);
-    return x.lag_min >= 0
-      ? `${who}, tiết kết thúc ${x.end} — máy chạy thừa đến ${x.last_off}, tức trễ ${fmtHM(x.lag_min)} sau khi lớp tan`
-      : `${who}, tiết kết thúc ${x.end} — máy tắt lúc ${x.last_off}, tức sớm ${fmtHM(-x.lag_min)} trước khi lớp tan`;
+    if (x.lag_min >= 0) return `${who}, tiết kết thúc ${x.end} — máy chạy thừa đến ${x.last_off}, tức trễ ${fmtHM(x.lag_min)} sau khi lớp tan`;
+    const sameBlockEarlyOn = x.lead_min > 10 ? ` (lưu ý: cùng khối ca này phòng cũng bật sớm ${fmtHM(x.lead_min)} trước giờ học — không bù cho việc tắt sớm, vì đây là thời điểm khác trong ca)` : "";
+    return `${who}, tiết kết thúc ${x.end} — máy tắt lúc ${x.last_off}, tức sớm ${fmtHM(-x.lag_min)} trước khi lớp tan${sameBlockEarlyOn}`;
   };
   /* Bảng "phòng đáng chú ý" hiện sẵn (không cần bấm) cho các nhóm lệch nhiều nhất */
   function topTable(card_, title, note, buckets, spec) {
@@ -586,6 +605,10 @@ function build(d) {
       {empty: "Không có phòng nào tắt trễ quá 5 phút tuần này.", sub: "gồm 2 nhóm 'Trễ 5–15' và 'Trễ >15' phút"},
       ["Trễ 5–15", "Trễ >15"],
       {bucket: "lag_bucket", amount: x => Math.max(x.lag_min, 0), detail: fmtLag});
+    topTable(c, "Phòng tắt sớm so với giờ kết thúc (máy lạnh tắt khi lớp còn học)",
+      {empty: "Không có phòng nào tắt sớm quá 5 phút tuần này.", sub: "gồm 2 nhóm 'Tắt sớm 5–30' và 'Tắt sớm >30' phút — KHÔNG trừ cho phần bật sớm cùng ca, vì đây là hai vấn đề khác nhau (xem ghi chú bên dưới bảng)"},
+      ["Tắt sớm 5–30", "Tắt sớm >30"],
+      {bucket: "lag_bucket", amount: x => Math.max(-x.lag_min, 0), detail: fmtLag});
     gridA.append(c.card);
   }
 
