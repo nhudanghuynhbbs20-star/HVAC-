@@ -520,6 +520,29 @@ function build(d) {
   }
   const fmtLead = x => x.lead_min >= 0 ? `bật ${x.first_on}, ca bắt đầu ${x.start} (sớm ${nf0.format(x.lead_min)} phút)` : `ca bắt đầu ${x.start}, bật lúc ${x.first_on} (trễ ${nf0.format(-x.lead_min)} phút)`;
   const fmtLag = x => x.lag_min >= 0 ? `ca kết thúc ${x.end}, tắt ${x.last_off} (trễ ${nf0.format(x.lag_min)} phút)` : `ca kết thúc ${x.end}, tắt ${x.last_off} (sớm ${nf0.format(-x.lag_min)} phút)`;
+  /* Bảng "phòng đáng chú ý" hiện sẵn (không cần bấm) cho các nhóm lệch nhiều nhất */
+  function topTable(card_, title, note, buckets, spec) {
+    const blocks = Array.isArray(d.blocks_detail) ? d.blocks_detail : null;
+    if (!blocks) return;
+    const rl = r => r.replace(".B08", "");
+    const rows = blocks.filter(x => buckets.includes(x[spec.bucket]));
+    const wrap = el("div", {class: "drill"});
+    wrap.append(el("h3", {}, title));
+    if (!rows.length) { wrap.append(el("p", {class: "hint"}, note.empty)); card_.card.append(wrap); return; }
+    const byRoom = new Map();
+    rows.forEach(x => { if (!byRoom.has(x.room_id)) byRoom.set(x.room_id, []); byRoom.get(x.room_id).push(x); });
+    const list = [...byRoom.entries()].map(([room, xs]) => ({room, xs, tot: xs.reduce((a, x) => a + spec.amount(x), 0)})).sort((a, b) => b.tot - a.tot);
+    const totAll = list.reduce((a, r) => a + r.tot, 0);
+    wrap.append(el("p", {class: "sum"}, el("b", {}, `${rows.length} lượt, ${list.length} phòng`), ` · tổng lệch `, el("b", {}, hrs(totAll / 60)), ` · ${note.sub}`));
+    const t = el("table"), th = el("thead"), tr = el("tr");
+    ["Phòng", "Số lần", "Tổng lệch", "Từng tiết (ngày: chi tiết)"].forEach((h, i) => tr.append(el("th", {style: i === 3 ? "text-align:left" : ""}, h))); th.append(tr); t.append(th);
+    const tb = el("tbody"); t.append(tb);
+    list.forEach(r => tb.append(el("tr", {}, el("td", {}, rl(r.room)), el("td", {}, String(r.xs.length)), el("td", {}, hrs(r.tot / 60)),
+      el("td", {class: "det"}, ...r.xs.flatMap((x, i) => [i ? el("br") : "", `${dlabel(x.date)}: ${spec.detail(x)}`])))));
+    t.append(el("tfoot"));
+    wrap.append(el("div", {class: "scroll"}, t));
+    card_.card.append(wrap);
+  }
   /* A3. Bật trước giờ học */
   if (Array.isArray(d.on_lead_hist)) {
     const c = card("Máy bật trước giờ học bao lâu?", "");
@@ -531,6 +554,10 @@ function build(d) {
       title: "Bật trước giờ học", totalLabel: "tổng giờ bật trước giờ học",
       amount: x => Math.max(x.lead_min, 0) , over: x => Math.max(x.lead_min - L, 0), overLabel: `vượt mức thiết kế ${L} phút`,
       detail: fmtLead});
+    topTable(c, "Phòng bật sớm nhiều nhất (quá 60 phút trước giờ học)",
+      {empty: "Không có phòng nào bật quá sớm (>60 phút) tuần này.", sub: "gồm 2 nhóm '60–120' và '>120' phút"},
+      ["60–120", ">120"],
+      {bucket: "lead_bucket", amount: x => Math.max(x.lead_min, 0), detail: fmtLead});
     gridA.append(c.card);
   }
   /* A4. Tắt so với giờ kết thúc */
@@ -543,6 +570,10 @@ function build(d) {
       short: n => n.replace(" ", "\n"), good: n => n.startsWith("Đúng"),
       title: "Tắt so với giờ kết thúc", totalLabel: "tổng giờ lệch",
       amount: x => Math.abs(x.lag_min), detail: fmtLag});
+    topTable(c, "Phòng tắt trễ so với giờ kết thúc (máy chạy thừa sau khi lớp tan)",
+      {empty: "Không có phòng nào tắt trễ quá 5 phút tuần này.", sub: "gồm 2 nhóm 'Trễ 5–15' và 'Trễ >15' phút"},
+      ["Trễ 5–15", "Trễ >15"],
+      {bucket: "lag_bucket", amount: x => Math.max(x.lag_min, 0), detail: fmtLag});
     gridA.append(c.card);
   }
 
