@@ -145,6 +145,13 @@ td{white-space:nowrap}td:first-child{white-space:normal}
 @media (max-width:1000px){.kpis.four{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.kpis.four{grid-template-columns:1fr}}
 .scroll td{vertical-align:top}
+.barlist{display:flex;flex-direction:column;gap:7px;margin-top:2px}
+.barrow{display:grid;grid-template-columns:70px 1fr 170px;align-items:center;gap:10px;font-size:13px}
+.barlabel{color:var(--text-primary);font-weight:600;white-space:nowrap}
+.bartrack{height:14px;border-radius:4px;background:var(--surface-2,var(--line));overflow:hidden}
+.barfill{height:100%;border-radius:4px;min-width:3px}
+.barval{color:var(--text-secondary);font-size:12.5px;white-space:nowrap}
+@media (max-width:560px){.barrow{grid-template-columns:60px 1fr;grid-template-areas:"label val" "track track"}.barlabel{grid-area:label}.barval{grid-area:val;text-align:right}.bartrack{grid-area:track}}
 .cmp td,.cmp th{white-space:normal}
 .cmp select{font:inherit;font-size:13px;color:var(--text-primary);background:var(--surface-0);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
 </style>
@@ -278,12 +285,26 @@ function stackedColumns(box, cats, series, o) {
     const cx = m.l + slot * i + slot / 2, x0 = cx - bw / 2;
     const g = sv("g"); let acc = 0;
     const live = series.filter(s => (s.values[c.key] || 0) > 0);
+    const hit = sv("rect", {class: "hit", x: cx - slot / 2, y: m.t, width: slot, height: ih + 6, "aria-label": c.label});
+    const rows = series.slice().reverse().filter(s => (s.values[c.key] || 0) > 0).map(s => ({label: s.name, color: s.color, value: hrs(s.values[c.key])}));
+    rows.push({label: "Tổng", value: hrs(totals[i])});
+    bindTip(hit, c.label + (c.note ? " · " + c.note : ""), rows, () => g.style.opacity = .82, () => g.style.opacity = 1);
+    svg.append(hit);
     live.forEach((s, k) => {
       const v = s.values[c.key], h = v / max * ih, top = y(acc + v);
       const isTop = k === live.length - 1;
       const gap = k === 0 ? 0 : 2;
       const hh = Math.max(h - gap, 1);
-      g.append(sv("path", {d: isTop ? topRounded(x0, top, bw, hh, 4) : `M${x0},${top}h${bw}v${hh}h${-bw}Z`, fill: s.color}));
+      const seg = sv("path", {d: isTop ? topRounded(x0, top, bw, hh, 4) : `M${x0},${top}h${bw}v${hh}h${-bw}Z`, fill: s.color});
+      const isSel = o.selected && o.selected.date === c.key && o.selected.name === s.name;
+      if (o.onSelect) {
+        seg.style.cursor = "pointer";
+        seg.addEventListener("click", ev => { ev.stopPropagation(); o.onSelect(c.key, s.name); });
+        bindTip(seg, `${c.label} · ${s.name}${o.hint ? " — " + o.hint : " — bấm để xem chi tiết"}`, [{label: s.name, color: s.color, value: hrs(v)}]);
+        if (o.selected && !isSel) seg.style.opacity = .35;
+        if (isSel) { seg.setAttribute("stroke", css("--text-primary")); seg.setAttribute("stroke-width", 2); }
+      }
+      g.append(seg);
       acc += v;
     });
     if (totals[i] > 0) svg.append(sv("text", {class: "val", x: cx, y: y(totals[i]) - 6, "text-anchor": "middle"}, nf1.format(totals[i])));
@@ -291,11 +312,6 @@ function stackedColumns(box, cats, series, o) {
     const lab = sv("text", {x: cx, y: H - m.b + 16, "text-anchor": "middle"}, c.label);
     svg.append(lab);
     if (c.note) svg.append(sv("text", {x: cx, y: H - m.b + 29, "text-anchor": "middle", style: "font-size:10.5px"}, c.note));
-    const hit = sv("rect", {class: "hit", x: cx - slot / 2, y: m.t, width: slot, height: ih + 6, "aria-label": c.label});
-    const rows = series.slice().reverse().filter(s => (s.values[c.key] || 0) > 0).map(s => ({label: s.name, color: s.color, value: hrs(s.values[c.key])}));
-    rows.push({label: "Tổng", value: hrs(totals[i])});
-    bindTip(hit, c.label + (c.note ? " · " + c.note : ""), rows, () => g.style.opacity = .82, () => g.style.opacity = 1);
-    svg.append(hit);
   });
   box.append(svg);
 }
@@ -643,10 +659,72 @@ function build(d) {
   if (Array.isArray(d.ooh_by_day_group)) {
     const c = card("Mỗi ngày chạy thừa bao nhiêu, vì lý do gì?", "", {wide: true, legend: GROUPS.map(g => [g[0], g[1]])});
     c.card.id = "c-day";
-    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "chiều cao cột là tổng giờ phòng chạy thừa trong ngày; màu là nhóm nguyên nhân. Phần xám “Chưa phân loại” là phần chưa ai giải thích được, cần đối chiếu thêm."), c.box);
+    c.card.insertBefore(el("p", {class: "how"}, el("b", {}, "Cách đọc: "), "chiều cao cột là tổng giờ phòng chạy thừa trong ngày; màu là nhóm nguyên nhân. Phần xám “Chưa phân loại” là phần chưa ai giải thích được, cần đối chiếu thêm. Bấm vào một ô màu để xem danh sách phòng."), c.box);
     const cats = dates.map(dt => ({key: dt, label: dlabel(dt), note: evDays.includes(dt) ? "Sự kiện" : ""}));
     const series = GROUPS.map(([n, col]) => ({name: n, color: col, values: Object.fromEntries(d.ooh_by_day_group.filter(r => r.cause_group === n).map(r => [r.date, r.gio_phong]))}));
-    register(c.box, () => stackedColumns(c.box, cats, series, {aria: "Giờ phòng ngoài giờ theo ngày và nhóm nguyên nhân"}));
+    let sel = null, wholeWeek = false;
+    const panel = el("div", {class: "drill"});
+    const od = Array.isArray(d.ooh_detail) ? d.ooh_detail : null;
+    const rl = r => r.replace(".B08", "");
+    function renderPanel() {
+      panel.replaceChildren();
+      if (!sel) { panel.append(el("p", {class: "hint"}, "Bấm vào một ô màu trong biểu đồ trên để xem danh sách phòng thuộc nhóm đó.")); return; }
+      if (!od) { panel.append(el("p", {class: "hint"}, "data.json chưa có 'ooh_detail' — chạy lại pipeline mới nhất để xem danh sách.")); return; }
+      const rows = od.filter(x => x.cause_group === sel.name && (wholeWeek || x.date === sel.date));
+      const col = (GROUPS.find(g => g[0] === sel.name) || [,"var(--neutral)"])[1];
+      const hd = el("div", {style: "display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap"});
+      hd.append(el("h3", {style: "margin:0"}, sel.name, " — ", wholeWeek ? "cả tuần" : dlabel(sel.date)));
+      if (dates.length > 1) {
+        const tgl = el("button", {class: "linkbtn", type: "button"}, wholeWeek ? "Chỉ xem ngày đã bấm" : "Xem cả tuần");
+        tgl.addEventListener("click", () => { wholeWeek = !wholeWeek; renderPanel(); });
+        hd.append(tgl);
+      }
+      panel.append(hd);
+      if (!rows.length) { panel.append(el("p", {class: "hint"}, "Không có lượt nào.")); return; }
+      const totH = rows.reduce((a, x) => a + x.gio_phong, 0);
+      panel.append(el("p", {class: "sum"}, el("b", {}, `${rows.length} lượt`), ` · tổng `, el("b", {}, hrs(totH))));
+      if (sel.name === "Ngoài phạm vi GĐ1") {
+        /* phòng chức năng: gộp theo phòng, xếp hạng - đúng ý "phòng nào dùng nhiều điện ngoài giờ, chưa tối ưu" */
+        const byRoom = new Map();
+        rows.forEach(x => { const k = x.room_id; const o2 = byRoom.get(k) || {room: k, gio_phong: 0, gio_may: 0, n: 0}; o2.gio_phong += x.gio_phong; o2.gio_may += x.gio_may; o2.n++; byRoom.set(k, o2); });
+        const list = [...byRoom.values()].sort((a, b) => b.gio_phong - a.gio_phong);
+        const mx = Math.max(...list.map(r => r.gio_phong), 1);
+        const bars = el("div", {class: "barlist"});
+        list.forEach(r => {
+          const row = el("div", {class: "barrow"});
+          row.append(el("div", {class: "barlabel"}, rl(r.room)));
+          const track = el("div", {class: "bartrack"});
+          const fill = el("div", {class: "barfill"}); fill.style.width = (r.gio_phong / mx * 100) + "%"; fill.style.background = col;
+          track.append(fill); row.append(track);
+          row.append(el("div", {class: "barval"}, `${nf1.format(r.gio_phong)} giờ (${r.n} lượt, ${nf1.format(r.gio_may)} giờ-máy)`));
+          bars.append(row);
+        });
+        panel.append(bars);
+      } else {
+        const t = el("table"), th = el("thead"), tr = el("tr");
+        ["Ngày", "Phòng", "Giờ", "Vị trí", "Lý do suy ra", "Mã quy tắc"].forEach((h, i) => tr.append(el("th", {style: i === 4 ? "text-align:left" : ""}, h))); th.append(tr); t.append(th);
+        const tb = el("tbody"); t.append(tb);
+        rows.forEach(x => tb.append(el("tr", {},
+          el("td", {}, dlabel(x.date)), el("td", {}, rl(x.room_id)), el("td", {}, `${x.start}–${x.end}`),
+          el("td", {}, x.position || "–"), el("td", {class: "det"}, x.cause), el("td", {}, x.rule_id))));
+        panel.append(el("div", {class: "scroll"}, t));
+      }
+    }
+    function draw() {
+      stackedColumns(c.box, cats, series, {
+        aria: "Giờ phòng ngoài giờ theo ngày và nhóm nguyên nhân",
+        hint: "bấm để xem danh sách phòng",
+        selected: sel,
+        onSelect: (date, name) => {
+          sel = (sel && sel.date === date && sel.name === name) ? null : {date, name};
+          wholeWeek = false;
+          renderPanel();
+          draw();
+        }
+      });
+    }
+    register(c.box, draw);
+    c.card.append(panel); renderPanel();
     c.card.append(tableView(["Ngày"].concat(GROUPS.map(g => g[0])).concat(["Tổng"]),
       dates.map(dt => [dlabel(dt)].concat(series.map(s => nf1.format(s.values[dt] || 0))).concat([nf1.format(series.reduce((a, s) => a + (s.values[dt] || 0), 0))]))));
     grid.append(c.card);
