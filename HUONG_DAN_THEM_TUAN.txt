@@ -1,7 +1,0 @@
-Thêm một tuần mới vào trang:
-1. Chạy pipeline và build_energy.py cho tuần đó (Q-energy cắt đúng đến thời điểm cuối của log).
-2. Tạo thư mục weeks/<Tnn>/ rồi chép data.json và energy.json của tuần đó vào.
-3. Thêm một dòng vào weeks.json (đặt tuần mới lên đầu và đổi "default"):
-   {"id": "T43", "label": "T43 · 19–23/10/2026", "data": "weeks/T43/data.json", "energy": "weeks/T43/energy.json", "note": "(tùy chọn) lưu ý hiển thị dưới tiêu đề"}
-4. Đẩy cả thư mục lên GitHub Pages. Mở ?w=T41 để vào thẳng một tuần.
-Không có weeks.json thì trang chạy như cũ với data.json + energy.json ở thư mục gốc.
