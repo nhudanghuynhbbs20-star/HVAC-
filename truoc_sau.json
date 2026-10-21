@@ -1,0 +1,53 @@
+{
+ "generated_at": "2026-10-21T15:50:00",
+ "note": "So sánh giai đoạn CHƯA chạy hệ thống tự động (nhóm A) với giai đoạn ĐÃ chạy ổn định (T41+T42). Không dùng hệ số lãng phí cũ (0,93 / 0,374) của báo cáo thử nghiệm 5/2026 - mọi hệ số ở đây tính trực tiếp từ log vận hành + lịch AAO + điện Q-energy thực đo.",
+ "truoc": {
+  "label": "Trước khi có hệ thống (06/04 - 16/05/2026)",
+  "ngay": 36,
+  "S_gio_lich": 8323.0,
+  "R_gio_thuc_te": 11783.55,
+  "ooh_gio": 4248.74,
+  "he_so_lang_phi": 0.4158,
+  "kwh_per_machine_hour": 4.3104,
+  "r2": 0.8562,
+  "kwh_r2_days": 35,
+  "machines_per_run_room_hour": null
+ },
+ "sau": {
+  "label": "Sau khi có hệ thống, chạy ổn định (T41 05-10/10 + T42 12-16/10/2026)",
+  "T41": {
+   "ngay_log": 6,
+   "S_gio_lich": 982.0,
+   "R_gio_thuc_te": 1192.0772222222222,
+   "ooh_gio": 172.35444444444443,
+   "he_so_lang_phi": 0.21392792486988002,
+   "kwh_per_machine_hour": null,
+   "note": "Chưa có file Q-energy riêng cho T41 - dùng tạm hệ số kWh/giờ-máy của T42 (GIẢ ĐỊNH, cùng hệ thống/tòa nhà, cùng giai đoạn tháng 10)."
+  },
+  "T42": {
+   "ngay_log": 5,
+   "S_gio_lich": 1121.0,
+   "R_gio_thuc_te": 1410.6355555555556,
+   "ooh_gio": 217.9208333333333,
+   "he_so_lang_phi": 0.25837248488452774,
+   "kwh_per_machine_hour": 3.685,
+   "r2": 0.978,
+   "machines_per_run_room_hour": 2.18
+  },
+  "combined": {
+   "S_gio_lich": 2103.0,
+   "R_gio_thuc_te": 2602.712777777778,
+   "he_so_lang_phi": 0.2376190098800655
+  }
+ },
+ "khong_so_sanh": {
+  "label": "Giai đoạn thử nghiệm, chưa ổn định (18/05 - 02/06/2026) - KHÔNG dùng để so sánh trước/sau",
+  "ly_do": "Tỷ lệ lệnh bị nghẽn hàng đợi (QUEUED) 17-70% trong giai đoạn này; số liệu giờ-máy nhiều khả năng bị thổi phồng do lệnh TẮT thực thi trễ. Xem phân tích chi tiết đã trao đổi 21/10.",
+  "ngay": 14,
+  "kwh_per_machine_hour": 3.0815,
+  "r2": 0.433,
+  "total_kwh": 54639.6,
+  "total_machine_hours": 16876.7
+ },
+ "don_gia_vnd_kwh": 2128
+}

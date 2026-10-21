@@ -172,10 +172,12 @@ td{white-space:nowrap}td:first-child{white-space:normal}
   <div class="tabs" role="tablist" aria-label="Chọn góc nhìn">
     <button class="tab" role="tab" id="t1" aria-controls="app" aria-selected="true" type="button">1 · Kiểm tra vận hành hệ thống</button>
     <button class="tab" role="tab" id="t2" aria-controls="app2" aria-selected="false" type="button">2 · Góc nhìn quản lý</button>
+    <button class="tab" role="tab" id="t3" aria-controls="app3" aria-selected="false" type="button">3 · Trước/sau khi có hệ thống</button>
   </div>
   <div id="notices"></div>
   <main id="app" class="panel" role="tabpanel" aria-labelledby="t1" aria-live="polite"></main>
   <section id="app2" class="panel" role="tabpanel" aria-labelledby="t2" hidden></section>
+  <section id="app3" class="panel" role="tabpanel" aria-labelledby="t3" hidden></section>
   <div class="foot" id="foot"></div>
 </div>
 <div class="tip" id="tip" role="tooltip"></div>
@@ -1080,16 +1082,100 @@ function buildTab2(d) {
   upd();
 }
 
+/* ---------- Tab 3: trước/sau khi có hệ thống ---------- */
+function buildTab3(ts) {
+  const host = document.getElementById("app3"); host.replaceChildren();
+  if (!ts) {
+    host.append(el("div", {class: "notice"}, el("b", {}, "Chưa có dữ liệu so sánh trước/sau. "), "Đặt file truoc_sau.json cùng thư mục với index.html rồi tải lại trang."));
+    return;
+  }
+  const T = ts.truoc, S = ts.sau, NC = ts.khong_so_sanh;
+  host.append(el("div", {class: "notice"}, el("b", {}, "Không dùng hệ số lãng phí cũ (0,93 / 0,374) của báo cáo thử nghiệm 5/2026. "),
+    "Mọi hệ số ở tab này tính trực tiếp từ log vận hành + lịch AAO + điện Q-energy thực đo, theo đúng công thức nêu ở cuối trang."));
+
+  const P = {price: ts.don_gia_vnd_kwh || 2128, weeks: 12, terms: 2};
+  const inPrice = el("input", {type: "number", min: "0", step: "1", inputmode: "numeric", value: String(P.price), "aria-label": "Đơn giá điện"});
+  const inWeeks = el("input", {type: "number", min: "1", max: "30", step: "1", inputmode: "numeric", value: String(P.weeks), "aria-label": "Số tuần học mỗi kỳ"});
+  const inTerms = el("input", {type: "number", min: "1", max: "6", step: "1", inputmode: "numeric", value: String(P.terms), "aria-label": "Số kỳ học mỗi năm"});
+  const par = el("section", {class: "card"}, el("h2", {}, "Thông số (có thể sửa)"),
+    el("div", {class: "inputs"},
+      el("label", {}, "Đơn giá điện (đồng/kWh)", inPrice),
+      el("label", {}, "Số tuần học mỗi kỳ", inWeeks),
+      el("label", {}, "Số kỳ học mỗi năm", inTerms)));
+  par.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), `Đơn giá ${nf0.format(2128)} đồng/kWh theo quy định chung của dự án (khác với đơn giá ${nf0.format(2138)} đang dùng ở Tab 2, vốn là đơn giá trung bình trường đại học bạn cung cấp riêng cho phần đó — hai nguồn khác nhau, tôi chưa tự gộp làm một; nếu muốn thống nhất một đơn giá cho cả 2 tab, nói tôi sửa).`));
+  host.append(par);
+
+  const dyn = [];
+  const upd = () => { P.price = parseFloat(inPrice.value) || 0; P.weeks = Math.max(1, parseFloat(inWeeks.value) || 12); P.terms = Math.max(1, parseFloat(inTerms.value) || 2); dyn.forEach(f => f()); };
+  [inPrice, inWeeks, inTerms].forEach(i => i.addEventListener("input", upd));
+  const liveTd = (fn) => { const td = el("td", {}); dyn.push(() => { td.textContent = fn(); }); td.textContent = fn(); return td; };
+
+  /* ===== 1. Hệ số lãng phí hai giai đoạn ===== */
+  host.append(el("div", {class: "sec"}, el("h2", {}, "1. Hệ số lãng phí: trước và sau khi có hệ thống"),
+    el("p", {}, "Hệ số lãng phí = (giờ phòng máy chạy thực tế − giờ có lịch học) ÷ giờ có lịch học. Phòng học, không tính ngày sự kiện (lớp nghỉ).")));
+  const k1 = el("div", {class: "grid kpis"});
+  const tileS = (l, v, s, kind) => el("div", {class: "card tile"}, el("div", {class: "lbl"}, ...(kind ? [el("span", {class: "tag"}, kind)] : []), l), el("div", {class: "val"}, v), el("div", {class: "sub"}, s));
+  k1.append(tileS("Trước khi có hệ thống", pct(T.he_so_lang_phi, 1), `${T.label} · ${T.ngay} ngày có log`, "ĐO THỰC TẾ"));
+  k1.append(tileS("Sau khi có hệ thống", pct(S.combined.he_so_lang_phi, 1), "T41 + T42 cộng gộp, 11 ngày có log", "ĐO THỰC TẾ"));
+  const giam = T.he_so_lang_phi - S.combined.he_so_lang_phi;
+  k1.append(tileS("Giảm được", pct(giam, 1), `từ ${pct(T.he_so_lang_phi, 1)} xuống ${pct(S.combined.he_so_lang_phi, 1)} (điểm phần trăm, không phải tỷ lệ tương đối)`, "SUY LUẬN"));
+  host.append(k1);
+  host.append(el("div", {class: "scroll"}, (() => {
+    const t = el("table"), th = el("thead"), tr = el("tr");
+    ["Giai đoạn", "Giờ có lịch (S)", "Giờ chạy thực tế (R)", "Hệ số (R-S)/S"].forEach((h, i) => tr.append(el("th", {style: i === 0 ? "text-align:left" : ""}, h))); th.append(tr); t.append(th);
+    const tb = el("tbody"); t.append(tb);
+    const row = (name, s, r, c) => tb.append(el("tr", {}, el("td", {style: "text-align:left"}, name), el("td", {}, nf0.format(s)), el("td", {}, nf0.format(r)), el("td", {}, pct(c, 1))));
+    row("Trước (06/04–16/05, loại 17/05 sự kiện)", T.S_gio_lich, T.R_gio_thuc_te, T.he_so_lang_phi);
+    row("· T41 (05–10/10, loại 09/10 sự kiện)", S.T41.S_gio_lich, S.T41.R_gio_thuc_te, S.T41.he_so_lang_phi);
+    row("· T42 (12–16/10)", S.T42.S_gio_lich, S.T42.R_gio_thuc_te, S.T42.he_so_lang_phi);
+    row("Sau, cộng gộp T41+T42", S.combined.S_gio_lich, S.combined.R_gio_thuc_te, S.combined.he_so_lang_phi);
+    return t;
+  })()));
+
+  /* ===== 2. Quy ra tiền ===== */
+  host.append(el("div", {class: "sec", style: "margin-top:20px"}, el("h2", {}, "2. Quy đổi ra điện và tiền"),
+    el("p", {}, "Áp hệ số lãng phí của giai đoạn 'trước' lên đúng khối lượng lịch học của giai đoạn 'sau', để xem nếu vẫn giữ cách vận hành cũ thì giai đoạn 'sau' sẽ lãng phí thêm bao nhiêu so với thực tế đã xảy ra.")));
+  const mprr = S.T42.machines_per_run_room_hour, kL = S.T42.kwh_per_machine_hour;
+  const gioTranhDuoc = () => Math.max(0, giam) * S.combined.S_gio_lich;
+  const kwhTranhDuoc = () => gioTranhDuoc() * mprr * kL;
+  const ndaysSau = S.T41.ngay_log + S.T42.ngay_log;
+  const perWeekKwh = () => kwhTranhDuoc() / ndaysSau * 5;
+  const k2 = el("div", {class: "grid kpis four"});
+  k2.append(el("div", {class: "card tile"}, el("div", {class: "lbl"}, el("span", {class: "tag"}, "SUY LUẬN"), "Giờ phòng tránh được"), el("div", {class: "val"}, nf0.format(gioTranhDuoc()) + " giờ"), el("div", {class: "sub"}, `trong ${nf0.format(S.combined.S_gio_lich)} giờ có lịch của T41+T42`)));
+  k2.append((() => { const v = el("div", {class: "val"}); dyn.push(() => v.textContent = nf0.format(kwhTranhDuoc()) + " kWh"); v.textContent = nf0.format(kwhTranhDuoc()) + " kWh";
+    return el("div", {class: "card tile"}, el("div", {class: "lbl"}, el("span", {class: "tag"}, "ƯỚC TÍNH"), "Điện tránh được (T41+T42)"), v, el("div", {class: "sub"}, `× ${nf1.format(mprr)} máy/giờ-phòng × ${nf1.format(kL)} kWh/giờ-máy (hệ số T42, R²=${pct(S.T42.r2, 0)})`)); })());
+  k2.append((() => { const v = el("div", {class: "val"}); const f = () => vnd(kwhTranhDuoc() * P.price); dyn.push(() => v.textContent = f()); v.textContent = f();
+    return el("div", {class: "card tile"}, el("div", {class: "lbl"}, el("span", {class: "tag"}, "ƯỚC TÍNH"), "Tiền tránh được (T41+T42)"), v, el("div", {class: "sub"}, `${ndaysSau} ngày có log`)); })());
+  k2.append((() => { const v = el("div", {class: "val"}); const f = () => vnd(perWeekKwh() * P.price * P.weeks * P.terms); dyn.push(() => v.textContent = f()); v.textContent = f();
+    return el("div", {class: "card tile"}, el("div", {class: "lbl"}, el("span", {class: "tag"}, "DỰ ĐOÁN"), "Quy ra cả năm"), v, el("div", {class: "sub"}, `${P.weeks} tuần × ${P.terms} kỳ, nhân thô theo tuần`)); })());
+  host.append(k2);
+  host.append(el("p", {class: "how"}, el("span", {class: "tag"}, "DỰ ĐOÁN"), "Phép nhân theo tuần/năm là ước lượng thô (chưa trừ nghỉ hè, nghỉ lễ, mùa mát), dùng để định cỡ, không dùng để cam kết số tiền."));
+  host.append(el("p", {class: "how"}, el("span", {class: "tag"}, "GIẢ ĐỊNH"), S.T41.note));
+  host.append(el("p", {class: "how"}, `Công thức: (hệ số trước − hệ số sau) × giờ có lịch của giai đoạn sau × ${nf1.format(mprr)} máy/giờ-phòng × ${nf1.format(kL)} kWh/giờ-máy × đơn giá.`));
+
+  /* ===== 3. Giai đoạn không dùng để so sánh ===== */
+  host.append(el("section", {class: "card", style: "margin-top:20px;border-style:dashed"},
+    el("h2", {}, "Giai đoạn thử nghiệm (18/05–02/06/2026) — không đưa vào so sánh trên"),
+    el("p", {}, NC.ly_do),
+    el("p", {class: "how"}, `Riêng giai đoạn này: ${NC.ngay} ngày, hệ số kWh/giờ-máy đo được ${nf1.format(NC.kwh_per_machine_hour)} nhưng R² chỉ ${pct(NC.r2, 0)} (yếu, so với ${pct(T.r2, 0)} ở giai đoạn trước và ${pct(S.T42.r2, 0)} ở T42) — độ tin cậy thấp, không dùng để tính tiết kiệm.`)));
+
+  upd();
+}
+
 /* ---------- chuyển tab ---------- */
 function showTab(n) {
-  const one = n === 1;
-  document.getElementById("app").hidden = !one; document.getElementById("app2").hidden = one;
-  document.getElementById("t1").setAttribute("aria-selected", String(one)); document.getElementById("t2").setAttribute("aria-selected", String(!one));
-  try { history.replaceState(null, "", one ? location.pathname + location.search : location.pathname + location.search + "#quanly"); } catch (e) {}
+  [1, 2, 3].forEach(i => {
+    const panelId = i === 1 ? "app" : "app" + i;
+    document.getElementById(panelId).hidden = i !== n;
+    document.getElementById("t" + i).setAttribute("aria-selected", String(i === n));
+  });
+  const hash = n === 1 ? "" : n === 2 ? "#quanly" : "#truocsau";
+  try { history.replaceState(null, "", location.pathname + location.search + hash); } catch (e) {}
   requestAnimationFrame(() => charts.forEach(c => c.draw()));
 }
 document.getElementById("t1").addEventListener("click", () => showTab(1));
 document.getElementById("t2").addEventListener("click", () => showTab(2));
+document.getElementById("t3").addEventListener("click", () => showTab(3));
 
 /* ---------- điều khiển ---------- */
 let tablesOpen = false;
@@ -1160,6 +1246,8 @@ document.getElementById("week").addEventListener("change", e => {
   setMode(mode === "auto" ? "auto" : mode);
   const qs = new URLSearchParams(location.search);
   try { BLDG = qs.get("b") || localStorage.getItem("b8-bldg") || "B08"; } catch (err) {}
+  try { const ts = await getJSON("truoc_sau.json"); buildTab3(ts); } catch (err) { buildTab3(null); }
+  const gotoHash = () => { if (location.hash === "#quanly") showTab(2); else if (location.hash === "#truocsau") showTab(3); };
   // Chế độ nhiều tuần: có weeks.json và không ép data=... trên URL
   if (!qs.get("data")) {
     try {
@@ -1172,7 +1260,7 @@ document.getElementById("week").addEventListener("change", e => {
         const w = WEEKS.find(x => x.id === want) || WEEKS.find(x => x.id === m.default) || WEEKS[0];
         sel.value = w.id; document.getElementById("weekWrap").style.display = "";
         await loadWeek(w);
-        if (location.hash === "#quanly") showTab(2);
+        gotoHash();
         return;
       }
     } catch (err) { /* không có weeks.json: chạy chế độ một tuần như cũ */ }
@@ -1185,7 +1273,7 @@ document.getElementById("week").addEventListener("change", e => {
   try { const ej = await getJSON(qs.get("energy") || "energy.json"); if (isEnergy(ej)) ENERGY = ej; } catch (err) { /* energy.json là tùy chọn */ }
   fillBldg();
   safeBuild(j);
-  if (location.hash === "#quanly") showTab(2);
+  gotoHash();
 })();
 </script>
 </body>
