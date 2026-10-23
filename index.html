@@ -154,6 +154,11 @@ td{white-space:nowrap}td:first-child{white-space:normal}
 @media (max-width:560px){.barrow{grid-template-columns:60px 1fr;grid-template-areas:"label val" "track track"}.barlabel{grid-area:label}.barval{grid-area:val;text-align:right}.bartrack{grid-area:track}}
 .cmp td,.cmp th{white-space:normal}
 .cmp select{font:inherit;font-size:13px;color:var(--text-primary);background:var(--surface-0);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.report-pickbar{display:block;font-size:12px;color:var(--text-secondary);background:var(--surface-1);border:1px dashed var(--line);border-radius:6px;padding:4px 8px;margin-bottom:8px;cursor:pointer;user-select:none}
+.report-pickbar input{margin-right:6px;vertical-align:middle}
+.report-fab{position:fixed;right:16px;bottom:16px;z-index:50;background:var(--surface-0);border:1px solid var(--line);border-radius:10px;padding:10px 12px;box-shadow:0 4px 16px rgba(0,0,0,.18);display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--text-primary)}
+.report-fab button{white-space:nowrap}
+@media (max-width:560px){.report-fab{left:16px;right:16px}}
 </style>
 </head>
 <body>
@@ -431,7 +436,7 @@ function build(d) {
       el("p", {class: "desc"}, "Tab 1 đọc log máy lạnh và lịch học theo phòng, và pipeline hiện chỉ xử lý dữ liệu của B08. Với các tòa khác, hãy xem điện năng ở Tab 2.")));
     const bt2 = el("button", {class: "btn", type: "button"}, "Mở Tab 2: Góc nhìn quản lý"); bt2.addEventListener("click", () => showTab(2)); app.append(bt2);
     document.getElementById("foot").replaceChildren();
-    buildTab2(d); return;
+    buildTab2(d); scanReportables(); return;
   }
   const qa = d.qa || {};
   if (qa.unit_ids_used_in_multiple_rooms) nt.append(el("div", {class: "notice"}, el("b", {}, "Chất lượng dữ liệu: "),
@@ -831,6 +836,7 @@ function build(d) {
     el("p", {}, el("span", {class: "tag"}, "SUY LUẬN"), "Nhóm nguyên nhân được gán theo nhật ký theo dõi thủ công và quy tắc trong cause_rules.csv, không phải kết luận từ log hệ thống. “Chưa phân loại” nghĩa là chưa có ghi nhận."),
     el("p", {}, el("span", {class: "tag"}, "GIỚI HẠN"), "Chưa có Activities log (lệnh QUEUED/SKIPPED), điện năng theo phòng và số người có mặt; không thể quy ra kWh hay kết luận phòng trống."));
   applyTableToggle();
+  scanReportables();
 }
 
 
@@ -1160,6 +1166,7 @@ function buildTab3(ts) {
     el("p", {class: "how"}, `Riêng giai đoạn này: ${NC.ngay} ngày, hệ số kWh/giờ-máy đo được ${nf1.format(NC.kwh_per_machine_hour)} nhưng R² chỉ ${pct(NC.r2, 0)} (yếu, so với ${pct(T.r2, 0)} ở giai đoạn trước và ${pct(S.T42.r2, 0)} ở T42) — độ tin cậy thấp, không dùng để tính tiết kiệm.`)));
 
   upd();
+  scanReportables();
 }
 
 /* ---------- chuyển tab ---------- */
@@ -1195,6 +1202,108 @@ function setMode(m) {
 bt.addEventListener("click", () => setMode(modes[(modes.indexOf(mode) + 1) % 3]));
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (mode === "auto" && DATA) build(DATA); });
 let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => charts.forEach(c => c.draw()), 80); }).observe(document.body);
+
+/* ---------- xuất báo cáo riêng lẻ (chế độ biên tập, ẩn mặc định) ----------
+   Bật bằng cách thêm ?edit=1 vào URL. Người xem thường (BGH, phòng ban...) không thấy gì khác lạ.
+   Tick chọn bất kỳ thẻ/mục nào (có thể chọn từ nhiều tab khác nhau) rồi bấm "Xuất Excel":
+   mỗi mục đã chọn ra 1 sheet riêng, giữ đúng số liệu + công thức/nhãn GIẢ ĐỊNH-SUY LUẬN-ƯỚC TÍNH
+   đang hiển thị trên màn hình lúc bấm xuất (kể cả khi đã sửa đơn giá/số tuần ở Tab 2-3). */
+let REPORT_MODE = false;
+try { REPORT_MODE = new URLSearchParams(location.search).get("edit") === "1"; } catch (e) {}
+function textOf(node) { return (node.textContent || "").replace(/\s+/g, " ").trim(); }
+function nodeToRows(node, rows) {
+  if (!node || node.nodeType !== 1) return;
+  if (node.classList && node.classList.contains("report-pickbar")) return;
+  const tag = node.tagName;
+  if (tag === "TABLE") { rows.push([]); [...node.querySelectorAll("tr")].forEach(tr => rows.push([...tr.querySelectorAll("th,td")].map(textOf))); return; }
+  if (node.classList && node.classList.contains("tile")) {
+    const lbl = node.querySelector(".lbl"), val = node.querySelector(".val"), sub = node.querySelector(".sub");
+    let lblText = "";
+    if (lbl) {
+      const tagSpan = lbl.querySelector(":scope > span.tag");
+      lblText = tagSpan ? (textOf(lbl).slice(textOf(tagSpan).length).trim() + " [" + textOf(tagSpan) + "]") : textOf(lbl);
+    }
+    rows.push([lblText, val ? textOf(val) : "", sub ? textOf(sub) : ""]); return;
+  }
+  if (node.classList && node.classList.contains("barrow")) {
+    const l = node.querySelector(".barlabel"), v = node.querySelector(".barval");
+    rows.push([l ? textOf(l) : "", v ? textOf(v) : ""]); return;
+  }
+  if (tag === "DL") {
+    const dts = [...node.querySelectorAll("dt")], dds = [...node.querySelectorAll("dd")];
+    dts.forEach((dt, i) => rows.push([textOf(dt), dds[i] ? textOf(dds[i]) : ""])); return;
+  }
+  if (tag === "H2" || tag === "H3") { rows.push([textOf(node)]); return; }
+  if (tag === "SUMMARY") { rows.push(["[" + textOf(node) + "]"]); return; }
+  if (tag === "P" || tag === "DD" || tag === "DT") {
+    const tagSpan = node.querySelector(":scope > span.tag"); let t;
+    if (tagSpan) { const rest = textOf(node).slice(textOf(tagSpan).length); t = rest.trim() + " [" + textOf(tagSpan) + "]"; }
+    else t = textOf(node);
+    if (t) rows.push([t]); return;
+  }
+  if (tag === "svg" || tag === "SVG") return;   // bỏ qua hình vẽ biểu đồ, chỉ lấy bảng/số liệu đi kèm
+  [...node.children].forEach(c => nodeToRows(c, rows));   // thẻ bao (section/div/details...): đi sâu vào từng con
+}
+function regionRows(sec, rows) {
+  nodeToRows(sec, rows);
+  let n = sec.nextElementSibling;
+  while (n && !(n.classList && n.classList.contains("sec"))) { nodeToRows(n, rows); n = n.nextElementSibling; }
+}
+function scanReportables() {
+  if (!REPORT_MODE) return;
+  document.querySelectorAll(".card, .sec").forEach(node => {
+    if (node.dataset.reportReady) return;
+    if (node.classList.contains("card") && node.parentElement && node.parentElement.closest(".card")) return;   // card lồng trong card khác: để card cha xử lý, tránh trùng
+    node.dataset.reportReady = "1";
+    const txt = node.classList.contains("sec") ? "Chọn cả mục này (gồm thẻ/bảng theo sau, đến mục kế tiếp)" : "Chọn khối này để xuất báo cáo";
+    const chk = el("input", {type: "checkbox", "data-report-pick": "1"});
+    chk.addEventListener("change", updateReportCount);
+    const bar = el("label", {class: "report-pickbar"}, chk, " " + txt);
+    node.insertBefore(bar, node.firstChild);
+  });
+  updateReportCount();
+}
+function updateReportCount() {
+  const n = document.querySelectorAll('input[data-report-pick]:checked').length;
+  const s = document.getElementById("reportCount"); if (s) s.textContent = "Đã chọn: " + n + " mục";
+}
+function clearPicks() { document.querySelectorAll('input[data-report-pick]:checked').forEach(x => x.checked = false); updateReportCount(); }
+async function ensureXLSX() {
+  if (window.XLSX) return;
+  await new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+    s.onload = res; s.onerror = () => rej(new Error("Không tải được thư viện xuất Excel (cần kết nối Internet)."));
+    document.head.append(s);
+  });
+}
+async function exportSelected() {
+  const picks = [...document.querySelectorAll('input[data-report-pick]:checked')];
+  if (!picks.length) { alert("Chưa chọn khối nào để xuất."); return; }
+  try { await ensureXLSX(); } catch (err) { alert(err.message); return; }
+  const wb = XLSX.utils.book_new(); const used = new Set();
+  const stamp = `Trích từ: ${location.href} · lúc ${new Date().toLocaleString("vi-VN")}`;
+  picks.forEach((chk, i) => {
+    const sec = chk.closest(".sec"), card = !sec && chk.closest(".card");
+    const rows = [];
+    if (sec) regionRows(sec, rows); else if (card) nodeToRows(card, rows);
+    if (!rows.length) rows.push(["(không trích được nội dung - khối này chỉ có biểu đồ hình ảnh)"]);
+    rows.push([]); rows.push([stamp]);
+    let name = (rows[0][0] || ("Khoi_" + (i + 1))).toString().replace(/[\\/?*\[\]:]/g, " ").trim().slice(0, 28) || ("Khoi_" + (i + 1));
+    const base = name; let k = 2; while (used.has(name)) { name = (base + "_" + k).slice(0, 31); k++; }
+    used.add(name);
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), name);
+  });
+  XLSX.writeFile(wb, `BaoCao_SBMS_trich_xuat_${new Date().toISOString().slice(0, 10)}.xlsx`);
+}
+function initReportBar() {
+  if (!REPORT_MODE) return;
+  const bar = el("div", {class: "report-fab", id: "reportFab"}, el("b", {}, "Chế độ xuất báo cáo"), el("span", {id: "reportCount"}, "Đã chọn: 0 mục"));
+  const bExport = el("button", {class: "btn", type: "button"}, "Xuất Excel (.xlsx)"); bExport.addEventListener("click", exportSelected);
+  const bClear = el("button", {class: "btn", type: "button"}, "Bỏ chọn tất cả"); bClear.addEventListener("click", clearPicks);
+  bar.append(bExport, bClear); document.body.append(bar);
+}
+initReportBar();
 
 /* ---------- nạp dữ liệu ---------- */
 function safeBuild(j) {
